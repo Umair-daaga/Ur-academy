@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chemistry Learning - UR Academy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            margin: 0;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar-logo {
+            font-size: 1.8em;
+            font-weight: 700;
+            padding: 1rem 0;
+            color: #667eea;
+        }
+
+        .navbar-menu {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar-menu a {
+            text-decoration: none;
+            font-weight: 600;
+            padding: 1.5rem 1rem;
+            color: #333;
+            display: inline-block;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+
+        .navbar-menu a:hover {
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: white;
+            font-weight: 600;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .section-content {
+            display: none;
+        }
+        .equation-desc {
+                font-size: 0.9em;
+                color: #666;
+                margin-top: -8px;
+                margin-bottom: 15px;
+                font-style: italic;
+            }
+        .section-content.active {
+            display: block;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .grid-item {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border-top: 4px solid #667eea;
+        }
+
+        .grid-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .grid-item h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.4em;
+            font-weight: 600;
+        }
+
+        .grid-item p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .drive-link {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .drive-link:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+
+        .update-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #667eea;
+        }
+
+        .update-card h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.6em;
+            font-weight: 600;
+        }
+
+        .update-content {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        /* Chemistry Equations Section */
+        .chemistry-equations-container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 2rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .breadcrumb {
+            font-size: 1em;
+            margin-bottom: 2rem;
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .breadcrumb span {
+            cursor: pointer;
+            color: #764ba2;
+            transition: color 0.3s ease;
+            padding: 0.5rem;
+            border-radius: 4px;
+        }
+
+        .breadcrumb span:hover {
+            color: #667eea;
+            background: #f8f9fa;
+        }
+
+        .breadcrumb .separator {
+            margin: 0 0.5rem;
+            color: #ccc;
+        }
+
+        .chemistry-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .chemistry-card {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .chemistry-card:hover {
+            border-color: #667eea;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .subsection-title {
+            color: #667eea;
+            margin: 2rem 0 1rem;
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 0.5rem;
+            font-size: 1.4em;
+            font-weight: 600;
+        }
+
+        .chemistry-equation-card {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .chemistry-equation-card:hover {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .chemistry-equation-card h4 {
+            color: #764ba2;
+            margin-bottom: 0.5rem;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+
+        .chemistry-equation-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .chemistry-button {
+            background: #667eea;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .chemistry-button:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+
+        /* Color Grid Styles */
+        .color-grid, .test-grid, .functional-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .color-card, .test-card, .functional-card {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+
+        .color-card:hover, .test-card:hover, .functional-card:hover {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .color-card h3, .test-card h3, .functional-card h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+
+        .color-chip {
+            display: inline-block;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            margin-right: 12px;
+            vertical-align: middle;
+            border: 2px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .color-description {
+            display: flex;
+            align-items: center;
+            margin: 8px 0;
+            padding: 8px;
+            background: white;
+            border-radius: 6px;
+        }
+
+        /* Video Section */
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .video-thumbnail {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+        }
+
+        .video-thumbnail::after {
+            content: '▶';
+            font-size: 3rem;
+            background: rgba(0, 0, 0, 0.5);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                padding: 1rem;
+            }
+
+            .navbar-menu {
+                flex-direction: column;
+                gap: 0;
+                width: 100%;
+            }
+
+            .navbar-menu li {
+                width: 100%;
+                text-align: center;
+            }
+
+            .grid-container, .chemistry-grid, .color-grid, .test-grid, .functional-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-logo">UR Chemistry Point</div>
+        <ul class="navbar-menu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#" onclick="showSection('pastpapers')">Past Papers</a></li>
+            <li><a href="#" onclick="showSection('reactions')">Reactions & Mechanisms</a></li>
+            <li><a href="#" onclick="showSection('videos')">Video Lessons</a></li>
+            <li><a href="#" onclick="showSection('updates')">What's New</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <!-- Home Section -->
+        <div id="home" class="section-content active">
+            <h2 class="section-title">Welcome to UR Chemistry Point</h2>
+            <div class="update-card">
+                <h3>Your Complete Chemistry Resource</h3>
+                <div class="update-content">
+                    <p>This platform provides everything you need to excel in chemistry:</p>
+                    <ul style="margin: 1rem 0; padding-left: 1.5rem;">
+                        <li>Comprehensive past papers collection</li>
+                        <li>Detailed reaction mechanisms and equations</li>
+                        <li>Video lessons and tutorials</li>
+                        <li>Latest updates in chemistry education</li>
+                    </ul>
+                    <p>Select a category from the navigation menu to get started!</p>
+                </div>
+            </div>
+            
+            <div class="grid-container">
+                <div class="grid-item" onclick="showSection('pastpapers')">
+                    <h3>Past Papers</h3>
+                    <p>Access past examination papers with detailed solutions to practice for your exams.</p>
+                    <a href="https://drive.google.com/drive/u/0/folders/1fMWQ33EonzjQsk-8vDuHGjnut5xpGL0K?sort=13&direction=a" target="_blank" class="drive-link" style="display: inline-block; margin-top: 15px;">Access All Physics Past Papers</a>
+                </div>
+                <div class="grid-item" onclick="showSection('reactions')">
+                    <h3>Reactions & Mechanisms</h3>
+                    <p>Explore chemical reactions, mechanisms, and comprehensive equation library.</p>
+                </div>
+                <div class="grid-item" onclick="showSection('videos')">
+                    <h3>Video Lessons</h3>
+                    <p>Watch detailed video explanations of complex chemistry concepts.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Past Papers Section -->
+        <div id="pastpapers" class="section-content">
+            <h2 class="section-title">Chemistry Past Papers</h2>
+            <div class="update-card">
+                <h3>Download Past Papers</h3>
+                <div class="update-content">
+                    <p>Access our complete collection of chemistry past papers And Resources:</p>
+                    <a href="https://drive.google.com/drive/folders/your-chemistry-papers-link" target="_blank" class="drive-link" style="display: inline-block; margin-top: 15px;">Access All Chemistry Past Papers</a>
+                </div>
+            </div>
+            <button class="chemistry-button" onclick="showSection('home')">⬅ Back to Home</button>
+        </div>
+
+        <!-- Reactions & Mechanisms Section -->
+        <div id="reactions" class="section-content">
+            <h2 class="section-title">Chemical Reactions & Mechanisms</h2>
+            <div class="chemistry-equations-container">
+                <div class="breadcrumb" id="breadcrumb">
+                    <span onclick="goToChemistryHome()">Chemistry Topics</span>
+                </div>
+
+                <!-- Main grid -->
+                <div class="chemistry-grid" id="main-chemistry-grid">
+                    <div class="chemistry-card" onclick="showChemistrySection('organic')">Organic Chemistry</div>
+                    <div class="chemistry-card" onclick="showChemistrySection('inorganic')">Inorganic Chemistry</div>
+                    <div class="chemistry-card" onclick="showChemistrySection('thermodynamics')">Thermodynamics</div>
+                    <div class="chemistry-card" onclick="showChemistrySection('equilibrium')">Equilibrium</div>
+                    <div class="chemistry-card" onclick="showChemistrySection('electrochemistry')">Electrochemistry</div>
+                    <div class="chemistry-card" onclick="showChemistrySection('kinetics')">Chemical Kinetics</div>
+                </div>
+
+                <div id="thermodynamics" class="content-section">
+                    <div class="physics-equation-card">
+                        <h4>Second Law of Thermodynamics</h4>
+                        <div class="math-expression">ΔS ≥ 0</div>
+                        <p>Entropy of an isolated system never decreases.</p>
+                    </div>
+                    <div class="physics-equation-card">
+                        <h4>Entropy of total system </h4>
+                        <div class="math-expression">ΔS ≥ 0</div>
+                        <p>Entropy of system + surronding ≥ 0 </p>
+                    </div>
+                    <div class="physics-equation-card">
+                        <h4>At Equilubrium ΔG=0 </h4>
+                        <div class="math-expression">ΔS ≥ 0</div>
+                        <p>Entropy of an isolated system never decreases.</p>
+                    </div>
+                    <div>
+                        <button class="chemistry-button" onclick="goToChemistryBack('inorganic')">⬅ Back</button>
+                    </div>
+                     
+                </div>
+
+                <!-- Inorganic Chemistry Section -->
+                <div id="inorganic" class="content-section">
+                    <h2>Inorganic Chemistry</h2>
+                    <div class="chemistry-grid">
+                        <div class="chemistry-card" onclick="showChemistrySubSection('colors', 'inorganic')">Colors of Compounds</div>
+                        <div class="chemistry-card" onclick="showChemistrySubSection('testing', 'inorganic')">Testing of Compounds</div>
+                        <div class="chemistry-card" >Reactions  would be out on 24/10/2025</div>
+                    </div>
+                    <button class="chemistry-button" onclick="goToChemistryBack('inorganic')">⬅ Back</button>
+                </div>
+
+                <!-- Colors of Compounds Section -->
+                <div id="colors" class="content-section">
+                    <h2>Colors of Inorganic Compounds</h2>
+                    
+                    <h3 class="subsection-title">Colors of Metal Ions in Aqueous Solution</h3>
+                    <div class="color-grid">
+                        <div class="color-card">
+                            <h3>Copper (Cu²⁺)</h3>
+                            <div class="color-description">
+                                <span class="color-chip" style="background-color: #0077FF;"></span>
+                                <span>Bright Blue solution</span>
+                            </div>
+                            <p>Compounds: CuSO₄, Cu(NO₃)₂, CuCl₂</p>
+                            <p><strong>Characteristic:</strong> Deep azure blue color</p>
+                        </div>
+                        
+                        <div class="color-card">
+                            <h3>Iron (Fe²⁺)</h3>
+                            <div class="color-description">
+                                <span class="color-chip" style="background-color: #66CC66;"></span>
+                                <span>Pale Green solution</span>
+                            </div>
+                            <p>Compounds: FeSO₄, FeCl₂</p>
+                            <p><strong>Characteristic:</strong> Light apple green</p>
+                        </div>
+                        
+                        <div class="color-card">
+                            <h3>Iron (Fe³⁺)</h3>
+                            <div class="color-description">
+                                <span class="color-chip" style="background-color: #CC6633;"></span>
+                                <span>Yellow/Brown solution</span>
+                            </div>
+                            <p>Compounds: FeCl₃, Fe(NO₃)₃</p>
+                            <p><strong>Characteristic:</strong> Amber to reddish-brown</p>
+                        </div>
+                        
+                        <div class="color-card">
+                            <h3>Nickel (Ni²⁺)</h3>
+                            <div class="color-description">
+                                <span class="color-chip" style="background-color: #33CC33;"></span>
+                                <span>Emerald Green solution</span>
+                            </div>
+                            <p>Compounds: NiSO₄, NiCl₂</p>
+                            <p><strong>Characteristic:</strong> Bright green</p>
+                        </div>
+                        
+                        <div class="color-card">
+                            <h3>Cobalt (Co²⁺)</h3>
+                            <div class="color-description">
+                                <span class="color-chip" style="background-color: #3366FF;"></span>
+                                <span>Pink solution</span>
+                            </div>
+                            <p>Compounds: CoCl₂, CoSO₄</p>
+                            <p><strong>Characteristic:</strong> Pink to reddish color</p>
+                        </div>
+                        
+                        <div class="color-card">
+                            <h3>Chromium (Cr³⁺)</h3>
+                            <div class="color-description">
+                                <span class="color-chip" style="background-color: #006600;"></span>
+                                <span>Green solution</span>
+                            </div>
+                            <p>Compounds: CrCl₃, Cr(NO₃)₃</p>
+                            <p><strong>Characteristic:</strong> Dark green color</p>
+                        </div>
+                        
+                        <div class="color-card">
+                            <h3>Manganese (Mn²⁺)</h3>
+                            <div class="color-description">
+                                <span class="color-chip" style="background-color: #CCCCCC;"></span>
+                                <span>Pale Pink solution</span>
+                            </div>
+                            <p>Compounds: MnSO₄, MnCl₂</p>
+                            <p><strong>Characteristic:</strong> Very pale pink, almost colorless</p>
+                        </div>
+                        
+                        <div class="color-card">
+                            <h3>Vanadium (V²⁺, V³⁺, V⁴⁺, V⁵⁺)</h3>
+                            <div class="color-description">
+                                <span class="color-chip" style="background-color: linear-gradient(to right, #CCCCCC, #3366FF, #006600, #FF6600);"></span>
+                                <span>Multiple colors</span>
+                            </div>
+                            <p>V²⁺ (violet), V³⁺ (green), VO²⁺ (blue), VO₂⁺ (yellow)</p>
+                            <p><strong>Characteristic:</strong> Shows multiple oxidation states</p>
+                        </div>
+                    </div>
+
+                    <h3 class="subsection-title">Colors of Precipitates</h3>
+                    <div class="color-grid">
+                        <div class="color-card">
+                            <h3>Silver Chloride (AgCl)</h3>
+                            <div class="color-description">
+                                <span class="color-chip" style="background-color: #F5F5F5;"></span>
+                                <span>White curdy precipitate</span>
+                            </div>
+                            <p><strong>Special:</strong> Turns violet in sunlight</p>
+                        </div>
+                        
+                        <div class="color-card">
+                            <h3>Lead Chromate (PbCrO₄)</h3>
+                            <div class="color-description">
+                                <span class="color-chip" style="background-color: #FFD700;"></span>
+                                <span>Bright Yellow precipitate</span>
+                            </div>
+                            <p><strong>Common name:</strong> Chrome yellow pigment</p>
+                        </div>
+                        
+                        <div class="color-card">
+                            <h3>Ferric Hydroxide (Fe(OH)₃)</h3>
+                            <div class="color-description">
+                                <span class="color-chip" style="background-color: #8B4513;"></span>
+                                <span>Reddish-Brown precipitate</span>
+                            </div>
+                            <p><strong>Characteristic:</strong> Gelatinous brown precipitate</p>
+                        </div>
+                        
+                        <div class="color-card">
+                            <h3>Copper Hydroxide (Cu(OH)₂)</h3>
+                            <div class="color-description">
+                                <span class="color-chip" style="background-color: #009900;"></span>
+                                <span>Blue precipitate</span>
+                            </div>
+                            <p><strong>Characteristic:</strong> Pale blue gelatinous precipitate</p>
+                        </div>
+                        
+                        <div class="color-card">
+                            <h3>Nickel Dimethylglyoxime</h3>
+                            <div class="color-description">
+                                <span class="color-chip" style="background-color: #FF3366;"></span>
+                                <span>Bright Red precipitate</span>
+                            </div>
+                            <p><strong>Test:</strong> Specific test for nickel ions</p>
+                        </div>
+                        
+                        <div class="color-card">
+                            <h3>Manganese Dioxide (MnO₂)</h3>
+                            <div class="color-description">
+                                <span class="color-chip" style="background-color: #333333;"></span>
+                                <span>Black/Brown precipitate</span>
+                            </div>
+                            <p><strong>Characteristic:</strong> Dark brown to black solid</p>
+                        </div>
+                    </div>
+
+                    <button class="chemistry-button" onclick="goToChemistryBack('inorganic')">⬅ Back</button>
+                </div>
+
+                <!-- Testing of Compounds Section -->
+                <div id="testing" class="content-section">
+                    <h2>Testing of Inorganic Compounds</h2>
+                    
+                    <h3 class="subsection-title">Flame Tests</h3>
+                    <div class="test-grid">
+                        <div class="test-card">
+                            <h3>Sodium (Na⁺)</h3>
+                            <p><span style="color: #FFD700;">Golden yellow flame</span></p>
+                            <p><strong>Intensity:</strong> Very intense, persistent</p>
+                        </div>
+                        
+                        <div class="test-card">
+                            <h3>Potassium (K⁺)</h3>
+                            <p><span style="color: #C8A2C8;">Lilac (pale violet) flame</span></p>
+                            <p><strong>Observation:</strong> Pale violet through cobalt glass</p>
+                        </div>
+                        
+                        <div class="test-card">
+                            <h3>Calcium (Ca²⁺)</h3>
+                            <p><span style="color: #FF4500;">Brick red flame</span></p>
+                            <p><strong>Characteristic:</strong> Orange-red color</p>
+                        </div>
+                        
+                        <div class="test-card">
+                            <h3>Strontium (Sr²⁺)</h3>
+                            <p><span style="color: #FF0000;">Crimson red flame</span></p>
+                            <p><strong>Characteristic:</strong> Bright red color</p>
+                        </div>
+                        
+                        <div class="test-card">
+                            <h3>Barium (Ba²⁺)</h3>
+                            <p><span style="color: #00FF00;">Apple green flame</span></p>
+                            <p><strong>Characteristic:</strong> Pale green color</p>
+                        </div>
+                        
+                        <div class="test-card">
+                            <h3>Copper (Cu²⁺)</h3>
+                            <p><span style="color: #00FFFF;">Blue-green flame</span></p>
+                            <p><strong>Characteristic:</strong> Bluish-green with green flashes</p>
+                        </div>
+                    </div>
+
+                    <h3 class="subsection-title">Anion Tests</h3>
+                    <div class="test-grid">
+                        <div class="test-card">
+                            <h3>Carbonate (CO₃²⁻)</h3>
+                            <p>Effervescence with acid, lime water test</p>
+                            <p><strong>Reaction:</strong> CO₃²⁻ + 2H⁺ → CO₂ + H₂O</p>
+                        </div>
+                        
+                        <div class="test-card">
+                            <h3>Sulfate (SO₄²⁻)</h3>
+                            <p>White precipitate with BaCl₂ in acidic medium</p>
+                            <p><strong>Reaction:</strong> Ba²⁺ + SO₄²⁻ → BaSO₄ (white ppt)</p>
+                        </div>
+                        
+                        <div class="test-card">
+                            <h3>Chloride (Cl⁻)</h3>
+                            <p>White precipitate with AgNO₃ soluble in NH₃</p>
+                            <p><strong>Reaction:</strong> Ag⁺ + Cl⁻ → AgCl (white ppt)</p>
+                        </div>
+                        
+                        <div class="test-card">
+                            <h3>Nitrate (NO₃⁻)</h3>
+                            <p>Brown ring test with FeSO₄ and H₂SO₄</p>
+                            <p><strong>Observation:</strong> Brown ring at junction</p>
+                        </div>
+                        
+                        <div class="test-card">
+                            <h3>Phosphate (PO₄³⁻)</h3>
+                            <p>Yellow precipitate with ammonium molybdate</p>
+                            <p><strong>Reaction:</strong> Forms ammonium phosphomolybdate</p>
+                        </div>
+                        
+                        <div class="test-card">
+                            <h3>Sulfide (S²⁻)</h3>
+                            <p>Black precipitate with lead acetate</p>
+                            <p><strong>Reaction:</strong> Pb²⁺ + S²⁻ → PbS (black ppt)</p>
+                        </div>
+                    </div>
+
+                    <button class="chemistry-button" onclick="goToChemistryBack('inorganic')">⬅ Back</button>
+                    
+                </div>
+
+                <!-- Organic Chemistry Section -->
+                <div id="organic" class="content-section">
+                    <h2>Organic Chemistry</h2>
+                    <div class="chemistry-grid">
+                        <div class="chemistry-card" onclick="showChemistrySubSection('mechanisms', 'organic')">Reaction Mechanisms</div>
+                        <div class="chemistry-card" onclick="showChemistrySubSection('functional-groups', 'organic')">Functional Groups</div>
+                        <div class="chemistry-card" onclick="showChemistrySubSection('nomenclature', 'organic')">Nomenclature</div>
+                    </div>
+                    <button class="chemistry-button" onclick="goToChemistryBack('organic')">⬅ Back</button>
+                </div>
+
+                <!-- Reaction Mechanisms Section -->
+                <div id="mechanisms" class="content-section">
+                    <h2>Organic Reaction Mechanisms</h2>
+                    
+                    <div class="chemistry-equation-card">
+                        <h4>SN2 Reaction</h4>
+                        <p><strong>Mechanism:</strong> Bimolecular nucleophilic substitution</p>
+                        <p><strong>Example:</strong> CH₃Br + OH⁻ → CH₃OH + Br⁻</p>
+                        <p><strong>Characteristics:</strong> One step, inversion of configuration</p>
+                    </div>
+                    
+                    <div class="chemistry-equation-card">
+                        <h4>SN1 Reaction</h4>
+                        <p><strong>Mechanism:</strong> Unimolecular nucleophilic substitution</p>
+                        <p><strong>Example:</strong> (CH₃)₃CBr → (CH₃)₃C⁺ + Br⁻</p>
+                        <p><strong>Characteristics:</strong> Two steps, carbocation intermediate</p>
+                    </div>
+                    
+                    <div class="chemistry-equation-card">
+                        <h4>E2 Elimination</h4>
+                        <p><strong>Mechanism:</strong> Bimolecular elimination</p>
+                        <p><strong>Example:</strong> CH₃CH₂Br + OH⁻ → CH₂=CH₂ + Br⁻ + H₂O</p>
+                        <p><strong>Characteristics:</strong> One step, anti-periplanar geometry</p>
+                    </div>
+                    
+                    <div class="chemistry-equation-card">
+                        <h4>E1 Elimination</h4>
+                        <p><strong>Mechanism:</strong> Unimolecular elimination</p>
+                        <p><strong>Example:</strong> (CH₃)₃CBr → (CH₃)₂C=CH₂ + HBr</p>
+                        <p><strong>Characteristics:</strong> Two steps, carbocation intermediate</p>
+                    </div>
+                    
+                    <div class="chemistry-equation-card">
+                        <h4>Electrophilic Addition</h4>
+                        <p><strong>Mechanism:</strong> Addition to alkenes</p>
+                        <p><strong>Example:</strong> CH₂=CH₂ + HBr → CH₃CH₂Br</p>
+                        <p><strong>Characteristics:</strong> Follows Markovnikov's rule</p>
+                    </div>
+
+                     <div class="chemistry-equation-card">
+                        <h4>Watch playlist uploaded on mechanisms</h4>
+                        <a href="https://youtu.be/nnLPBvyvwFw" target="_blank" class="drive-link">Watch Video</a>
+                    </div>
+
+                    <button class="chemistry-button" onclick="goToChemistryBack('organic')">⬅ Back</button>
+                </div>
+
+                <!-- Functional Groups Section -->
+                <div id="functional-groups" class="content-section">
+                    <h2>Organic Functional Groups</h2>
+                    
+                    <h3 class="subsection-title">Hydrocarbon Functional Groups</h3>
+                    <div class="functional-grid">
+                        <div class="functional-card">
+                            <h3>Alkane</h3>
+                            <p><strong>Formula:</strong> C<sub>n</sub>H<sub>2n+2</sub></p>
+                            <p><strong>Example:</strong> CH₄ (Methane)</p>
+                            <p><strong>Properties:</strong> Saturated, non-polar</p>
+                        </div>
+                        
+                        <div class="functional-card">
+                            <h3>Alkene</h3>
+                            <p><strong>Formula:</strong> C<sub>n</sub>H<sub>2n</sub></p>
+                            <p><strong>Example:</strong> CH₂=CH₂ (Ethene)</p>
+                            <p><strong>Properties:</strong> Unsaturated, reactive</p>
+                        </div>
+                        
+                        <div class="functional-card">
+                            <h3>Alkyne</h3>
+                            <p><strong>Formula:</strong> C<sub>n</sub>H<sub>2n-2</sub></p>
+                            <p><strong>Example:</strong> HC≡CH (Ethyne)</p>
+                            <p><strong>Properties:</strong> Triple bond, acidic H</p>
+                        </div>
+                        
+                        <div class="functional-card">
+                            <h3>Aromatic</h3>
+                            <p><strong>Formula:</strong> C₆H₆ (Benzene)</p>
+                            <p><strong>Example:</strong> C₆H₆ (Benzene)</p>
+                            <p><strong>Properties:</strong> Delocalized π electrons</p>
+                        </div>
+                    </div>
+
+                    <h3 class="subsection-title">Oxygen-Containing Functional Groups</h3>
+                    <div class="functional-grid">
+                        <div class="functional-card">
+                            <h3>Alcohol</h3>
+                            <p><strong>Formula:</strong> R-OH</p>
+                            <p><strong>Example:</strong> CH₃CH₂OH (Ethanol)</p>
+                            <p><strong>Properties:</strong> Polar, hydrogen bonding</p>
+                        </div>
+                        
+                        <div class="functional-card">
+                            <h3>Aldehyde</h3>
+                            <p><strong>Formula:</strong> R-CHO</p>
+                            <p><strong>Example:</strong> HCHO (Formaldehyde)</p>
+                            <p><strong>Properties:</strong> Reducing agent, carbonyl</p>
+                        </div>
+                        
+                        <div class="functional-card">
+                            <h3>Ketone</h3>
+                            <p><strong>Formula:</strong> R-CO-R'</p>
+                            <p><strong>Example:</strong> CH₃COCH₃ (Acetone)</p>
+                            <p><strong>Properties:</strong> Carbonyl, less reactive</p>
+                        </div>
+                        
+                        <div class="functional-card">
+                            <h3>Carboxylic Acid</h3>
+                            <p><strong>Formula:</strong> R-COOH</p>
+                            <p><strong>Example:</strong> CH₃COOH (Acetic acid)</p>
+                            <p><strong>Properties:</strong> Acidic, hydrogen bonding</p>
+                        </div>
+                        
+                        <div class="functional-card">
+                            <h3>Ester</h3>
+                            <p><strong>Formula:</strong> R-COO-R'</p>
+                            <p><strong>Example:</strong> CH₃COOCH₃ (Methyl acetate)</p>
+                            <p><strong>Properties:</strong> Fruity odor, hydrolysis</p>
+                        </div>
+                        
+                        <div class="functional-card">
+                            <h3>Ether</h3>
+                            <p><strong>Formula:</strong> R-O-R'</p>
+                            <p><strong>Example:</strong> CH₃OCH₃ (Dimethyl ether)</p>
+                            <p><strong>Properties:</strong> Polar, anesthetic</p>
+                        </div>
+                    </div>
+
+                    <h3 class="subsection-title">Nitrogen-Containing Functional Groups</h3>
+                    <div class="functional-grid">
+                        <div class="functional-card">
+                            <h3>Amine</h3>
+                            <p><strong>Formula:</strong> R-NH₂</p>
+                            <p><strong>Example:</strong> CH₃NH₂ (Methylamine)</p>
+                            <p><strong>Properties:</strong> Basic, fishy odor</p>
+                        </div>
+                        
+                        <div class="functional-card">
+                            <h3>Amide</h3>
+                            <p><strong>Formula:</strong> R-CONH₂</p>
+                            <p><strong>Example:</strong> CH₃CONH₂ (Acetamide)</p>
+                            <p><strong>Properties:</strong> Neutral, peptide bond</p>
+                        </div>
+                        
+                        <div class="functional-card">
+                            <h3>Nitrile</h3>
+                            <p><strong>Formula:</strong> R-CN</p>
+                            <p><strong>Example:</strong> CH₃CN (Acetonitrile)</p>
+                            <p><strong>Properties:</strong> Polar, high boiling point</p>
+                        </div>
+                    </div>
+
+                    <button class="chemistry-button" onclick="goToChemistryBack('organic')">⬅ Back</button>
+                </div>
+
+                <!-- Nomenclature Section -->
+                <div id="nomenclature" class="content-section">
+                    <h2>Organic Nomenclature</h2>
+                    
+                    <h3 class="subsection-title">IUPAC Naming Rules</h3>
+                    <div class="chemistry-equation-card">
+                        <h4>Basic Rules</h4>
+                        <p>1. Identify the longest carbon chain (parent chain)</p>
+                        <p>2. Number the chain to give substituents the lowest numbers</p>
+                        <p>3. Name substituents in alphabetical order</p>
+                        <p>4. Use prefixes (di-, tri-) for identical substituents</p>
+                    </div>
+                    
+                    <h3 class="subsection-title">Alkane Nomenclature</h3>
+                    <div class="functional-grid">
+                        <div class="functional-card">
+                            <h3>Methane</h3>
+                            <p><strong>Formula:</strong> CH₄</p>
+                            <p><strong>Structure:</strong> Simplest alkane</p>
+                        </div>
+                        
+                        <div class="functional-card">
+                            <h3>Ethane</h3>
+                            <p><strong>Formula:</strong> C₂H₆</p>
+                            <p><strong>Structure:</strong> CH₃-CH₃</p>
+                        </div>
+                        
+                        <div class="functional-card">
+                            <h3>Propane</h3>
+                            <p><strong>Formula:</strong> C₃H₈</p>
+                            <p><strong>Structure:</strong> CH₃-CH₂-CH₃</p>
+                        </div>
+                        
+                        <div class="functional-card">
+                            <h3>Butane</h3>
+                            <p><strong>Formula:</strong> C₄H₁₀</p>
+                            <p><strong>Structure:</strong> CH₃-CH₂-CH₂-CH₃</p>
+                        </div>
+                    </div>
+
+                    <h3 class="subsection-title">Functional Group Priority</h3>
+                    <div class="chemistry-equation-card">
+                        <h4>Priority Order (Highest to Lowest)</h4>
+                        <p>1. Carboxylic acids</p>
+                        <p>2. Esters</p>
+                        <p>3. Amides</p>
+                        <p>4. Nitriles</p>
+                        <p>5. Aldehydes</p>
+                        <p>6. Ketones</p>
+                        <p>7. Alcohols</p>
+                        <p>8. Amines</p>
+                        <p>9. Alkenes/Alkynes</p>
+                        <p>10. Alkanes</p>
+                    </div>
+
+                    <h3 class="subsection-title">Common Naming Examples</h3>
+                    <div class="functional-grid">
+                        <div class="functional-card">
+                            <h3>2-Methylpropane</h3>
+                            <p><strong>Formula:</strong> C₄H₁₀</p>
+                            <p><strong>Structure:</strong> (CH₃)₂CH-CH₃</p>
+                            <p><strong>Common name:</strong> Isobutane</p>
+                        </div>
+                        
+                        <div class="functional-card">
+                            <h3>2-Butanol</h3>
+                            <p><strong>Formula:</strong> C₄H₉OH</p>
+                            <p><strong>Structure:</strong> CH₃-CH(OH)-CH₂-CH₃</p>
+                            <p><strong>Common name:</strong> sec-Butyl alcohol</p>
+                        </div>
+                        
+                        <div class="functional-card">
+                            <h3>Propanone</h3>
+                            <p><strong>Formula:</strong> C₃H₆O</p>
+                            <p><strong>Structure:</strong> CH₃-CO-CH₃</p>
+                            <p><strong>Common name:</strong> Acetone</p>
+                        </div>
+                        
+                        <div class="functional-card">
+                            <h3>Ethanoic acid</h3>
+                            <p><strong>Formula:</strong> C₂H₄O₂</p>
+                            <p><strong>Structure:</strong> CH₃-COOH</p>
+                            <p><strong>Common name:</strong> Acetic acid</p>
+                        </div>
+                    </div>
+
+                    <button class="chemistry-button" onclick="goToChemistryBack('organic')">⬅ Back</button>
+                </div>
+
+               <div id="equilibrium" class="content-section">
+                    <h2>Chemical Equilibrium</h2>
+                    <p>Chemical equilibrium occurs when the rates of forward and reverse reactions are equal, and concentrations remain constant.</p>
+                    
+                    <!-- Basic Equilibrium Constants -->
+                    <div class="math-expression">Kc = [C]<sup>c</sup>[D]<sup>d</sup>/[A]<sup>a</sup>[B]<sup>b</sup></div>
+                    <p class="equation-desc">For: aA + bB ⇌ cC + dD | Concentration-based equilibrium constant</p>
+                    
+                    <div class="math-expression">Kp = (P<sub>C</sub><sup>c</sup>P<sub>D</sub><sup>d</sup>)/(P<sub>A</sub><sup>a</sup>P<sub>B</sub><sup>b</sup>)</div>
+                    <p class="equation-desc">Pressure-based equilibrium constant for gaseous systems</p>
+                    
+                    <div class="math-expression">Kp = Kc(RT)<sup>Δn</sup></div>
+                    <p class="equation-desc">Relationship between Kp and Kc | Δn = (c+d) - (a+b)</p>
+
+                    <!-- Solubility Equilibrium -->
+                    <div class="math-expression">Ksp = [A<sup>n+</sup>]<sup>m</sup>[B<sup>m-</sup>]<sup>n</sup></div>
+                    <p class="equation-desc">For: A<sub>m</sub>B<sub>n</sub>(s) ⇌ mA<sup>n+</sup>(aq) + nB<sup>m-</sup>(aq) | Solubility product</p>
+
+                    <!-- Acid-Base Equilibrium -->
+                    <div class="math-expression">Ka = [H<sup>+</sup>][A<sup>-</sup>]/[HA]</div>
+                    <p class="equation-desc">Acid dissociation constant | Stronger acid = larger Ka</p>
+                    
+                    <div class="math-expression">Kb = [BH<sup>+</sup>][OH<sup>-</sup>]/[B]</div>
+                    <p class="equation-desc">Base dissociation constant | Stronger base = larger Kb</p>
+                    
+                    <div class="math-expression">Kw = [H<sup>+</sup>][OH<sup>-</sup>] = 1.0 × 10<sup>-14</sup></div>
+                    <p class="equation-desc">Water autoionization constant | At 25°C</p>
+                    
+                    <div class="math-expression">Ka × Kb = Kw</div>
+                    <p class="equation-desc">For conjugate acid-base pairs</p>
+
+                    <!-- pH Calculations -->
+                    <div class="math-expression">pH = -log[H<sup>+</sup>]</div>
+                    <p class="equation-desc">Measure of acidity | pH < 7 = acidic, pH > 7 = basic</p>
+                    
+                    <div class="math-expression">pOH = -log[OH<sup>-</sup>]</div>
+                    <p class="equation-desc">Measure of basicity</p>
+                    
+                    <div class="math-expression">pH + pOH = 14</div>
+                    <p class="equation-desc">At 25°C</p>
+
+                    <!-- Distribution & Other Constants -->
+                    <div class="math-expression">KD = [A]<sub>organic</sub>/[A]<sub>aqueous</sub></div>
+                    <p class="equation-desc">Partition coefficient | Ratio between two immiscible solvents</p>
+
+                    <!-- Reaction Quotient -->
+                    <div class="math-expression">Q = [C]<sup>c</sup>[D]<sup>d</sup>/[A]<sup>a</sup>[B]<sup>b</sup></div>
+                    <p class="equation-desc">Reaction quotient | Q < K: forward, Q > K: reverse, Q = K: equilibrium</p>
+
+                    <!-- Van't Hoff Equation -->
+                    <div class="math-expression">ln(K<sub>2</sub>/K<sub>1</sub>) = -(ΔH°/R)(1/T<sub>2</sub> - 1/T<sub>1</sub>)</div>
+                    <p class="equation-desc">Temperature dependence of K | Endothermic: K↑ with T↑, Exothermic: K↓ with T↑</p>
+
+                    <button class="chemistry-button" onclick="goToChemistryBack('equilibrium')">⬅ Back</button>
+                </div>
+
+                <div id="electrochemistry" class="content-section">
+                    <h2>Electrochemistry</h2>
+                    <p>sorry still under update ......  updates on 22nd october  </p>
+                    <button class="chemistry-button" onclick="goToChemistryBack('electrochemistry')">⬅ Back</button>
+                </div>
+
+                <div id="kinetics" class="content-section">
+    <h2>Chemical Kinetics</h2>
+    
+    <!-- Rate Laws & Order Section -->
+    <div class="chemistry-grid">
+        <h3>Rate Laws & Reaction Order</h3>
+        <div class="chemistry-equation-card">
+            <h4>Rate Definition</h4>
+            <div class="math-expression">Rate = -ⅆ[A]/ⅆt = ⅆ[P]/ⅆt</div>
+            <p>Rate of reaction in terms of reactant disappearance or product formation.</p>
+        </div>
+        <div class="chemistry-equation-card">
+            <h4>Zero Order Rate Law</h4>
+            <div class="math-expression">Rate = k</div>
+            <p>Rate is independent of reactant concentration.</p>
+        </div>
+        <div class="chemistry-equation-card">
+            <h4>First Order Rate Law</h4>
+            <div class="math-expression">Rate = k[A]</div>
+            <p>Rate proportional to concentration of one reactant.</p>
+        </div>
+        <div class="chemistry-equation-card">
+            <h4>Second Order Rate Law</h4>
+            <div class="math-expression">Rate = k[A]² or Rate = k[A][B]</div>
+            <p>Rate depends on square of concentration or two reactants.</p>
+        </div>
+    </div>
+    <!-- Half-Life Equations Section -->
+    <div class="chemistry-grid">
+        <h3>Half-Life Equations</h3>
+        <div class="chemistry-equation-card">
+            <h4>Zero Order Half-Life</h4>
+            <div class="math-expression">t<sub>½</sub> = [A]₀/(2k)</div>
+            <p>Half-life depends on initial concentration.</p>
+        </div>
+        <div class="chemistry-equation-card">
+            <h4>First Order Half-Life</h4>
+            <div class="math-expression">t<sub>½</sub> = ln(2)/k</div>
+            <p>Half-life is constant, independent of initial concentration.</p>
+        </div>
+        <div class="chemistry-equation-card">
+            <h4>Second Order Half-Life</h4>
+            <div class="math-expression">t<sub>½</sub> = 1/(k[A]₀)</div>
+            <p>Half-life inversely proportional to initial concentration.</p>
+        </div>
+        <div class="chemistry-equation-card">
+            <h4>nth Order Half-Life</h4>
+            <div class="math-expression">t<sub>½</sub> = (2<sup>n-1</sup>-1)/((n-1)k[A]₀<sup>n-1</sup>)</div>
+            <p>General half-life equation for any order n ≠ 1.</p>
+        </div>
+    </div>
+
+
+    <!-- Complex Reactions Section -->
+    <div class="chemistry-grid">
+        <h3>Complex Reaction Mechanisms</h3>
+        <div class="chemistry-equation-card">
+            <h4>Reversible Reaction Equilibrium</h4>
+            <div class="math-expression">A ⇌ B, K = k<sub>forward</sub>/k<sub>reverse</sub></div>
+            <p>Equilibrium constant from rate constants.</p>
+        </div>
+        <div class="chemistry-equation-card">
+            <h4>Consecutive Reactions</h4>
+            <div class="math-expression">A → B → C</div>
+            <p>Rate determined by slowest (rate-determining) step.</p>
+        </div>
+        
+        
+    </div>
+
+    <!-- Catalysis Section -->
+    <div class="chemistry-grid">
+        <div class="chemistry-equation-card">
+            <h4>Catalyst Effect</h4>
+            <p>Catalysts increases rate by providing alternate path with low  activation energy.</p>
+        </div>
+    </div>
+    <button class="chemistry-button" onclick="goToChemistryBack('kinetics')">⬅ Back</button>
+</div>
+            </div>
+            <button class="chemistry-button" onclick="showSection('home')">⬅ Back to Home</button>
+        </div>
+
+        <!-- Videos Section -->
+        <div id="videos" class="section-content">
+            <h2 class="section-title">Chemistry Video Lessons</h2>
+            <div class="grid-container">
+                <div class="grid-item">
+                    <div class="video-container">
+                        <div class="video-thumbnail" style="background-image: url('https://youtu.be/YUpbTm58ztI?si=xjUmA8K7a45IvjRQ');">  <!-- add video -->
+                            LiALH<sub>4</sub> mechanism
+                        </div>
+                    </div>
+                    <h3>Organic Chemistry reaction mechanism </h3>
+                    <p>Alkene with Br2 mechanism </p>
+                    <a href="https://youtu.be/nnLPBvyvwFw" target="_blank" class="drive-link">Watch Video</a> <!-- add video -->
+                </div> 
+                
+                <div class="grid-item">
+                    <div class="video-container">
+                        <div class="video-thumbnail" style="background-image: url('..');"> <!-- add video -->
+                            Reaction Mechanisms
+                        </div>
+                    </div>
+                    <h3>Organic Reaction Mechanisms playlist</h3>
+                    <p>Detailed explanation of various organic reaction mechanisms</p>
+                    <a href="" target="_blank" class="drive-link">Watch Video</a> <!-- add video -->
+                </div>
+            </div>
+            <button class="chemistry-button" onclick="showSection('home')">⬅ Back to Home</button>
+        </div>
+
+        <!-- Updates Section -->
+        <div id="updates" class="section-content">
+            <h2 class="section-title">What's New in Chemistry</h2>
+            <div class="update-card">
+                <h3>Today's Chemistry Update</h3>
+                <div class="update-content">
+                    <p><strong>New Content Added:</strong></p>
+                    <ul style="margin: 1rem 0; padding-left: 1.5rem;">
+                        <li>2023 A-Level Chemistry past papers with detailed solutions</li>
+                        <li>New video series on organic mechanism has been  uploaded</li>
+                        
+                    </ul>
+                    <p><strong>Upcoming Events:</strong></p>
+                    <ul style="margin: 1rem 0; padding-left: 1.5rem;">
+                        <li>Live Q&A session on reaction mechanisms - Tomorrow at 6 PM</li>
+                        <li>electro chemistry , industrial are to be updated </li> 
+                    </ul>
+                </div>
+            </div>
+            <button class="chemistry-button" onclick="showSection('home')">⬅ Back to Home</button>
+        </div>
+    </div>
+
+    <script>
+        // Show home section by default
+        document.getElementById('home').classList.add('active');
+        
+        // Check URL parameters on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const section = urlParams.get('section');
+            
+            if (section === 'reactions') {
+                // Automatically show the reactions section
+                showSection('reactions');
+            }
+        });
+        
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section-content').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Scroll to top of section
+            document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Chemistry Navigation Functions
+        function showChemistrySection(id) {
+            document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            document.getElementById('main-chemistry-grid').style.display = 'none';
+            updateChemistryBreadcrumb(id);
+        }
+
+        function showChemistrySubSection(sub, parent) {
+            document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
+            document.getElementById(sub).classList.add('active');
+            updateChemistryBreadcrumb(parent, sub);
+        }
+
+        function goToChemistryBack(id) {
+            const parent = document.getElementById(id);
+            parent.classList.remove('active');
+            
+            // Check if we're at the main level
+            if (['organic', 'inorganic', 'thermodynamics', 'equilibrium', 'electrochemistry', 'kinetics'].includes(id)) {
+                document.getElementById('main-chemistry-grid').style.display = 'grid';
+                updateChemistryBreadcrumb();
+            } else {
+                // Find the parent section
+                const parentSections = ['organic', 'inorganic', 'thermodynamics', 'equilibrium', 'electrochemistry', 'kinetics'];
+                for (const section of parentSections) {
+                    if (document.getElementById(section).contains(parent)) {
+                        document.getElementById(section).classList.add('active');
+                        updateChemistryBreadcrumb(section);
+                        break;
+                    }
+                }
+            }
+        }
+
+        function goToChemistryHome() {
+            document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
+            document.getElementById('main-chemistry-grid').style.display = 'grid';
+            updateChemistryBreadcrumb();
+        }
+
+        function updateChemistryBreadcrumb(parent, child) {
+            const breadcrumb = document.getElementById('breadcrumb');
+            breadcrumb.innerHTML = `<span onclick="goToChemistryHome()">Chemistry Topics</span>`;
+            if (parent) breadcrumb.innerHTML += ` <span class="separator">›</span> <span onclick="showChemistrySection('${parent}')">${capitalize(parent)}</span>`;
+            if (child) breadcrumb.innerHTML += ` <span class="separator">›</span> <span>${capitalize(child)}</span>`;
+        }
+
+        function capitalize(str) {
+            return str.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+        }
+    </script>
+</body>
+</html> 

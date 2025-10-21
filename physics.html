@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UR Physics Point - Professional Learning</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a2a6c 0%, #2a3a7c 100%);
+            color: #333;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            margin: 0;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar-logo {
+            font-size: 1.8em;
+            font-weight: 700;
+            padding: 1rem 0;
+            color: #1a2a6c;
+        }
+
+        .navbar-menu {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar-menu a {
+            text-decoration: none;
+            font-weight: 600;
+            padding: 1.5rem 1rem;
+            color: #333;
+            display: inline-block;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+
+        .navbar-menu a:hover {
+            color: #1a2a6c;
+            border-bottom: 3px solid #1a2a6c;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: white;
+            font-weight: 600;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .section-content {
+            display: none;
+        }
+
+        .section-content.active {
+            display: block;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .grid-item {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border-top: 4px solid #1a2a6c;
+        }
+
+        .grid-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .grid-item h3 {
+            color: #1a2a6c;
+            margin-bottom: 1rem;
+            font-size: 1.4em;
+            font-weight: 600;
+        }
+
+        .grid-item p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .drive-link {
+            display: inline-block;
+            background: #1a2a6c;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .drive-link:hover {
+            background: #152258;
+            transform: translateY(-2px);
+        }
+
+        .update-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #1a2a6c;
+        }
+
+        .update-card h3 {
+            color: #1a2a6c;
+            margin-bottom: 1rem;
+            font-size: 1.6em;
+            font-weight: 600;
+        }
+
+        .update-content {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        /* Physics Equations Section */
+        .physics-equations-container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 2rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .breadcrumb {
+            font-size: 1em;
+            margin-bottom: 2rem;
+            color: #1a2a6c;
+            font-weight: 600;
+        }
+
+        .breadcrumb span {
+            cursor: pointer;
+            color: #2a3a7c;
+            transition: color 0.3s ease;
+            padding: 0.5rem;
+            border-radius: 4px;
+        }
+
+        .breadcrumb span:hover {
+            color: #1a2a6c;
+            background: #f8f9fa;
+        }
+
+        .breadcrumb .separator {
+            margin: 0 0.5rem;
+            color: #ccc;
+        }
+
+        .physics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .physics-card {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .physics-card:hover {
+            border-color: #1a2a6c;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(26, 42, 108, 0.2);
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .subsection-title {
+            color: #1a2a6c;
+            margin: 2rem 0 1rem;
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 0.5rem;
+            font-size: 1.4em;
+            font-weight: 600;
+        }
+
+        .physics-equation-card {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid #1a2a6c;
+            transition: all 0.3s ease;
+        }
+
+        .physics-equation-card:hover {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .physics-equation-card h4 {
+            color: #2a3a7c;
+            margin-bottom: 0.5rem;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+
+        .physics-equation-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .physics-button {
+            background: #1a2a6c;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .physics-button:hover {
+            background: #152258;
+            transform: translateY(-2px);
+        }
+
+        .math-expression {
+            font-family: 'Cambria Math', serif;
+            font-size: 1.2rem;
+            text-align: center;
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            background: #e9ecef;
+            border-radius: 4px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                padding: 1rem;
+            }
+
+            .navbar-menu {
+                flex-direction: column;
+                gap: 0;
+                width: 100%;
+            }
+
+            .navbar-menu li {
+                width: 100%;
+                text-align: center;
+            }
+
+            .grid-container, .physics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-logo">UR Physics Point</div>
+        <ul class="navbar-menu">
+            <li><a href="index.html" onclick="showSection('index')">Home</a></li>
+            <li><a href="#" onclick="showSection('pastpapers')">Past Papers</a></li>
+            <li><a href="#" onclick="showSection('equations')">Physics Equations</a></li>
+            <li><a href="#" onclick="showSection('videos')">Video Lessons</a></li>
+            <li><a href="#" onclick="showSection('updates')">What's New</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <!-- Home Section -->
+        <div id="home" class="section-content active">
+            <h2 class="section-title">Welcome to UR Physics Point</h2>
+            <div class="update-card">
+                <h3>Your Complete Physics Resource</h3>
+                <div class="update-content">
+                    <p>This platform provides everything you need to excel in physics:</p>
+                    <ul style="margin: 1rem 0; padding-left: 1.5rem;">
+                        <li>Comprehensive past papers collection</li>
+                        <li>Classified equation library with detailed explanations</li>
+                        <li>Video lessons and tutorials</li>
+                        <li>Latest updates in physics education</li>
+                    </ul>
+                    <p>Select a category from the navigation menu to get started!</p>
+                </div>
+            </div>
+            
+            <div class="grid-container">
+                <div class="grid-item" onclick="showSection('pastpapers')">
+                    <h3>Past Papers</h3>
+                    <p>Access past examination papers with detailed solutions to practice for your exams.</p>
+                </div>
+                <div class="grid-item" onclick="showSection('equations')">
+                    <h3>Physics Equations</h3>
+                    <p>Explore essential physics equations with explanations and derivations.</p>
+                </div>
+                <div class="grid-item" onclick="showSection('videos')">
+                    <h3>Video Lessons</h3>
+                    <p>Watch detailed video explanations of complex physics concepts.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Past Papers Section -->
+        <div id="pastpapers" class="section-content">
+            <h2 class="section-title">Physics Past Papers</h2>
+            <div class="update-card">
+                <h3>Download Past Papers</h3>
+                <div class="update-content">
+                    <p>Access our complete collection of physics past papers with detailed solutions:</p>
+                    <a href="https://drive.google.com/drive/u/0/folders/1gKdXhVFqtfW0glc5gFsO15_-JMqDLa5V?sort=13&direction=a" target="_blank" class="drive-link" style="display: inline-block; margin-top: 15px;">Access All Physics Past Papers</a>
+                </div>
+            </div>
+            <button class="physics-button" onclick="showSection('home')">⬅ Back to Home</button>
+        </div>
+
+        <!-- Equations Section -->
+        <div id="equations" class="section-content">
+            <h2 class="section-title">Essential Physics Equations</h2>
+            <div class="physics-equations-container">
+                <div class="breadcrumb" id="breadcrumb">
+                    <span onclick="goToPhysicsHome()">Physics Equations</span>
+                </div>
+
+                <!-- Main grid -->
+                <div class="physics-grid" id="main-physics-grid">
+                    <div class="physics-card" onclick="showPhysicsSection('mechanics')">Mechanics</div>
+                    <div class="physics-card" onclick="showPhysicsSection('waves')">Waves</div>
+                    <div class="physics-card" onclick="showPhysicsSection('optics')">Optics</div>
+                    <div class="physics-card" onclick="showPhysicsSection('thermodynamics')">Thermodynamics</div>
+                    <div class="physics-card" onclick="showPhysicsSection('electricity')">Electricity</div>
+                    <div class="physics-card" onclick="showPhysicsSection('magnetism')">Magnetism</div>
+                    <div class="physics-card" onclick="showPhysicsSection('electronics')">Electronics</div>
+                    <div class="physics-card" onclick="showPhysicsSection('electrostatics')">Electrostatics</div>
+                    <div class="physics-card" onclick="showPhysicsSection('gravitation')">Gravitation</div>
+                    <div class="physics-card" onclick="showPhysicsSection('properties-matter')">Properties of Matter</div>
+                    <div class="physics-card" onclick="showPhysicsSection('radiation')">Radiation</div>
+                </div>
+
+                <!-- Mechanics Section -->
+<div id="mechanics" class="content-section">
+    <h2>Mechanics</h2>
+    
+    <!-- Kinematics Section -->
+    <div class="physics-grid">
+        <h2>Kinematics</h2>
+        <div class="physics-equation-card">
+            <h4>v = u + at</h4>
+            <div class="math-expression">v = u + at</div>
+            <p>Final velocity after time <b>t</b> with constant acceleration <b>a</b>.</p>
+        </div>
+        <div class="physics-equation-card">
+            <h4>s = ut + ½at²</h4>
+            <div class="math-expression">s = ut + ½at²</div>
+            <p>Displacement after time <b>t</b>.</p>
+        </div>
+        <div class="physics-equation-card">
+            <h4>v² = u² + 2as</h4>
+            <div class="math-expression">v² = u² + 2as</div>
+            <p>Final velocity squared relationship.</p>
+        </div>
+        <div class="physics-equation-card">
+            <h4>s = (u + v)/2 * t</h4>
+            <div class="math-expression">s = (u + v)/2 * t</div>
+            <p>Displacement after time <b>t</b>.</p>
+        </div>
+    </div>
+    
+    <!-- Circular Motion Section -->
+    <div class="physics-grid">
+        <h2>Circular Motion</h2>
+        <div class="physics-equation-card">
+            <h4>Centripetal Acceleration</h4>
+            <div class="math-expression">a = v²/r</div>
+            <p>Acceleration directed toward the center of circular path.</p>
+        </div>
+        <div class="physics-equation-card">
+            <h4>Centripetal Force</h4>
+            <div class="math-expression">F = mv²/r</div>
+            <p>Force required to keep an object in circular motion.</p>
+        </div>
+        <div class="physics-equation-card">
+            <h4>Angular Velocity</h4>
+            <div class="math-expression">ω = v/r</div>
+            <p>Relationship between linear and angular velocity.</p>
+        </div>
+        <div class="physics-equation-card">
+            <h4>Period of Revolution</h4>
+            <div class="math-expression">T = 2πr/v</div>
+            <p>Time for one complete revolution.</p>
+        </div>
+    </div>
+    
+    <!-- Rotational Motion Section -->
+    <div class="physics-grid">
+        <h2>Rotational Motion</h2>
+        <div class="physics-equation-card">
+            <h4>Torque</h4>
+            <div class="math-expression">τ = r × F</div>
+            <p>Rotational equivalent of force.</p>
+        </div>
+        <div class="physics-equation-card">
+            <h4>Moment of Inertia</h4>
+            <div class="math-expression">I = Σmr²</div>
+            <p>Rotational equivalent of mass.</p>
+        </div>
+        <div class="physics-equation-card">
+            <h4>Rotational Kinetic Energy</h4>
+            <div class="math-expression">K = ½Iω²</div>
+            <p>Energy due to rotational motion.</p>
+        </div>
+        <div class="physics-equation-card">
+            <h4>Angular Momentum</h4>
+            <div class="math-expression">L = Iω</div>
+            <p>Rotational equivalent of linear momentum.</p>
+        </div>
+    </div>
+    
+    <!-- Impulse and Impulsive Force Section -->
+    <div class="physics-grid">
+        <h2>Impulse and Impulsive Force</h2>
+        <div class="physics-equation-card">
+            <h4>Impulse</h4>
+            <div class="math-expression">J = FΔt</div>
+            <p>Change in momentum due to applied force over time.</p>
+        </div>
+        <div class="physics-equation-card">
+            <h4>Impulse-Momentum Theorem</h4>
+            <div class="math-expression">J = Δp = mΔv</div>
+            <p>Impulse equals change in momentum.</p>
+        </div>
+        <div class="physics-equation-card">
+            <h4>Average Impulsive Force</h4>
+            <div class="math-expression">F_avg = Δp/Δt</div>
+            <p>Average force during a collision or impact.</p>
+        </div>
+        <div class="physics-equation-card">
+            <h4>Conservation of Momentum</h4>
+            <div class="math-expression">m₁u₁ + m₂u₂ = m₁v₁ + m₂v₂</div>
+            <p>Total momentum before and after collision remains constant.</p>
+        </div>
+    </div>
+    
+    <!-- Hydrostatics Section -->
+    <div class="physics-grid">
+        <h2>Hydrostatics</h2>
+        <div class="physics-equation-card">
+            <h4>Hydrostatic Pressure</h4>
+            <div class="math-expression">P = ρgh</div>
+            <p>Pressure at depth h in a fluid.</p>
+        </div>
+        <div class="physics-equation-card">
+            <h4>Pascal's Principle</h4>
+            <div class="math-expression">P₁ = P₂</div>
+            <p>Pressure applied to confined fluid is transmitted equally.</p>
+        </div>
+        <div class="physics-equation-card">
+            <h4>Buoyant Force</h4>
+            <div class="math-expression">F_b = ρVg</div>
+            <p>Upward force on submerged object (Archimedes' Principle).</p>
+        </div>
+        <div class="physics-equation-card">
+            <h4>Continuity Equation</h4>
+            <div class="math-expression">A₁v₁ = A₂v₂</div>
+            <p>For incompressible fluids, flow rate is constant.</p>
+        </div>
+    </div>
+    
+    <!-- Hydrodynamics Section -->
+    <div class="physics-grid">
+        <h2>Hydrodynamics</h2>
+        <div class="physics-equation-card">
+            <h4>Bernoulli's Equation</h4>
+            <div class="math-expression">P + ½ρv² + ρgh = constant</div>
+            <p>Conservation of energy for flowing fluids.</p>
+        </div>
+        <div class="physics-equation-card">
+            <h4>hydro Force</h4>
+            <div class="math-expression">F =ρAv²  Power=ρAv<sup>3</sup></div>
+            <p>Force due to liquid </p>
+        </div>
+       
+    </div>
+    
+    <button class="physics-button" onclick="goToPhysicsBack('mechanics')">⬅ Back</button>
+</div>
+
+            
+
+                <!-- Waves Section -->
+                <div id="waves" class="content-section">
+                    <h2>Waves</h2>
+                    
+                    <div class="physics-equation-card">
+                        <h4>v = fλ</h4>
+                        <div class="math-expression">v = fλ</div>
+                        <p>Wave speed = frequency × wavelength.</p>
+                    </div>
+                    
+                    <h3 class="subsection-title">Simple Harmonic Motion</h3>
+                    <div class="physics-equation-card">
+                        <h4>X = A sin(ωt)</h4>
+                        <div class="math-expression">X = A sin(ωt)</div>
+                        <p>Displacement in simple harmonic motion.</p>
+                    </div>
+                    <div class="physics-equation-card">
+                        <h4>V = Aω cos(ωt)</h4>
+                        <div class="math-expression">V = Aω cos(ωt)</div>
+                        <p>Velocity in simple harmonic motion.</p>
+                    </div>
+                    <div class="physics-equation-card">
+                        <h4>a = -Aω² sin(ωt)</h4>
+                        <div class="math-expression">a = -Aω² sin(ωt)</div>
+                        <p>Acceleration in simple harmonic motion.</p>
+                    </div>
+                    <div class="physics-equation-card">
+                        <h4>T = 2π√(l/g)</h4>
+                        <div class="math-expression">T = 2π√(l/g)</div>
+                        <p>Periodic time in simple pendulum motion, where l is the length of pendulum.</p>
+                    </div>
+                    <div class="physics-equation-card">
+                        <h4>T = 2π√(m/k)</h4>
+                        <div class="math-expression">T = 2π√(m/k)</div>
+                        <p>Periodic time in spring motion, where k is the spring constant and m is the mass.</p>
+                    </div>
+                    
+                    <h3 class="subsection-title">Resonance in Strings</h3>
+                    <div class="physics-equation-card">
+                        <h4>v = √(T/μ)</h4>
+                        <div class="math-expression">v = √(T/μ)</div>
+                        <p>Wave speed = √(Tension / mass per unit length).</p>
+                    </div>
+                    <div class="physics-equation-card">
+                        <h4>f₀ = (n/2l) √(T/μ)</h4>
+                        <div class="math-expression">f₀ = (n/2l) √(T/μ)</div>
+                        <p>Fundamental frequency, where n is the harmonic state and l is the length of string.</p>
+                    </div>
+                    
+                    <h3 class="subsection-title">Resonance in Tubes</h3>
+                    <div class="physics-equation-card">
+                        <h4>v = √(γRT/M)</h4>
+                        <div class="math-expression">v = √(γRT/M)</div>
+                        <p>Speed of sound in gases, where γ is the adiabatic index, R is the gas constant, T is temperature, and M is molar mass.</p>
+                    </div>
+                    
+                    <h4 class="subsection-title">One End Closed Tubes</h4>
+                    <div class="physics-equation-card">
+                        <h4>f₀ = n * v / (4l)</h4>
+                        <div class="math-expression">f₀ = n * v / (4l)</div>
+                        <p>Fundamental frequency, where n is the harmonic state and l is the length of tube.</p>
+                    </div>
+                    
+                    <h4 class="subsection-title">Opened Tubes</h4>
+                    <div class="physics-equation-card">
+                        <h4>f₀ = n * v / (2l)</h4>
+                        <div class="math-expression">f₀ = n * v / (2l)</div>
+                        <p>Fundamental frequency, where n is the harmonic state and l is the length of tube.</p>
+                    </div>
+                    
+                    <h3 class="subsection-title">Doppler Effect</h3>
+                    <div class="physics-equation-card">
+                        <h4>f' = f (v ± v₀) / (v ∓ vₛ)</h4>
+                        <div class="math-expression">f' = f (v ± v₀) / (v ∓ vₛ)</div>
+                        <p>Apparent frequency due to relative motion between source and observer.</p>
+                    </div>
+                    
+                    <h3 class="subsection-title">Sonic Boom</h3>
+                    <div class="physics-equation-card">
+                        <h4>Mach Number = U / v</h4>
+                        <div class="math-expression">Mach Number = U / v</div>
+                        <p>Where U is velocity of source and v is velocity of sound.</p>
+                    </div>
+                    
+                    <h3 class="subsection-title">Intensity</h3>
+                    <div class="physics-equation-card">
+                        <h4>I = P / (4πr²)</h4>
+                        <div class="math-expression">I = P / (4πr²)</div>
+                        <p>Intensity at distance r from a point source.</p>
+                    </div>
+                    <div class="physics-equation-card">
+                        <h4>L = 10 log(I / I₀)</h4>
+                        <div class="math-expression">L = 10 log(I / I₀)</div>
+                        <p>Sound intensity level, where I₀ is the threshold intensity (10⁻¹² W/m²).</p>
+                    </div>
+                    
+                    <button class="physics-button" onclick="goToPhysicsBack('waves')">⬅ Back</button>
+                </div>
+
+                <!-- Magnetism Section -->
+                <div id="magnetism" class="content-section">
+                    <h2>Magnetism</h2>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Force on Current-Carrying Conductor</h4>
+                        <div class="math-expression">F = BILsinθ</div>
+                        <p>Force acting on a current-carrying conductor in a magnetic field.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Force on Moving Charge</h4>
+                        <div class="math-expression">F = Bqvsinθ</div>
+                        <p>Force acting on a charge moving in a magnetic field.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Hall Voltage</h4>
+                        <div class="math-expression">V<sub>Hall</sub> = BI / (net)</div>
+                        <p>Hall voltage, where n is carrier density and e is electric charge.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Magnetic Field - Long Straight Conductor</h4>
+                        <div class="math-expression">B = μ₀I / (2πr)</div>
+                        <p>Magnetic flux density near a current-carrying infinitely long straight conductor.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Magnetic Field - Circular Coil</h4>
+                        <div class="math-expression">B = μ₀I / (2r)</div>
+                        <p>Magnetic flux density at the center of a current-carrying circular coil.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Magnetic Field - Solenoid</h4>
+                        <div class="math-expression">B = μ₀nI</div>
+                        <p>Magnetic flux density along the axis of a current-carrying long solenoid.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Torque on Rectangular Coil</h4>
+                        <div class="math-expression">Γ = BInAcosθ</div>
+                        <p>Torque acting on a rectangular coil placed in a uniform magnetic field.</p>
+                    </div>
+                    
+                    <button class="physics-button" onclick="goToPhysicsBack('magnetism')">⬅ Back</button>
+                </div>
+
+                <!-- Electrostatics Section -->
+                <div id="electrostatics" class="content-section">
+                    <h2>Electrostatics</h2>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Coulomb's Law</h4>
+                        <div class="math-expression">F = (1/(4πε)) * (Q₁Q₂/r²)</div>
+                        <p>Coulomb's law for force between two point charges.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Electric Field Intensity</h4>
+                        <div class="math-expression">E = (1/(4πε)) * (Q/r²)</div>
+                        <p>Electric field intensity due to a point charge.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Force in Electric Field</h4>
+                        <div class="math-expression">F = EQ</div>
+                        <p>Force acting on a charge in an electric field.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Gauss Law</h4>
+                        <div class="math-expression">φ = Q/ε</div>
+                        <p>Gauss law relating electric flux to enclosed charge.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Electric Field - Point Charge</h4>
+                        <div class="math-expression">E = Q/(ε * 4πr²)</div>
+                        <p>Electric field intensity around a point charge using Gauss theorem.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Electric Field - Infinite Plate</h4>
+                        <div class="math-expression">E = σ/ε</div>
+                        <p>Electric field intensity near an infinite charge plate.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Electric Potential</h4>
+                        <div class="math-expression">V = (1/(4πε)) * (Q/r)</div>
+                        <p>Potential at a point due to a point charge.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Work Done Moving Charge</h4>
+                        <div class="math-expression">W = QV</div>
+                        <p>Work done in moving a charge across a potential difference.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Electric Field and Potential Gradient</h4>
+                        <div class="math-expression">E = -ΔV/d</div>
+                        <p>Relationship between potential gradient and electric field intensity.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Capacitance - Parallel Plate</h4>
+                        <div class="math-expression">C = kε₀A/d</div>
+                        <p>Capacitance of a parallel plate capacitor.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Capacitance - Spherical Conductor</h4>
+                        <div class="math-expression">C = 4πrkε₀</div>
+                        <p>Capacitance of a spherical conductor.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Capacitors in Series</h4>
+                        <div class="math-expression">1/C<sub>T</sub> = 1/C₁ + 1/C₂ + 1/C₃</div>
+                        <p>Total capacitance for capacitors connected in series.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Capacitors in Parallel</h4>
+                        <div class="math-expression">C<sub>T</sub> = C₁ + C₂ + C₃</div>
+                        <p>Total capacitance for capacitors connected in parallel.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Energy Stored in Capacitor</h4>
+                        <div class="math-expression">W = ½QV</div>
+                        <p>Energy stored in a charged capacitor.</p>
+                    </div>
+                    
+                    <button class="physics-button" onclick="goToPhysicsBack('electrostatics')">⬅ Back</button>
+                </div>
+
+                <!-- Gravitation Section -->
+                <div id="gravitation" class="content-section">
+                    <h2>Gravitation</h2>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Newton's Law of Universal Gravitation</h4>
+                        <div class="math-expression">F = GMm/r²</div>
+                        <p>Gravitational force between two masses.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Gravitational Field Intensity (r > R)</h4>
+                        <div class="math-expression">E = GM/r²</div>
+                        <p>Gravitational field intensity when distance is greater than radius.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Gravitational Field Intensity (r < R)</h4>
+                        <div class="math-expression">E = GMr/R³</div>
+                        <p>Gravitational field intensity when distance is less than radius.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Gravitational Potential</h4>
+                        <div class="math-expression">U<sub>r</sub> = -GMm/r</div>
+                        <p>Gravitational potential energy.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Escape Velocity</h4>
+                        <div class="math-expression">V = √(2GM/R)</div>
+                        <p>Escape velocity from a planet's surface.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Energy of Orbiting Mass</h4>
+                        <div class="math-expression">E = -GMm/(2r)</div>
+                        <p>Total energy of a mass moving on a circular path around a spherical mass.</p>
+                    </div>
+                    
+                    <button class="physics-button" onclick="goToPhysicsBack('gravitation')">⬅ Back</button>
+                </div>
+
+                <!-- Properties of Matter Section -->
+                <div id="properties-matter" class="content-section">
+                    <h2>Properties of Matter</h2>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Hooke's Law</h4>
+                        <div class="math-expression">F = -kx</div>
+                        <p>Hooke's law for elastic materials.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Energy Stored in Stretched String</h4>
+                        <div class="math-expression">W = ½kx² = ½Fx</div>
+                        <p>Energy stored in a stretched string.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Tensile Stress</h4>
+                        <div class="math-expression">σ = F/A</div>
+                        <p>Tensile stress definition.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Tensile Strain</h4>
+                        <div class="math-expression">ε = e/l</div>
+                        <p>Tensile strain definition.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Young's Modulus</h4>
+                        <div class="math-expression">F/A = E(e/l)</div>
+                        <p>Young's modulus relationship.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Viscous Force</h4>
+                        <div class="math-expression">F = ηA((V₁ - V₂)/d)</div>
+                        <p>Viscous force between parallel plates.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Poiseuille's Equation</h4>
+                        <div class="math-expression">Q = (πr⁴/(8η)) * (ΔP/L)</div>
+                        <p>Flow rate through a pipe (Poiseuille's equation).</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Stoke's Law</h4>
+                        <div class="math-expression">F = 6πηrV</div>
+                        <p>Viscous drag force on a spherical object (Stoke's law).</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Terminal Velocity</h4>
+                        <div class="math-expression">V₀ = (2gr²(ρ<sub>s</sub> - ρ<sub>L</sub>))/(9η)</div>
+                        <p>Terminal velocity of a sphere falling through a fluid.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Surface Tension Force</h4>
+                        <div class="math-expression">F = TL</div>
+                        <p>Force due to surface tension.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Surface Energy</h4>
+                        <div class="math-expression">E = TA</div>
+                        <p>Surface energy relationship.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Pressure Difference - Bubble</h4>
+                        <div class="math-expression">P<sub>i</sub> - P<sub>o</sub> = 4T/r</div>
+                        <p>Pressure difference across a spherical bubble.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Pressure Difference - Droplet</h4>
+                        <div class="math-expression">P<sub>i</sub> - P<sub>o</sub> = 2T/r</div>
+                        <p>Pressure difference across a droplet with one surface.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Capillary Rise</h4>
+                        <div class="math-expression">h = (2Tcosθ)/(rρg) = 2T/(Rρg)</div>
+                        <p>Capillary rise in a tube.</p>
+                    </div>
+                    
+                    <button class="physics-button" onclick="goToPhysicsBack('properties-matter')">⬅ Back</button>
+                </div>
+
+                <!-- Radiation Section -->
+                <div id="radiation" class="content-section">
+                    <h2>Radiation</h2>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Planck's Quantum Hypothesis</h4>
+                        <div class="math-expression">E = hf</div>
+                        <p>Energy of a photon according to Planck's hypothesis.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Einstein's Photoelectric Equation</h4>
+                        <div class="math-expression">hf = W₀ + ½mv<sub>max</sub>²</div>
+                        <p>Einstein's photoelectric effect equation.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Work Function</h4>
+                        <div class="math-expression">W₀ = φ = hf₀ = hc/λ₀</div>
+                        <p>Work function of a metal.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Stefan's Law</h4>
+                        <div class="math-expression">E = σT⁴</div>
+                        <p>Stefan's law for black body radiation.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Net Radiation</h4>
+                        <div class="math-expression">E<sub>net</sub> = σ(T⁴ - T₀⁴)</div>
+                        <p>Net radiation energy for a body.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Stefan's Law for Non-Black Bodies</h4>
+                        <div class="math-expression">E = εσT⁴</div>
+                        <p>Stefan's law modified for non-black bodies.</p>
+                    </div>
+                    
+                    
+                    
+                    <div class="physics-equation-card">
+                        <h4>de Broglie Wavelength</h4>
+                        <div class="math-expression">λ = h/P = h/(mv)</div>
+                        <p>de Broglie wavelength of a particle.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Stopping Potential</h4>
+                        <div class="math-expression">K.E = ½mv<sub>m</sub>² = eV<sub>s</sub></div>
+                        <p>Relationship between stopping potential and maximum kinetic energy.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Radioactive Decay Law</h4>
+                        <div class="math-expression">dN/dt = -λN</div>
+                        <p>Radioactive disintegration law.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Radioactive Decay</h4>
+                        <div class="math-expression">N = N₀e<sup>-λt</sup></div>
+                        <p>Number of particles remaining after time t.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Half-Life</h4>
+                        <div class="math-expression">T<sub>1/2</sub> = 0.6931/λ</div>
+                        <p>Half-life of a radioactive substance.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Einstein's Mass-Energy Equation</h4>
+                        <div class="math-expression">E = mc²</div>
+                        <p>Einstein's famous mass-energy equivalence.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Alpha Decay</h4>
+                        <div class="math-expression"><sup>A</sup><sub>Z</sub>X → <sup>A-4</sup><sub>Z-2</sub>Y + <sup>4</sup><sub>2</sub>α + Energy</div>
+                        <p>Alpha particle emission equation.</p>
+                    </div>
+                    
+                    <button class="physics-button" onclick="goToPhysicsBack('radiation')">⬅ Back</button>
+                </div>
+
+                <!-- Optics Section -->
+                <div id="optics" class="content-section">
+                    <h2>Optics</h2>
+                    
+                    <h3 class="subsection-title">Reflection and Refraction</h3>
+                    <div class="physics-equation-card">
+                        <h4>Snell's Law</h4>
+                        <div class="math-expression">n₁sinθ₁ = n₂sinθ₂</div>
+                        <p>Relationship between angles of incidence and refraction.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Refractive Index</h4>
+                        <div class="math-expression">n = c/v</div>
+                        <p>Refractive index as ratio of speed of light in vacuum to speed in medium.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Critical Angle</h4>
+                        <div class="math-expression">sinθ<sub>c</sub> = n₂/n₁</div>
+                        <p>Critical angle for total internal reflection.</p>
+                    </div>
+                    
+                    <h3 class="subsection-title">Lens Formula</h3>
+                    <div class="physics-equation-card">
+                        <h4>Thin Lens Formula</h4>
+                        <div class="math-expression">1/v - 1/u = 1/f</div>
+                        <p>Relationship between object distance, image distance, and focal length.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Magnification</h4>
+                        <div class="math-expression">m = v/u = h<sub>i</sub>/h<sub>o</sub></div>
+                        <p>Linear magnification of lenses.</p>
+                    </div>
+    
+                    <h3 class="subsection-title">Optical Instruments</h3>
+                    <div class="physics-equation-card">
+                        <h4>Magnifying Power of Simple Microscope</h4>
+                        <div class="math-expression">M = 1 + D/f</div>
+                        <p>When image is at near point.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Magnifying Power of Compound Microscope</h4>
+                        <div class="math-expression">M = (v<sub>o</sub>/u<sub>o</sub>) * (D/f<sub>e</sub>)</div>
+                        <p>For normal adjustment.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Magnifying Power of Astronomical Telescope</h4>
+                        <div class="math-expression">M = -f<sub>o</sub>/f<sub>e</sub></div>
+                        <p>For normal adjustment.</p>
+                    </div>
+                    
+                    <button class="physics-button" onclick="goToPhysicsBack('optics')">⬅ Back</button>
+                </div>
+
+                <!-- Thermodynamics Section -->
+                <div id="thermodynamics" class="content-section">
+                    <h2>Thermodynamics</h2>
+                    
+                    <h3 class="subsection-title">Thermal Expansion</h3>
+                    <div class="physics-equation-card">
+                        <h4>Linear Expansion</h4>
+                        <div class="math-expression">L = L₀(1 + αΔT)</div>
+                        <p>Linear expansion with temperature change.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Area Expansion</h4>
+                        <div class="math-expression">A = A₀(1 + βΔT)</div>
+                        <p>Area expansion with temperature change, where β = 2α.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Volume Expansion</h4>
+                        <div class="math-expression">V = V₀(1 + γΔT)</div>
+                        <p>Volume expansion with temperature change, where γ = 3α.</p>
+                    </div>
+                    
+                    <h3 class="subsection-title">Heat Transfer</h3>
+                    <div class="physics-equation-card">
+                        <h4>Heat Conduction</h4>
+                        <div class="math-expression">Q/t = kA(ΔT/d)</div>
+                        <p>Rate of heat conduction through a material.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Stefan-Boltzmann Law</h4>
+                        <div class="math-expression">P = εσAT⁴</div>
+                        <p>Power radiated by a black body.</p>
+                    </div>
+                    
+                    <h3 class="subsection-title">Laws of Thermodynamics</h3>
+                    <div class="physics-equation-card">
+                        <h4>First Law of Thermodynamics</h4>
+                        <div class="math-expression">ΔQ = U + W</div>
+                        <p>Conservation of energy in thermodynamic systems.</p>
+                    </div>    
+                    <h3 class="subsection-title">Ideal Gas Law</h3>
+                    <div class="physics-equation-card">
+                        <h4>Ideal Gas Equation</h4>
+                        <div class="math-expression">PV = nRT</div>
+                        <p>Relationship between pressure, volume, and temperature for an ideal gas.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Work Done by Gas</h4>
+                        <div class="math-expression">Area under pv graph </div>
+                        <p>Work done in a thermodynamic process.</p>
+                    </div>
+                    <button class="physics-button" onclick="goToPhysicsBack('thermodynamics')">⬅ Back</button>
+                </div>
+
+                <!-- Electricity Section -->
+                <div id="electricity" class="content-section">
+                    <h2>Current Electricity</h2>
+                    
+                    <h3 class="subsection-title">Basic Electrical Quantities</h3>
+                    <div class="physics-equation-card">
+                        <h4>Electric Current</h4>
+                        <div class="math-expression">I = Q/t</div>
+                        <p>Electric current as rate of flow of charge.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Ohm's Law</h4>
+                        <div class="math-expression">V = IR</div>
+                        <p>Relationship between voltage, current, and resistance.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Resistance</h4>
+                        <div class="math-expression">R = ρL/A</div>
+                        <p>Resistance of a conductor based on resistivity and dimensions.</p>
+                    </div>
+                    
+                    <h3 class="subsection-title">Circuit Analysis</h3>
+                    <div class="physics-equation-card">
+                        <h4>Resistors in Series</h4>
+                        <div class="math-expression">R<sub>total</sub> = R₁ + R₂ + R₃ + ...</div>
+                        <p>Total resistance for resistors in series.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Resistors in Parallel</h4>
+                        <div class="math-expression">1/R<sub>total</sub> = 1/R₁ + 1/R₂ + 1/R₃ + ...</div>
+                        <p>Total resistance for resistors in parallel.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Kirchhoff's Current Law</h4>
+                        <div class="math-expression">ΣI<sub>in</sub> = ΣI<sub>out</sub></div>
+                        <p>Conservation of charge at a junction.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Kirchhoff's Voltage Law</h4>
+                        <div class="math-expression">ΣV = 0</div>
+                        <p>Sum of potential differences around any closed loop is zero.</p>
+                    </div>
+                    
+                    <h3 class="subsection-title">Electrical Power and Energy</h3>
+                    <div class="physics-equation-card">
+                        <h4>Electrical Power</h4>
+                        <div class="math-expression">P = VI = I²R = V²/R</div>
+                        <p>Power dissipated in an electrical component.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Electrical Energy</h4>
+                        <div class="math-expression">E = VIt = I²Rt = (V²/R)t</div>
+                        <p>Electrical energy consumed.</p>
+                    </div>
+                    
+                    <h3 class="subsection-title">EMF and Internal Resistance</h3>
+                    <div class="physics-equation-card">
+                        <h4>Terminal Voltage</h4>
+                        <div class="math-expression">V = E - Ir</div>
+                        <p>Terminal voltage of a cell with internal resistance.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Maximum Power Transfer</h4>
+                        <div class="math-expression">P<sub>max</sub> = E²/(4r)</div>
+                        <p>Maximum power delivered to load when R = r.</p>
+                    </div>
+                    
+                    <button class="physics-button" onclick="goToPhysicsBack('electricity')">⬅ Back</button>
+                </div>
+
+                <!-- Electronics Section -->
+                <div id="electronics" class="content-section">
+                    <h2>Electronics</h2>
+                    
+                    <h3 class="subsection-title">Transistors</h3>
+                    <div class="physics-equation-card">
+                        <h4>Current Gain (Common Emitter)</h4>
+                        <div class="math-expression">β = I<sub>C</sub>/I<sub>B</sub></div>
+                        <p>DC current gain in common emitter configuration.</p>
+                    </div>
+
+                <div class="physics-equation-card">
+                    <h4>Transistor Working States</h4>
+                    <div class="math-expression">
+                        <strong>Cut-off Region:</strong><br>
+                        V<sub>BE</sub> &lt; 0.7V, I<sub>B</sub> = 0, I<sub>C</sub> = 0<br><br>
+                        
+                        <strong>Active Region:</strong><br>
+                        V<sub>BE</sub> ≈ 0.7V, I<sub>C</sub> = βI<sub>B</sub><br><br>
+                        
+                        <strong>Saturation Region:</strong><br>
+                        V<sub>BE</sub> &gt; 0.7V, V<sub>CE</sub> ≈ 0.2V
+                    </div>
+                    <p>Operating regions and conditions for bipolar junction transistors</p>
+                </div>
+
+                    <div class="physics-equation-card">
+                        <h4>Transistor Biasing Conditions</h4>
+                        <div class="math-expression">
+                            <strong>Amplifier:</strong> Active region<br>
+                            <strong>Switch ON:</strong> Saturation region<br>
+                            <strong>Switch OFF:</strong> Cut-off region
+                        </div>
+                        <p>Applications based on operating regions</p>
+                    </div>
+                    
+                    <h3 class="subsection-title">Operational Amplifiers</h3>
+                    <div class="physics-equation-card">
+                        <h4>Inverting Amplifier Gain</h4>
+                        <div class="math-expression">A<sub>v</sub> = -R<sub>f</sub>/R<sub>in</sub></div>
+                        <p>Voltage gain for inverting op-amp configuration.</p>
+                    </div>
+                    
+                    <div class="physics-equation-card">
+                        <h4>Non-Inverting Amplifier Gain</h4>
+                        <div class="math-expression">A<sub>v</sub> = 1 + R<sub>f</sub>/R<sub>in</sub></div>
+                        <p>Voltage gain for non-inverting op-amp configuration.</p>
+                    </div>
+
+                    <div class="physics-equation-card">
+                        <h4>Logic Gates </h4>
+                        <div class="math-expression"  >And gate  = Any input 0 , output is 0 (A.B)</div>
+                        <div class="math-expression" >OR gate  = Any input 1, output is 1 (A+B)</div>
+                        <div class="math-expression"   >nand gate  = Any input 0 , output is 1</div>
+                         <div class="math-expression" > OR gate  = Any input 1, output is 0</div>
+                    </div>
+                    
+                    <button class="physics-button" onclick="goToPhysicsBack('electronics')">⬅ Back</button>
+                </div>
+            </div>
+            <button class="physics-button" onclick="showSection('home')">⬅ Back to Home</button>
+        </div>
+
+        <!-- Videos Section -->
+        <div id="videos" class="section-content">
+            <h2 class="section-title">Physics Video Lessons</h2>
+            <div class="grid-container">
+                
+                
+                <div class="grid-item">
+                    <h3>stay connected by subscribing our channel</h3>
+                    <a href="https://youtube.com/@uracademy-v7b?si=uGWbXbVCXxVdYw_8" target="_blank" class="drive-link">visit channel</a>
+                    <p>updates soon.......</p> <!-- add video -->
+                </div>
+            </div>
+            <button class="physics-button" onclick="showSection('home')">⬅ Back to Home</button>
+        </div>
+
+        <!-- Updates Section -->
+        <div id="updates" class="section-content">
+            <h2 class="section-title">What's New in Physics</h2>
+            <div class="update-card">
+                <h3>Today's Physics Update</h3>
+                <div class="update-content">
+                    <p><strong>New Content Added:</strong></p>
+                    <ul style="margin: 1rem 0; padding-left: 1.5rem;">
+                        <li>New electronics section  is updated </li>
+                        <li>Updated equation sheets for all physics topics</li>
+                        <li>You can share your feed back and necessary changes required </li>
+                    </ul>
+                    <p><strong>Upcoming Events:</strong></p>
+                    <ul style="margin: 1rem 0; padding-left: 1.5rem;">
+                        <li>at 6pm on 22 october , lens law proof will be updated </li>
+                        <li>Mora- physics paper scheme would be updated</li>
+                        <li>practicals would be updated </li>
+                    </ul>
+                </div>
+            </div>
+            <button class="physics-button" onclick="showSection('home')">⬅ Back to Home</button>
+        </div>
+    </div>
+
+    <script>
+        // Show home section by default
+        document.getElementById('home').classList.add('active');
+        
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section-content').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Scroll to top of section
+            document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Physics Equations Navigation Functions
+        function showPhysicsSection(id) {
+            document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            document.getElementById('main-physics-grid').style.display = 'none';
+            updatePhysicsBreadcrumb(id);
+        }
+
+        function showPhysicsSubSection(sub, parent) {
+            document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
+            document.getElementById(sub).classList.add('active');
+            updatePhysicsBreadcrumb(parent, sub);
+        }
+
+        function goToPhysicsBack(id) {
+            const parent = document.getElementById(id);
+            parent.classList.remove('active');
+            if (['mechanics', 'waves', 'optics', 'thermodynamics', 'electricity', 'magnetism', 'electronics', 'electrostatics', 'gravitation', 'properties-matter', 'radiation'].includes(id)) {
+                document.getElementById('main-physics-grid').style.display = 'grid';
+                updatePhysicsBreadcrumb();
+            } else {
+                const parentSection = parent.closest('.content-section');
+                if (parentSection) {
+                    parentSection.classList.add('active');
+                    updatePhysicsBreadcrumb(parentSection.id);
+                } else {
+                    document.getElementById('main-physics-grid').style.display = 'grid';
+                    updatePhysicsBreadcrumb();
+                }
+            }
+        }
+
+        function goToPhysicsHome() {
+            document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
+            document.getElementById('main-physics-grid').style.display = 'grid';
+            updatePhysicsBreadcrumb();
+        }
+
+        function updatePhysicsBreadcrumb(parent, child) {
+            const breadcrumb = document.getElementById('breadcrumb');
+            breadcrumb.innerHTML = `<span onclick="goToPhysicsHome()">Physics Equations</span>`;
+            if (parent) breadcrumb.innerHTML += ` <span class="separator">›</span> <span onclick="showPhysicsSection('${parent}')">${capitalize(parent)}</span>`;
+            if (child) breadcrumb.innerHTML += ` <span class="separator">›</span> <span>${capitalize(child)}</span>`;
+        }
+
+        function capitalize(str) {
+            return str.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+        }
+    </script>
+</body>
+</html>

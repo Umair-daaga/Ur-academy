@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UR Academy - Mathematics</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #333;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    header {
+      text-align: center;
+      padding: 2rem 1rem;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.2);
+    }
+
+    header h1 { font-size: 2.2em; margin-bottom: 0.3rem; }
+    header p { font-size: 1.1em; opacity: 0.9; }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    nav button {
+      background: white;
+      color: #667eea;
+      border: none;
+      padding: 0.7rem 1.4rem;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    nav button:hover {
+      background: #5a6fd8;
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    .content {
+      max-width: 1100px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h2.section-title {
+      text-align: center;
+      font-size: 2em;
+      margin: 2rem 0 1.5rem;
+      color: #333;
+    }
+
+    .grid, .formula-grid, .stat-grid, .pastpapers-grid {
+      display: grid;
+      gap: 1.5rem;
+      padding: 1rem 2rem 3rem;
+    }
+
+    .grid { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+    .formula-grid, .stat-grid, .pastpapers-grid { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+
+    .card, .formula-card, .stat-card, .pastpaper-card {
+      background: #f7f7ff;
+      border-radius: 10px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: 0.3s ease;
+      cursor: pointer;
+    }
+
+    .card:hover, .formula-card:hover, .stat-card:hover, .pastpaper-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    .card h3 { color: #667eea; margin-bottom: 0.8rem; }
+    .formula-card h4, .stat-card h4, .pastpaper-card h4 { color: #333; margin-bottom: 1rem; font-size: 1.2em; }
+    .formula-card p, .stat-card p, .pastpaper-card p { color: #666; line-height: 1.6; margin-top: 0.8rem; }
+
+    .section-content { display: none; padding: 2rem; animation: fadeIn 0.6s ease; }
+    .section-content.active { display: block; }
+
+    .proof-box, .proof-steps { background: #eef2ff; border-left: 5px solid #667eea; padding: 1rem 1.5rem; margin: 1rem 0; border-radius: 8px; }
+    .proof-step { margin: 0.8rem 0; padding: 0.5rem; background: white; border-radius: 4px; }
+
+    .back-button, .home-button { background: #667eea; color: white; border: none; padding: 0.7rem 1.3rem; border-radius: 5px; cursor: pointer; margin-top: 1.5rem; transition: 0.3s; }
+    .back-button:hover, .home-button:hover { background: #5a6fd8; transform: translateY(-2px); }
+
+    .math-expression, .stat-formula { font-family: 'Cambria Math', serif; font-size: 1.2rem; text-align: center; margin: 1rem 0; padding: 1rem; background: white; border-radius: 6px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border: 1px solid #e9ecef; }
+
+    a.video-link, a.drive-link, .youtube-link { display: inline-block; margin-top: 0.5rem; color: #667eea; text-decoration: none; font-weight: 600; }
+    a.video-link:hover, a.drive-link:hover, .youtube-link:hover { text-decoration: underline; }
+
+    .youtube-container { margin: 2rem 0; padding: 1.5rem; background: #fff3cd; border-radius: 8px; border-left: 4px solid #ffc107; }
+    .buttons { display: flex; gap: 1rem; margin-top: 2rem; }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>UR Academy - Mathematics</h1>
+    <p>Explore proofs, formulas, and concepts visually</p>
+  </header>
+
+  <nav>
+    <button onclick="goHome()">Home</button>
+    <button onclick="showSection('past')">Past Papers</button>
+    <button onclick="showSection('trigonometry')">Trigonometry</button>
+    <button onclick="showSection('geometry')">Coordinate Geometry</button>
+    <button onclick="showSection('stat')">Statistics</button>
+    <button onclick="showSection('derivatives')">Derivatives</button>
+    <button onclick="showSection('cog')">Center of Gravity</button>
+    <button onclick="showSection('per')">Permutation Binomial </button>
+  </nav>
+
+  <div class="content">
+    <!-- Main Maths Section -->
+    <div id="math" class="section-content active">
+      <h2 class="section-title">Mathematics Topics</h2>
+      <div class="grid">
+        <div class="card" onclick="showSection('trigonometry')"><h3>Trigonometry</h3></div>
+        <div class="card" onclick="showSection('geometry')"><h3>Coordinate Geometry</h3></div>
+        <div class="card" onclick="showSection('stat')"><h3>Statistics</h3></div>
+        <div class="card" onclick="showSection('cog')"><h3>Center of Gravity</h3></div>
+        <div class="card" onclick="showSection('derivatives')"><h3>Derivatives</h3></div>
+        <div class="card" onclick="showSection('per')"><h3>Permutaion , Combinations and Binomial Exoansion</h3></div>
+      </div>
+    </div>
+
+    <!-- Past Papers Section -->
+    <div id="past" class="section-content">
+      <h2 class="section-title">Mathematics Past Papers</h2>
+      <div class="pastpapers-grid">
+        <div class="pastpaper-card">
+          <h4>Access all past papers</h4>
+          <a href="https://drive.google.com/drive/u/0/folders/1fbX1FTAt8ix_-Ijy4-ZOheAOe0AU5hYn?sort=13&direction=a" target="_blank" class="drive-link">Access Papers click here</a>
+          <p>Past papers are also discussed on our YouTube channel. Stay in touch by subscribing!</p>
+        </div>
+      </div>
+      <div class="buttons">
+        <button class="back-button" onclick="goBack()">Back</button>
+        <button class="home-button" onclick="goHome()">Home</button>
+      </div>
+    </div>
+
+    <!-- Trigonometry Section -->
+    <div id="trigonometry" class="section-content">
+      <h2 class="section-title">Trigonometry Formulas and Proofs</h2>
+      <div class="formula-grid">
+        <div class="formula-card">
+          <h4>Pythagorean Identity</h4>
+          <div class="math-expression">sin²θ + cos²θ = 1</div>
+          <p>Fundamental identity relating sine and cosine functions</p>
+        </div>
+        
+        <div class="formula-card">
+          <h4>Sine Rule</h4>
+          <div class="math-expression">a/sinA = b/sinB = c/sinC = 2R</div>
+          <p>Relates sides and angles of any triangle, where R is circumradius</p>
+        </div>
+
+
+        
+        <div class="formula-card">
+          <h4>Cosine Rule</h4>
+          <div class="math-expression">a² = b² + c² - 2bc·cosA</div>
+          <p>Generalization of Pythagorean theorem for any triangle</p>
+        </div>
+        
+        <div class="formula-card">
+            <h4>General Trigonometric Solutions</h4>
+            <div class="math-expression">
+                <strong>sin(x) = sin(θ)</strong><br>
+                x = nπ + (-1)ⁿθ, n ∈ ℤ<br><br>
+                
+                <strong>cos(x) = cos(θ)</strong><br>
+                x = 2nπ ± θ, n ∈ ℤ<br><br>
+                
+                <strong>tan(x) = tan(θ)</strong><br>
+                x = nπ + θ, n ∈ ℤ
+            </div>
+            <p>General solutions for trigonometric equations</p>
+       </div>
+
+        <div class="formula-card">
+            <h4>Triple Angle Formulas</h4>
+            <div class="math-expression">
+                <strong>sin(3x) = 3sin(x) - 4sin³(x)</strong><br><br>
+                
+                <strong>cos(3x) = 4cos³(x) - 3cos(x)</strong><br><br>
+                
+                <strong>tan(3x) = (3tan(x) - tan³(x))/(1 - 3tan²(x))</strong>
+            </div>
+            <p>Expansions for triple angles</p>
+            <div class="math-expression">
+                <h3>Double Angle Formulas</h3>
+                sin(2θ) = 2sinθ·cosθ<br>
+                cos(2θ) = cos²θ - sin²θ
+           </div>
+        </div>
+
+        <div class="formula-card">
+            <h4>Special Cases</h4>
+            <div class="math-expression">
+                <strong>sin(x) = 0</strong><br>
+                x = nπ, n ∈ ℤ<br><br>
+                
+                <strong>cos(x) = 0</strong><br>
+                x = (2n+1)π/2, n ∈ ℤ<br><br>
+                
+                <strong>sin(x) = 1</strong><br>
+                x = 2nπ + π/2, n ∈ ℤ<br><br>
+                
+                <strong>cos(x) = 1</strong><br>
+                x = 2nπ, n ∈ ℤ
+            </div>
+            <p>Solutions for common trigonometric values</p>
+        </div>
+
+        <div class="formula-card">
+            <h4>Product-to-Sum Formulas</h4>
+            <div class="math-expression">
+                <strong> cos(A-B) - cos(A+B)=2sinA·sinB</strong><br><br>
+                
+                <strong> cos(A-B) + cos(A+B)=2cosA·cosB</strong><br><br>
+                
+                <strong>  sin(A+B) + sin(A-B)=2sinA·cosB</strong><br><br>
+                
+                <strong> sin(A+B) - sin(A-B)=2cosA·sinB </strong>
+            </div>
+            <p>Convert products to sums of trigonometric functions</p>
+            </div>
+
+            <div class="formula-card">
+                <h4>Sum-to-Product Formulas</h4>
+                <div class="math-expression">
+                    <strong>sinA + sinB = 2sin[(A+B)/2]·cos[(A-B)/2]</strong><br><br>
+                    
+                    <strong>sinA - sinB = 2cos[(A+B)/2]·sin[(A-B)/2]</strong><br><br>
+                    
+                    <strong>cosA + cosB = 2cos[(A+B)/2]·cos[(A-B)/2]</strong><br><br>
+                    
+                    <strong>cosA - cosB = -2sin[(A+B)/2]·sin[(A-B)/2]</strong>
+                </div>
+                <p>Convert sums to products of trigonometric functions</p>
+            </div>
+        
+         <div class="formula-card">
+            <h4>Angle Sum Identities</h4>
+            <div class="math-expression">
+                sin(A+B) = sinA·cosB + cosA·sinB<br>
+                cos(A+B) = cosA·cosB - sinA·sinB
+            </div>
+            <p>Formulas for sine and cosine of sum of two angles</p>
+         </div>
+
+         <div class="formula-card">
+            <h4>Half Angle Formulas</h4>
+            <div class="math-expression">
+                sin(θ/2) = ±√((1-cosθ)/2)<br>
+                cos(θ/2) = ±√((1+cosθ)/2)
+            </div>
+            <p>Express trigonometric functions of half angles</p>
+           </div>
+        
+        
+        </div>
+      <!-- Add all Trigonometry formula cards here -->
+      <div class="buttons">
+        <button class="back-button" onclick="goBack()">Back</button>
+        <button class="home-button" onclick="goHome()">Home</button>
+      </div>
+    </div>
+
+    <!-- Coordinate Geometry Section -->
+    <div id="geometry" class="section-content">
+      <h2 class="section-title">Coordinate Geometry</h2>
+      <div class="formula-grid">
+        
+        <div class="formula-card">
+          <h4>Distance Between Two Points</h4>
+          <div class="math-expression">d = √[(x₂ - x₁)² + (y₂ - y₁)²]</div>
+          <p>Distance between points (x₁, y₁) and (x₂, y₂)</p>
+        </div>
+        
+        <div class="formula-card">
+          <h4>Midpoint Formula</h4>
+          <div class="math-expression">M = ((x₁ + x₂)/2, (y₁ + y₂)/2)</div>
+          <p>Coordinates of midpoint between two points</p>
+        </div>
+        
+        <div class="formula-card">
+          <h4>Slope of a Line</h4>
+          <div class="math-expression">m = (y₂ - y₁)/(x₂ - x₁)</div>
+          <p>Slope between points (x₁, y₁) and (x₂, y₂)</p>
+        </div>
+        
+        <div class="formula-card">
+          <h4>Equation of a Line</h4>
+          <div class="math-expression">y - y₁ = m(x - x₁)</div>
+          <p>Point-slope form of a line</p>
+        </div>
+        
+        <div class="formula-card">
+          <h4>Distance from Point to Line</h4>
+          <div class="math-expression">d = |Ax₀ + By₀ + C| / √(A² + B²)</div>
+          <p>Distance from point (x₀, y₀) to line Ax + By + C = 0</p>
+        </div>
+        
+        <div class="formula-card">
+          <h4>Circle - Standard Form</h4>
+          <div class="math-expression">(x - h)² + (y - k)² = r²</div>
+          <p>Center (h, k), radius r</p>
+        </div>
+        
+        <div class="formula-card">
+          <h4>Circle - General Form</h4>
+          <div class="math-expression">x² + y² + 2gx + 2fy + c = 0</div>
+          <p>Center: (-g, -f), radius: √(g² + f² - c)</p>
+        </div>
+        
+        <div class="formula-card">
+          <h4>Distance Between Circle Centers</h4>
+          <div class="math-expression">d = √[(x₂ - x₁)² + (y₂ - y₁)²]</div>
+          <p>Distance between centers of two circles</p>
+        </div>
+        
+        <div class="formula-card">
+          <h4>Section Formula (Internal)</h4>
+          <div class="math-expression">P = ((mx₂ + nx₁)/(m+n), (my₂ + ny₁)/(m+n))</div>
+          <p>Point dividing line in ratio m:n internally</p>
+        </div>
+        
+        <div class="formula-card">
+          <h4>Section Formula (External)</h4>
+          <div class="math-expression">P = ((mx₂ - nx₁)/(m-n), (my₂ - ny₁)/(m-n))</div>
+          <p>Point dividing line in ratio m:n externally</p>
+        </div>
+        
+        <div class="formula-card">
+          <h4>Area of Triangle</h4>
+          <div class="math-expression">A = ½|x₁(y₂ - y₃) + x₂(y₃ - y₁) + x₃(y₁ - y₂)|</div>
+          <p>Area of triangle with vertices (x₁,y₁), (x₂,y₂), (x₃,y₃)</p>
+        </div>
+
+      </div>
+
+
+      <!-- Add all Coordinate Geometry formulas here -->
+      <div class="buttons">
+        <button class="back-button" onclick="goBack()">Back</button>
+        <button class="home-button" onclick="goHome()">Home</button>
+      </div>
+    </div>
+
+    <div id="per" class="section-content">
+      <h2 class="section-title">Permutation, Combination & Binomial Expansion</h2>
+
+       <!-- Permutation Formulas -->
+      <div class="formula-card">
+        <h4>Permutation Formula</h4>
+        <div class="stat-formula">P(n, r) = n! / (n - r)!</div>
+        <p>Number of ways to arrange r objects from a total of n distinct objects.</p>
+      </div>
+
+      <div class="formula-card">
+        <h4>Permutation with Repetition</h4>
+        <div class="stat-formula">nⁿ</div>
+        <p>When each object can be repeated, total number of arrangements is nⁿ.</p>
+      </div>
+
+      <div class="formula-card">
+        <h4>Permutation of Similar Objects</h4>
+        <div class="stat-formula">n! / (p₁! · p₂! · p₃! · ...)</div>
+        <p>Used when some objects are identical, e.g., letters in “BALLOON”.</p>
+      </div>
+
+      <div class="formula-card">
+        <h4>Circular Permutation</h4>
+        <div class="stat-formula">(n - 1)!</div>
+        <p>Number of ways to arrange n distinct objects in a circle.</p>
+      </div>
+
+  
+      <div class="formula-card">
+        <h4>Combination Formula</h4>
+        <div class="stat-formula">C(n, r) = n! / [r! (n - r)!]</div>
+        <p>Number of ways to choose r objects from n distinct objects (order doesn’t matter).</p>
+      </div>
+
+      <!-- Binomial Expansion -->
+      <div class="formula-card">
+        <h4>Binomial Theorem</h4>
+        <div class="stat-formula">(a + b)ⁿ = Σ [C(n, r) · aⁿ⁻ʳ · bʳ]</div>
+        <p>Expansion of powers of binomials using combinations.</p>
+      </div>
+
+      <div class="formula-card">
+        <h4>General Term in Binomial Expansion</h4>
+        <div class="stat-formula">T<sub>r+1</sub> = C(n, r) · aⁿ⁻ʳ · bʳ</div>
+        <p>Formula to find the (r + 1)ᵗʰ term in the expansion of (a + b)ⁿ.</p>
+      </div>
+
+      <div class="proof-box">
+        <h3>Example: Expansion of (x + 2)³</h3>
+        <p>(x + 2)³ = C(3,0)x³ + C(3,1)x²(2) + C(3,2)x(2)² + C(3,3)(2)³</p>
+        <p>= 1·x³ + 3·x²·2 + 3·x·4 + 8</p>
+        <p>= x³ + 6x² + 12x + 8</p>
+      </div>
+
+      <div class="buttons">
+        <button class="back-button" onclick="goBack()">Back</button>
+        <button class="home-button" onclick="goHome()">Home</button>
+      </div>
+    </div>
+
+
+
+    <!-- Statistics Section -->
+    <div id="stat" class="section-content">
+      <h2 class="section-title">Statistics Formulas</h2>
+      <div class="formula-grid">
+        <div class="formula-card">
+          <h4>Mean (Average)</h4>
+          <div class="stat-formula">x̄ = (Σxᵢ) / n</div>
+          <p>The arithmetic mean is the sum of all values divided by the number of values.</p>
+        </div>
+
+        <div class="formula-card">
+          <h4>Mode</h4>
+          <div class="stat-formula">Most frequent value in dataset</div>
+          <p>The value that appears most frequently in a data set.</p>
+        </div>
+
+        <div class="formula-card">
+          <h4>Median</h4>
+          <div class="stat-formula">
+            If n is odd: M = x<sub>(n+1)/2</sub><br>
+            If n is even: M = (x<sub>n/2</sub> + x<sub>(n/2)+1</sub>) / 2
+          </div>
+          <p>The middle value when data is arranged in order.</p>
+        </div>
+
+        <div class="formula-card">
+          <h4>Variance</h4>
+          <div class="stat-formula">σ² = Σ(xᵢ - x̄)² / n</div>
+          <p>Average of squared deviations from the mean.</p>
+        </div>
+
+        <div class="formula-card">
+          <h4>Standard Deviation</h4>
+          <div class="stat-formula">σ = √[Σ(xᵢ - x̄)² / n]</div>
+          <p>Square root of variance, measures data dispersion.</p>
+        </div>
+        <div class="formula-card">
+          <h4>Probability</h4>
+          <div class="stat-formula">P(A) = n(A) / n(S)</div>
+          <p>Probability of event A is favorable outcomes divided by total outcomes.</p>
+        </div>
+
+        <div class="formula-card">
+          <h4>Z-Score</h4>
+          <div class="stat-formula">z = (x - μ) / σ</div>
+          <p>Number of standard deviations a value is from the mean.</p>
+        </div>
+
+
+
+
+        <div class="proof-box">
+          <h3>Standard Deviation Calculation Example</h3>
+          <p>For dataset: 2, 4, 4, 4, 5, 5, 7, 9</p>
+          <p>1. Calculate mean: (2+4+4+4+5+5+7+9)/8 = 5</p>
+          <p>2. Find deviations: -3, -1, -1, -1, 0, 0, 2, 4</p>
+          <p>3. Square deviations: 9, 1, 1, 1, 0, 0, 4, 16</p>
+          <p>4. Sum of squares: 9+1+1+1+0+0+4+16 = 32</p>
+          <p>5. Variance: 32/8 = 4</p>
+          <p>6. Standard deviation: √4 = 2</p>
+        </div>
+
+
+
+      </div>
+      <!-- Add all Statistics formulas here -->
+        <div class="buttons">
+          <button class="back-button" onclick="goBack()">Back</button>
+          <button class="home-button" onclick="goHome()">Home</button>
+        </div>
+    </div>
+
+    <!-- Derivatives Section -->
+    <div id="derivatives" class="section-content">
+      <h2 class="section-title">Derivatives</h2>
+      <p>Explore common derivatives and their applications:</p>
+      
+      <div class="formula-grid">
+        <div class="formula-card">
+          <h4>Power Rule</h4>
+          <div class="math-expression">d/dx(xⁿ) = n·xⁿ⁻¹</div>
+          <p>Derivative of x raised to any power n</p>
+        </div>
+        
+        <div class="formula-card">
+          <h4>Constant Rule</h4>
+          <div class="math-expression">d/dx(c) = 0</div>
+          <p>Derivative of a constant is zero</p>
+        </div>
+        
+        <div class="formula-card">
+          <h4>Exponential Function</h4>
+          <div class="math-expression">d/dx(eˣ) = eˣ</div>
+          <p>Derivative of exponential function is itself</p>
+        </div>
+        
+        <div class="formula-card">
+          <h4>Natural Logarithm</h4>
+          <div class="math-expression">d/dx(ln x) = 1/x</div>
+          <p>Derivative of natural logarithm</p>
+        </div>
+        
+        <div class="formula-card">
+          <h4>Sine Function</h4>
+          <div class="math-expression">d/dx(sin x) = cos x</div>
+          <p>Derivative of sine is cosine</p>
+        </div>
+        
+        <div class="formula-card">
+          <h4>Cosine Function</h4>
+          <div class="math-expression">d/dx(cos x) = -sin x</div>
+          <p>Derivative of cosine is negative sine</p>
+        </div>
+        
+        <div class="formula-card">
+          <h4>Tangent Function</h4>
+          <div class="math-expression">d/dx(tan x) = sec² x</div>
+          <p>Derivative of tangent is secant squared</p>
+        </div>
+        
+        <div class="formula-card">
+          <h4>Product Rule</h4>
+          <div class="math-expression">d/dx(f·g) = f'·g + f·g'</div>
+          <p>Derivative of product of two functions</p>
+        </div>
+        
+        <div class="formula-card">
+          <h4>Quotient Rule</h4>
+          <div class="math-expression">d/dx(f/g) = (f'·g - f·g')/g²</div>
+          <p>Derivative of quotient of two functions</p>
+        </div>
+        
+        <div class="formula-card">
+          <h4>Chain Rule</h4>
+          <div class="math-expression">d/dx(f(g(x))) = f'(g(x))·g'(x)</div>
+          <p>Derivative of composite functions</p>
+        </div>
+      </div>
+      
+      <div class="proof-steps">
+        <h3>Proof of Power Rule:</h3>
+        <div class="proof-step">1. Start with definition of derivative: f'(x) = lim(h→0) [f(x+h) - f(x)]/h</div>
+        <div class="proof-step">2. For f(x) = xⁿ, we have f(x+h) = (x+h)ⁿ</div>
+        <div class="proof-step">3. Using binomial expansion: (x+h)ⁿ = xⁿ + n·xⁿ⁻¹·h + ... + hⁿ</div>
+        <div class="proof-step">4. Then [f(x+h) - f(x)]/h = [xⁿ + n·xⁿ⁻¹·h + ... - xⁿ]/h = n·xⁿ⁻¹ + ...</div>
+        <div class="proof-step">5. As h→0, all terms with h vanish, leaving n·xⁿ⁻¹</div>
+        <div class="proof-step">6. Therefore, d/dx(xⁿ) = n·xⁿ⁻¹</div>
+      </div>
+      <!-- Add all Derivatives formulas here -->
+      <div class="buttons">
+        <button class="back-button" onclick="goBack()">Back</button>
+        <button class="home-button" onclick="goHome()">Home</button>
+      </div>
+    </div>
+
+    <!-- Center of Gravity Section -->
+    <div id="cog" class="section-content">
+      <h2 class="section-title">Center of Gravity</h2>
+      <p>The center of gravity (CG) of a body is the point through which the entire weight of the body acts, irrespective of its position.</p>
+
+      <div class="formula-grid">
+        <div class="formula-card">
+          <h3>Solid Hemisphere</h3>
+          <div class="math-expression">CG = 3r/8 from base</div>
+          <p>For a solid hemisphere of radius r, consider infinite arrangement of cylinders .</p>
+          <a class="video-link" href="https://youtu.be/B1Rig86rMtc" target="_blank">📺 Watch this video for better understanding</a>  <!-- add video -->
+        </div>
+
+        <div class="formula-card">
+          <h3>Hollow Hemisphere</h3>
+          <div class="math-expression">CG = r/2 from center</div>
+          <p>For a hollow hemisphere (thin shell), consider infinite arrangements of rings do check the video .</p>
+          <a class="video-link" href="https://youtu.be/wMX9yXy22N4" target="_blank">📺 Watch this video for better understanding</a> <!-- add video -->
+        </div>
+
+        <div class="formula-card">
+          <h3> Solid Cone</h3>
+          <div class="math-expression">CG = 3h/4 from vertex</div>
+          <p>Consider inifinite arrangements of cylinders of side length dx and radius y </p>
+          <a class="video-link" href="https://youtu.be/s2CxlotC9jk" target="_blank">📺 Watch this video for better understanding</a>  <!-- add video -->
+        </div>
+
+        <div class="formula-card">
+          <h3>Hollow cone </h3>
+          <div class="math-expression">CG = at center</div>
+          <p>For a hollow cone  due to its complete symmetry, infinite arrangements of rings with radius y aand thickness dx.</p>
+          <a class="video-link" href="https://youtube.com/@uracademy-v7b?si=g1GDOj42IPaOS7IP" target="_blank">📺 Watch this video for better understanding</a>  <!-- add video -->
+        </div>
+      </div>
+
+        <div class="formula-card">
+          <h3>Arc of a Circle</h3>
+          <div class="math-expression">CG = r·sin(θ)/(θ)</div>
+          <p>For a circular arc of radius r and angle 2θ (in radians), consider neglegible rod of length rd0.</p>
+          <a class="video-link" href="https://youtube.com/@uracademy-v7b?si=g1GDOj42IPaOS7IP"  target="_blank">📺 Watch this video for better understanding</a>  <!-- add video -->
+        </div>
+        <div class="formula-card">
+          <h3>Sector </h3>
+          <div class="math-expression">CG = 2/3 .r·sin(θ)/(θ)</div>
+          <p>For a sector of radius r and angle 2θ (in radians), consider inifinte triangular strips of base rd0 and height r.</p>
+          <a class="video-link" href="https://youtube.com/@uracademy-v7b?si=g1GDOj42IPaOS7IP"  target="_blank">📺 Watch this video for better understanding</a>  <!-- add video -->
+        </div>
+      <!-- Add all Center of Gravity formulas here -->
+      <div class="buttons">
+        <button class="back-button" onclick="goBack()">Back</button>
+        <button class="home-button" onclick="goHome()">Home</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showSection(sectionId) {
+      document.querySelectorAll('.section-content').forEach(sec => sec.classList.remove('active'));
+      const section = document.getElementById(sectionId);
+      if (section) section.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function goBack() {
+      document.querySelectorAll('.section-content').forEach(sec => sec.classList.remove('active'));
+      document.getElementById('math').classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function goHome() {
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
+</html>

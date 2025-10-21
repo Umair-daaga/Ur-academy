@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UR Academy - Professional Learning Platform</title>
+  <style>
+    /* (same CSS as before – unchanged for brevity) */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #333;
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+    .navbar {
+      background: rgba(255, 255, 255, 0.95);
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0 2rem; box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+      position: sticky; top: 0; z-index: 1000;
+    }
+    .navbar-logo { font-size: 1.8em; font-weight: 700; color: #667eea; }
+    .navbar-menu { list-style: none; display: flex; gap: 2rem; align-items: center; }
+    .navbar-menu li { position: relative; }
+    .navbar-menu > li > a {
+      text-decoration: none; color: #333; font-weight: 600;
+      padding: 1.5rem 1rem; display: inline-block;
+      border-bottom: 3px solid transparent; transition: 0.3s ease;
+    }
+    .navbar-menu > li > a:hover { color: #667eea; border-bottom: 3px solid #667eea; }
+    .dropdown-content {
+      display: none; position: absolute; background: white;
+      min-width: 220px; box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      border-radius: 8px; overflow: hidden;
+    }
+    .dropdown-content a {
+      display: block; padding: 1rem 1.5rem; color: #333; text-decoration: none;
+      border-bottom: 1px solid #f8f9fa; transition: 0.3s ease;
+    }
+    .dropdown-content a:hover {
+      background: #667eea; color: white; padding-left: 2rem;
+    }
+    .dropdown:hover .dropdown-content { display: block; }
+
+    .youtube-section {
+      background: white;
+      border-radius: 12px;
+      padding: 3rem;
+      margin: 2rem auto;
+      max-width: 1200px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .video-grid iframe {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 8px;
+      border: none;
+    }
+
+    .channel-link {
+      display: inline-block;
+      background: #667eea;
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      margin-top: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .channel-link:hover {
+      background: #5a6fd8;
+      transform: translateY(-2px);
+    }
+
+    .hero-section {
+      background: linear-gradient(135deg, rgba(102,126,234,0.9), rgba(118,75,162,0.9));
+      color: white; padding: 4rem 2rem; text-align: center;
+    }
+
+    .content { max-width: 1200px; margin: 4rem auto; padding: 0 2rem; }
+    .section-title { font-size: 2.5em; text-align: center; margin-bottom: 3rem; color: #333; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-logo">UR Academy</div>
+    <ul class="navbar-menu">
+      <li class="dropdown">
+        <a href="physics.html">Physics</a>
+        <div class="dropdown-content">
+          <a href="physics.html?section=equations">Classified Equation</a>
+          <a href="physics.html?section=pastpapers">Papers</a>
+          
+        </div>
+      </li>
+
+      <li class="dropdown">
+        <a href="chemistry.html">Chemistry</a>
+        <div class="dropdown-content">
+          <a href="chemistry.html?section=reactions">Reactions and Equations</a>
+        
+          <a href="chemistry.html?section=pastpapers">Papers</a>
+        </div>
+      </li>
+
+      <li class="dropdown">
+        <a href="maths.html">Mathematics</a>
+        <div class="dropdown-content">
+          <a href="maths.html?section=proofs">Proofs</a>
+          <a href="maths.html?section=equations">Equations</a>
+          <a href="maths.html?section=pastpapers">Past Papers</a>
+        </div>
+      </li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+  </nav>
+
+  <!-- YouTube Section (Auto Updates) -->
+  <div class="youtube-section">
+    <h2 class="section-title">🎥 Latest from Our YouTube Channel</h2>
+    <div style="text-align: center;">
+      <a class="channel-link" href="https://youtube.com/@uracademy-v7b?si=PWMKGjucdIdYxnMD" target="_blank">
+        Visit Our Channel →
+      </a>
+    </div>
+    <div class="video-grid" id="video-grid">
+      <p style="text-align:center;">Loading latest videos...</p>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <h1>Welcome to UR Academy</h1>
+    <p>Professional Learning Platform - Organized, Comprehensive, Accessible</p>
+    <p>Stay connected with our YouTube channel and support us by sharing and subscribing</p>
+  </div>
+
+  <!-- (Rest of content same as before) -->
+  <div class="content">
+    <h2 class="section-title">Our Subjects</h2>
+    <!-- subject cards here -->
+  </div>
+
+  <script>
+    // Replace with your actual channel ID and API key
+    const apiKey = "AIzaSyBttxjuEWjgXv7TcqrYa94Q3jbcMSJc4J4";
+    const channelId = "UCGEdMXbnMtZZXqKXYoTDdKA";
+    const videoGrid = document.getElementById("video-grid");
+
+    async function loadLatestVideos() {
+      try {
+        const response = await fetch(
+          `https://www.googleapis.com/youtube/v3/search?key=${apiKey}&channelId=${channelId}&part=snippet,id&order=date&maxResults=3`
+        );
+        const data = await response.json();
+
+        videoGrid.innerHTML = ""; // clear loading text
+
+        data.items.forEach(item => {
+          if (item.id.kind === "youtube#video") {
+            const videoId = item.id.videoId;
+            const iframe = document.createElement("iframe");
+            iframe.src = `https://www.youtube.com/embed/${videoId}`;
+            iframe.allowFullscreen = true;
+            videoGrid.appendChild(iframe);
+          }
+        });
+      } catch (error) {
+        videoGrid.innerHTML = "<p style='text-align:center;color:red;'>Failed to load videos. Please check your API key or channel ID.</p>";
+      }
+    }
+
+    loadLatestVideos();
+  </script>
+</body>
+</html>
+
+

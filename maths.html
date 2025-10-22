@@ -20,16 +20,33 @@
       background: rgba(255, 255, 255, 0.1);
       color: white;
       box-shadow: 0 2px 20px rgba(0,0,0,0.2);
+      position: relative;
     }
 
     header h1 { font-size: 2.2em; margin-bottom: 0.3rem; }
     header p { font-size: 1.1em; opacity: 0.9; }
+
+    /* Mobile Menu Button */
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+    }
 
     nav {
       display: flex;
       justify-content: center;
       gap: 1rem;
       margin: 1.5rem 0;
+      padding: 0 1rem;
+      flex-wrap: wrap;
     }
 
     nav button {
@@ -110,15 +127,127 @@
     .buttons { display: flex; gap: 1rem; margin-top: 2rem; }
 
     @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Mobile Responsive Styles */
+    @media (max-width: 768px) {
+      header {
+        padding: 1.5rem 1rem;
+        position: relative;
+      }
+      
+      header h1 {
+        font-size: 1.8em;
+        padding-right: 3rem; /* Space for menu button */
+      }
+      
+      header p {
+        font-size: 1em;
+      }
+      
+      .mobile-menu-btn {
+        display: block;
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      
+      nav {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 70px;
+        right: 10px;
+        background: rgba(255, 255, 255, 0.95);
+        padding: 1rem;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        z-index: 1000;
+        margin: 0;
+        border-radius: 0 0 0 8px;
+      }
+      
+      nav.active {
+        display: flex;
+      }
+      
+      nav button {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 0.5rem;
+      }
+      
+      .content {
+        margin: 1rem auto;
+        padding: 0 0.5rem;
+      }
+      
+      h2.section-title {
+        font-size: 1.6em;
+        margin: 1.5rem 0 1rem;
+      }
+      
+      .grid, .formula-grid, .stat-grid, .pastpapers-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        padding: 0.5rem 1rem 2rem;
+      }
+      
+      .card, .formula-card, .stat-card, .pastpaper-card {
+        padding: 1.2rem;
+      }
+      
+      .section-content {
+        padding: 1.5rem;
+      }
+      
+      .math-expression, .stat-formula {
+        font-size: 1rem;
+        padding: 0.8rem;
+      }
+      
+      .proof-box, .proof-steps {
+        padding: 0.8rem 1rem;
+      }
+      
+      .buttons {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      
+      .back-button, .home-button {
+        width: 100%;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header h1 {
+        font-size: 1.5em;
+      }
+      
+      .section-content {
+        padding: 1rem;
+      }
+      
+      .card, .formula-card, .stat-card, .pastpaper-card {
+        padding: 1rem;
+      }
+      
+      .math-expression, .stat-formula {
+        font-size: 0.9rem;
+        padding: 0.7rem;
+      }
+    }
   </style>
 </head>
 <body>
   <header>
     <h1>UR Academy - Mathematics</h1>
     <p>Explore proofs, formulas, and concepts visually</p>
+    <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
   </header>
 
-  <nav>
+  <nav id="mainNav">
     <button onclick="goHome()">Home</button>
     <button onclick="showSection('past')">Past Papers</button>
     <button onclick="showSection('trigonometry')">Trigonometry</button>
@@ -126,7 +255,7 @@
     <button onclick="showSection('stat')">Statistics</button>
     <button onclick="showSection('derivatives')">Derivatives</button>
     <button onclick="showSection('cog')">Center of Gravity</button>
-    <button onclick="showSection('per')">Permutation Binomial </button>
+    <button onclick="showSection('per')">Permutation Binomial</button>
   </nav>
 
   <div class="content">
@@ -139,7 +268,7 @@
         <div class="card" onclick="showSection('stat')"><h3>Statistics</h3></div>
         <div class="card" onclick="showSection('cog')"><h3>Center of Gravity</h3></div>
         <div class="card" onclick="showSection('derivatives')"><h3>Derivatives</h3></div>
-        <div class="card" onclick="showSection('per')"><h3>Permutaion , Combinations and Binomial Exoansion</h3></div>
+        <div class="card" onclick="showSection('per')"><h3>Permutation, Combinations and Binomial Expansion</h3></div>
       </div>
     </div>
 
@@ -175,8 +304,6 @@
           <p>Relates sides and angles of any triangle, where R is circumradius</p>
         </div>
 
-
-        
         <div class="formula-card">
           <h4>Cosine Rule</h4>
           <div class="math-expression">a² = b² + c² - 2bc·cosA</div>
@@ -208,11 +335,15 @@
                 <strong>tan(3x) = (3tan(x) - tan³(x))/(1 - 3tan²(x))</strong>
             </div>
             <p>Expansions for triple angles</p>
+        </div>
+
+        <div class="formula-card">
+            <h4>Double Angle Formulas</h4>
             <div class="math-expression">
-                <h3>Double Angle Formulas</h3>
                 sin(2θ) = 2sinθ·cosθ<br>
                 cos(2θ) = cos²θ - sin²θ
            </div>
+           <p>Formulas for double angles</p>
         </div>
 
         <div class="formula-card">
@@ -245,21 +376,21 @@
                 <strong> sin(A+B) - sin(A-B)=2cosA·sinB </strong>
             </div>
             <p>Convert products to sums of trigonometric functions</p>
-            </div>
+        </div>
 
-            <div class="formula-card">
-                <h4>Sum-to-Product Formulas</h4>
-                <div class="math-expression">
-                    <strong>sinA + sinB = 2sin[(A+B)/2]·cos[(A-B)/2]</strong><br><br>
-                    
-                    <strong>sinA - sinB = 2cos[(A+B)/2]·sin[(A-B)/2]</strong><br><br>
-                    
-                    <strong>cosA + cosB = 2cos[(A+B)/2]·cos[(A-B)/2]</strong><br><br>
-                    
-                    <strong>cosA - cosB = -2sin[(A+B)/2]·sin[(A-B)/2]</strong>
-                </div>
-                <p>Convert sums to products of trigonometric functions</p>
+        <div class="formula-card">
+            <h4>Sum-to-Product Formulas</h4>
+            <div class="math-expression">
+                <strong>sinA + sinB = 2sin[(A+B)/2]·cos[(A-B)/2]</strong><br><br>
+                
+                <strong>sinA - sinB = 2cos[(A+B)/2]·sin[(A-B)/2]</strong><br><br>
+                
+                <strong>cosA + cosB = 2cos[(A+B)/2]·cos[(A-B)/2]</strong><br><br>
+                
+                <strong>cosA - cosB = -2sin[(A+B)/2]·sin[(A-B)/2]</strong>
             </div>
+            <p>Convert sums to products of trigonometric functions</p>
+        </div>
         
          <div class="formula-card">
             <h4>Angle Sum Identities</h4>
@@ -278,10 +409,8 @@
             </div>
             <p>Express trigonometric functions of half angles</p>
            </div>
-        
-        
         </div>
-      <!-- Add all Trigonometry formula cards here -->
+      
       <div class="buttons">
         <button class="back-button" onclick="goBack()">Back</button>
         <button class="home-button" onclick="goHome()">Home</button>
@@ -361,8 +490,6 @@
 
       </div>
 
-
-      <!-- Add all Coordinate Geometry formulas here -->
       <div class="buttons">
         <button class="back-button" onclick="goBack()">Back</button>
         <button class="home-button" onclick="goHome()">Home</button>
@@ -388,7 +515,7 @@
       <div class="formula-card">
         <h4>Permutation of Similar Objects</h4>
         <div class="stat-formula">n! / (p₁! · p₂! · p₃! · ...)</div>
-        <p>Used when some objects are identical, e.g., letters in “BALLOON”.</p>
+        <p>Used when some objects are identical, e.g., letters in "BALLOON".</p>
       </div>
 
       <div class="formula-card">
@@ -401,7 +528,7 @@
       <div class="formula-card">
         <h4>Combination Formula</h4>
         <div class="stat-formula">C(n, r) = n! / [r! (n - r)!]</div>
-        <p>Number of ways to choose r objects from n distinct objects (order doesn’t matter).</p>
+        <p>Number of ways to choose r objects from n distinct objects (order doesn't matter).</p>
       </div>
 
       <!-- Binomial Expansion -->
@@ -429,8 +556,6 @@
         <button class="home-button" onclick="goHome()">Home</button>
       </div>
     </div>
-
-
 
     <!-- Statistics Section -->
     <div id="stat" class="section-content">
@@ -480,9 +605,6 @@
           <p>Number of standard deviations a value is from the mean.</p>
         </div>
 
-
-
-
         <div class="proof-box">
           <h3>Standard Deviation Calculation Example</h3>
           <p>For dataset: 2, 4, 4, 4, 5, 5, 7, 9</p>
@@ -494,14 +616,12 @@
           <p>6. Standard deviation: √4 = 2</p>
         </div>
 
-
-
       </div>
-      <!-- Add all Statistics formulas here -->
-        <div class="buttons">
-          <button class="back-button" onclick="goBack()">Back</button>
-          <button class="home-button" onclick="goHome()">Home</button>
-        </div>
+      
+      <div class="buttons">
+        <button class="back-button" onclick="goBack()">Back</button>
+        <button class="home-button" onclick="goHome()">Home</button>
+      </div>
     </div>
 
     <!-- Derivatives Section -->
@@ -580,7 +700,7 @@
         <div class="proof-step">5. As h→0, all terms with h vanish, leaving n·xⁿ⁻¹</div>
         <div class="proof-step">6. Therefore, d/dx(xⁿ) = n·xⁿ⁻¹</div>
       </div>
-      <!-- Add all Derivatives formulas here -->
+      
       <div class="buttons">
         <button class="back-button" onclick="goBack()">Back</button>
         <button class="home-button" onclick="goHome()">Home</button>
@@ -597,44 +717,47 @@
           <h3>Solid Hemisphere</h3>
           <div class="math-expression">CG = 3r/8 from base</div>
           <p>For a solid hemisphere of radius r, consider infinite arrangement of cylinders .</p>
-          <a class="video-link" href="https://youtu.be/B1Rig86rMtc" target="_blank">📺 Watch this video for better understanding</a>  <!-- add video -->
+          <a class="video-link" href="https://youtu.be/B1Rig86rMtc" target="_blank">📺 Watch this video for better understanding</a>
         </div>
 
         <div class="formula-card">
           <h3>Hollow Hemisphere</h3>
           <div class="math-expression">CG = r/2 from center</div>
           <p>For a hollow hemisphere (thin shell), consider infinite arrangements of rings do check the video .</p>
-          <a class="video-link" href="https://youtu.be/wMX9yXy22N4" target="_blank">📺 Watch this video for better understanding</a> <!-- add video -->
+          <a class="video-link" href="https://youtu.be/wMX9yXy22N4" target="_blank">📺 Watch this video for better understanding</a>
         </div>
 
         <div class="formula-card">
           <h3> Solid Cone</h3>
           <div class="math-expression">CG = 3h/4 from vertex</div>
           <p>Consider inifinite arrangements of cylinders of side length dx and radius y </p>
-          <a class="video-link" href="https://youtu.be/s2CxlotC9jk" target="_blank">📺 Watch this video for better understanding</a>  <!-- add video -->
+          <a class="video-link" href="https://youtu.be/s2CxlotC9jk" target="_blank">📺 Watch this video for better understanding</a>
         </div>
 
         <div class="formula-card">
           <h3>Hollow cone </h3>
           <div class="math-expression">CG = at center</div>
           <p>For a hollow cone  due to its complete symmetry, infinite arrangements of rings with radius y aand thickness dx.</p>
-          <a class="video-link" href="https://youtube.com/@uracademy-v7b?si=g1GDOj42IPaOS7IP" target="_blank">📺 Watch this video for better understanding</a>  <!-- add video -->
+          <a class="video-link" href="https://youtube.com/@uracademy-v7b?si=g1GDOj42IPaOS7IP" target="_blank">📺 Watch this video for better understanding</a>
         </div>
-      </div>
+
+         <div class="formula-card">
+          <h3>Sector </h3>
+          <div class="math-expression">CG = 2/3 .r·sin(θ)/(θ)</div>
+          <p>For a sector of radius r and angle 2θ (in radians), consider inifinte triangular strips of base rd0 and height r.</p>
+          <a class="video-link" href="https://youtu.be/oGjXzJyfubo"  target="_blank">📺 Watch this video for better understanding</a>
+        </div>
 
         <div class="formula-card">
           <h3>Arc of a Circle</h3>
           <div class="math-expression">CG = r·sin(θ)/(θ)</div>
           <p>For a circular arc of radius r and angle 2θ (in radians), consider neglegible rod of length rd0.</p>
-          <a class="video-link" href="https://youtube.com/@uracademy-v7b?si=g1GDOj42IPaOS7IP"  target="_blank">📺 Watch this video for better understanding</a>  <!-- add video -->
+          <a class="video-link" href="https://youtube.com/@uracademy-v7b?si=g1GDOj42IPaOS7IP"  target="_blank">📺 Watch this video for better understanding</a>
         </div>
-        <div class="formula-card">
-          <h3>Sector </h3>
-          <div class="math-expression">CG = 2/3 .r·sin(θ)/(θ)</div>
-          <p>For a sector of radius r and angle 2θ (in radians), consider inifinte triangular strips of base rd0 and height r.</p>
-          <a class="video-link" href="https://youtube.com/@uracademy-v7b?si=g1GDOj42IPaOS7IP"  target="_blank">📺 Watch this video for better understanding</a>  <!-- add video -->
-        </div>
-      <!-- Add all Center of Gravity formulas here -->
+        
+
+      </div>
+      
       <div class="buttons">
         <button class="back-button" onclick="goBack()">Back</button>
         <button class="home-button" onclick="goHome()">Home</button>
@@ -643,6 +766,28 @@
   </div>
 
   <script>
+    // Mobile menu functionality
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mainNav = document.getElementById('mainNav');
+    
+    mobileMenuBtn.addEventListener('click', function() {
+      mainNav.classList.toggle('active');
+    });
+    
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function(event) {
+      if (!mainNav.contains(event.target) && !mobileMenuBtn.contains(event.target)) {
+        mainNav.classList.remove('active');
+      }
+    });
+    
+    // Close mobile menu when clicking a nav button
+    document.querySelectorAll('nav button').forEach(button => {
+      button.addEventListener('click', function() {
+        mainNav.classList.remove('active');
+      });
+    });
+
     function showSection(sectionId) {
       document.querySelectorAll('.section-content').forEach(sec => sec.classList.remove('active'));
       const section = document.getElementById(sectionId);

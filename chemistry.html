@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chemistry Learning - UR Academy</title>
     <style>
+        /* Your existing CSS remains the same */
         * {
             margin: 0;
             padding: 0;
@@ -17,6 +18,7 @@
             color: #333;
             min-height: 100vh;
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
         .navbar {
@@ -38,6 +40,18 @@
             font-weight: 700;
             padding: 1rem 0;
             color: #667eea;
+        }
+
+        /* Mobile menu button */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5em;
+            cursor: pointer;
+            padding: 0.5rem;
+            color: #333;
+            z-index: 1001;
         }
 
         .navbar-menu {
@@ -82,13 +96,15 @@
         .section-content {
             display: none;
         }
+
         .equation-desc {
-                font-size: 0.9em;
-                color: #666;
-                margin-top: -8px;
-                margin-bottom: 15px;
-                font-style: italic;
-            }
+            font-size: 0.9em;
+            color: #666;
+            margin-top: -8px;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+
         .section-content.active {
             display: block;
         }
@@ -214,6 +230,10 @@
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .chemistry-card:hover {
@@ -375,25 +395,121 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* Mobile Responsive Styles */
         @media (max-width: 768px) {
             .navbar {
-                flex-direction: column;
+                position: relative;
                 padding: 1rem;
+                flex-wrap: wrap;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+                position: absolute;
+                right: 1rem;
+                top: 1rem;
             }
 
             .navbar-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
                 flex-direction: column;
                 gap: 0;
-                width: 100%;
+                box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+                z-index: 1000;
+                padding: 0;
+                margin: 0;
             }
-
+            
+            .navbar-menu.active {
+                display: flex;
+            }
+            
             .navbar-menu li {
                 width: 100%;
                 text-align: center;
+                list-style: none;
+            }
+            
+            .navbar-menu a {
+                padding: 1.2rem 1rem;
+                width: 100%;
+                border-bottom: 1px solid #eee;
+                display: block;
+            }
+
+            .container {
+                padding: 0 1rem;
+                margin: 1rem auto;
+            }
+
+            .section-title {
+                font-size: 1.8em;
+                margin-bottom: 1.5rem;
             }
 
             .grid-container, .chemistry-grid, .color-grid, .test-grid, .functional-grid {
                 grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .grid-item, .chemistry-card {
+                padding: 1.5rem;
+            }
+
+            .update-card, .chemistry-equations-container {
+                padding: 1.5rem;
+            }
+
+            .chemistry-equation-card {
+                padding: 1rem;
+                margin: 0.5rem 0;
+            }
+
+            .subsection-title {
+                font-size: 1.2em;
+                margin: 1.5rem 0 0.8rem;
+            }
+
+            .drive-link, .chemistry-button {
+                padding: 0.7rem 1.2rem;
+                font-size: 0.9em;
+                width: 100%;
+                text-align: center;
+                display: block;
+                margin-top: 1rem;
+            }
+
+            .breadcrumb {
+                font-size: 0.9em;
+                margin-bottom: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar-logo {
+                font-size: 1.5em;
+                padding: 0.5rem 0;
+            }
+
+            .section-title {
+                font-size: 1.6em;
+            }
+
+            .container {
+                padding: 0 0.5rem;
+            }
+
+            .grid-item, .chemistry-card, .update-card, .chemistry-equations-container {
+                padding: 1rem;
+            }
+
+            .chemistry-equation-card, .color-card, .test-card, .functional-card {
+                padding: 0.8rem;
             }
         }
     </style>
@@ -401,7 +517,9 @@
 <body>
     <nav class="navbar">
         <div class="navbar-logo">UR Chemistry Point</div>
-        <ul class="navbar-menu">
+        <!-- Mobile hamburger menu -->
+        <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+        <ul class="navbar-menu" id="navbarMenu">
             <li><a href="index.html">Home</a></li>
             <li><a href="#" onclick="showSection('pastpapers')">Past Papers</a></li>
             <li><a href="#" onclick="showSection('reactions')">Reactions & Mechanisms</a></li>
@@ -477,25 +595,24 @@
                 </div>
 
                 <div id="thermodynamics" class="content-section">
-                    <div class="physics-equation-card">
+                    <div class="chemistry-equation-card">
                         <h4>Second Law of Thermodynamics</h4>
                         <div class="math-expression">ΔS ≥ 0</div>
                         <p>Entropy of an isolated system never decreases.</p>
                     </div>
-                    <div class="physics-equation-card">
+                    <div class="chemistry-equation-card">
                         <h4>Entropy of total system </h4>
                         <div class="math-expression">ΔS ≥ 0</div>
                         <p>Entropy of system + surronding ≥ 0 </p>
                     </div>
-                    <div class="physics-equation-card">
+                    <div class="chemistry-equation-card">
                         <h4>At Equilubrium ΔG=0 </h4>
                         <div class="math-expression">ΔS ≥ 0</div>
                         <p>Entropy of an isolated system never decreases.</p>
                     </div>
                     <div>
-                        <button class="chemistry-button" onclick="goToChemistryBack('inorganic')">⬅ Back</button>
+                        <button class="chemistry-button" onclick="goToChemistryBack('thermodynamics')">⬅ Back</button>
                     </div>
-                     
                 </div>
 
                 <!-- Inorganic Chemistry Section -->
@@ -1054,89 +1171,79 @@
 
                 <div id="electrochemistry" class="content-section">
                     <h2>Electrochemistry</h2>
-                    <p>sorry still under update ......  updates on 22nd october  </p>
+                    <p>sorry still under update ......  updates on 24th october  </p>
                     <button class="chemistry-button" onclick="goToChemistryBack('electrochemistry')">⬅ Back</button>
                 </div>
 
                 <div id="kinetics" class="content-section">
-    <h2>Chemical Kinetics</h2>
-    
-    <!-- Rate Laws & Order Section -->
-    <div class="chemistry-grid">
-        <h3>Rate Laws & Reaction Order</h3>
-        <div class="chemistry-equation-card">
-            <h4>Rate Definition</h4>
-            <div class="math-expression">Rate = -ⅆ[A]/ⅆt = ⅆ[P]/ⅆt</div>
-            <p>Rate of reaction in terms of reactant disappearance or product formation.</p>
-        </div>
-        <div class="chemistry-equation-card">
-            <h4>Zero Order Rate Law</h4>
-            <div class="math-expression">Rate = k</div>
-            <p>Rate is independent of reactant concentration.</p>
-        </div>
-        <div class="chemistry-equation-card">
-            <h4>First Order Rate Law</h4>
-            <div class="math-expression">Rate = k[A]</div>
-            <p>Rate proportional to concentration of one reactant.</p>
-        </div>
-        <div class="chemistry-equation-card">
-            <h4>Second Order Rate Law</h4>
-            <div class="math-expression">Rate = k[A]² or Rate = k[A][B]</div>
-            <p>Rate depends on square of concentration or two reactants.</p>
-        </div>
-    </div>
-    <!-- Half-Life Equations Section -->
-    <div class="chemistry-grid">
-        <h3>Half-Life Equations</h3>
-        <div class="chemistry-equation-card">
-            <h4>Zero Order Half-Life</h4>
-            <div class="math-expression">t<sub>½</sub> = [A]₀/(2k)</div>
-            <p>Half-life depends on initial concentration.</p>
-        </div>
-        <div class="chemistry-equation-card">
-            <h4>First Order Half-Life</h4>
-            <div class="math-expression">t<sub>½</sub> = ln(2)/k</div>
-            <p>Half-life is constant, independent of initial concentration.</p>
-        </div>
-        <div class="chemistry-equation-card">
-            <h4>Second Order Half-Life</h4>
-            <div class="math-expression">t<sub>½</sub> = 1/(k[A]₀)</div>
-            <p>Half-life inversely proportional to initial concentration.</p>
-        </div>
-        <div class="chemistry-equation-card">
-            <h4>nth Order Half-Life</h4>
-            <div class="math-expression">t<sub>½</sub> = (2<sup>n-1</sup>-1)/((n-1)k[A]₀<sup>n-1</sup>)</div>
-            <p>General half-life equation for any order n ≠ 1.</p>
-        </div>
-    </div>
-
-
-    <!-- Complex Reactions Section -->
-    <div class="chemistry-grid">
-        <h3>Complex Reaction Mechanisms</h3>
-        <div class="chemistry-equation-card">
-            <h4>Reversible Reaction Equilibrium</h4>
-            <div class="math-expression">A ⇌ B, K = k<sub>forward</sub>/k<sub>reverse</sub></div>
-            <p>Equilibrium constant from rate constants.</p>
-        </div>
-        <div class="chemistry-equation-card">
-            <h4>Consecutive Reactions</h4>
-            <div class="math-expression">A → B → C</div>
-            <p>Rate determined by slowest (rate-determining) step.</p>
-        </div>
-        
-        
-    </div>
-
-    <!-- Catalysis Section -->
-    <div class="chemistry-grid">
-        <div class="chemistry-equation-card">
-            <h4>Catalyst Effect</h4>
-            <p>Catalysts increases rate by providing alternate path with low  activation energy.</p>
-        </div>
-    </div>
-    <button class="chemistry-button" onclick="goToChemistryBack('kinetics')">⬅ Back</button>
-</div>
+                    <h2>Chemical Kinetics</h2>
+                    
+                    <!-- Rate Laws & Order Section -->
+                    <h3>Rate Laws & Reaction Order</h3>
+                    <div class="chemistry-equation-card">
+                        <h4>Rate Definition</h4>
+                        <div class="math-expression">Rate = -ⅆ[A]/ⅆt = ⅆ[P]/ⅆt</div>
+                        <p>Rate of reaction in terms of reactant disappearance or product formation.</p>
+                    </div>
+                    <div class="chemistry-equation-card">
+                        <h4>Zero Order Rate Law</h4>
+                        <div class="math-expression">Rate = k</div>
+                        <p>Rate is independent of reactant concentration.</p>
+                    </div>
+                    <div class="chemistry-equation-card">
+                        <h4>First Order Rate Law</h4>
+                        <div class="math-expression">Rate = k[A]</div>
+                        <p>Rate proportional to concentration of one reactant.</p>
+                    </div>
+                    <div class="chemistry-equation-card">
+                        <h4>Second Order Rate Law</h4>
+                        <div class="math-expression">Rate = k[A]² or Rate = k[A][B]</div>
+                        <p>Rate depends on square of concentration or two reactants.</p>
+                    </div>
+                    
+                    <!-- Half-Life Equations Section -->
+                    <h3>Half-Life Equations</h3>
+                    <div class="chemistry-equation-card">
+                        <h4>Zero Order Half-Life</h4>
+                        <div class="math-expression">t<sub>½</sub> = [A]₀/(2k)</div>
+                        <p>Half-life depends on initial concentration.</p>
+                    </div>
+                    <div class="chemistry-equation-card">
+                        <h4>First Order Half-Life</h4>
+                        <div class="math-expression">t<sub>½</sub> = ln(2)/k</div>
+                        <p>Half-life is constant, independent of initial concentration.</p>
+                    </div>
+                    <div class="chemistry-equation-card">
+                        <h4>Second Order Half-Life</h4>
+                        <div class="math-expression">t<sub>½</sub> = 1/(k[A]₀)</div>
+                        <p>Half-life inversely proportional to initial concentration.</p>
+                    </div>
+                    <div class="chemistry-equation-card">
+                        <h4>nth Order Half-Life</h4>
+                        <div class="math-expression">t<sub>½</sub> = (2<sup>n-1</sup>-1)/((n-1)k[A]₀<sup>n-1</sup>)</div>
+                        <p>General half-life equation for any order n ≠ 1.</p>
+                    </div>
+                    
+                    <!-- Complex Reactions Section -->
+                    <h3>Complex Reaction Mechanisms</h3>
+                    <div class="chemistry-equation-card">
+                        <h4>Reversible Reaction Equilibrium</h4>
+                        <div class="math-expression">A ⇌ B, K = k<sub>forward</sub>/k<sub>reverse</sub></div>
+                        <p>Equilibrium constant from rate constants.</p>
+                    </div>
+                    <div class="chemistry-equation-card">
+                        <h4>Consecutive Reactions</h4>
+                        <div class="math-expression">A → B → C</div>
+                        <p>Rate determined by slowest (rate-determining) step.</p>
+                    </div>
+                    
+                    <!-- Catalysis Section -->
+                    <div class="chemistry-equation-card">
+                        <h4>Catalyst Effect</h4>
+                        <p>Catalysts increases rate by providing alternate path with low  activation energy.</p>
+                    </div>
+                    <button class="chemistry-button" onclick="goToChemistryBack('kinetics')">⬅ Back</button>
+                </div>
             </div>
             <button class="chemistry-button" onclick="showSection('home')">⬅ Back to Home</button>
         </div>
@@ -1158,13 +1265,13 @@
                 
                 <div class="grid-item">
                     <div class="video-container">
-                        <div class="video-thumbnail" style="background-image: url('..');"> <!-- add video -->
+                        <div class="video-thumbnail" style="background-image: url('https://www.youtube.com/playlist?list=PLm4XndeqZIjM1TdXsI642KCA0y6IrCapw');"> <!-- add video -->
                             Reaction Mechanisms
                         </div>
                     </div>
                     <h3>Organic Reaction Mechanisms playlist</h3>
                     <p>Detailed explanation of various organic reaction mechanisms</p>
-                    <a href="" target="_blank" class="drive-link">Watch Video</a> <!-- add video -->
+                    <a href="https://www.youtube.com/playlist?list=PLm4XndeqZIjM1TdXsI642KCA0y6IrCapw" target="_blank" class="drive-link">Watch Video</a> <!-- add video -->
                 </div>
             </div>
             <button class="chemistry-button" onclick="showSection('home')">⬅ Back to Home</button>
@@ -1194,20 +1301,90 @@
     </div>
 
     <script>
-        // Show home section by default
-        document.getElementById('home').classList.add('active');
-        
-        // Check URL parameters on page load
+        // Mobile Menu Elements
+        let mobileMenuBtn, navbarMenu;
+
+        // Initialize when page loads
         document.addEventListener('DOMContentLoaded', function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const section = urlParams.get('section');
+            // Get elements
+            mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            navbarMenu = document.getElementById('navbarMenu');
+
+            // Show home section by default
+            showSection('home');
             
-            if (section === 'reactions') {
-                // Automatically show the reactions section
-                showSection('reactions');
-            }
+            // Set up mobile menu
+            setupMobileMenu();
+
+            // Handle responsive layout
+            handleResponsive();
+            window.addEventListener('resize', handleResponsive);
         });
-        
+
+        // Mobile Menu Functions
+        function setupMobileMenu() {
+            if (!mobileMenuBtn || !navbarMenu) {
+                console.log('Mobile menu elements not found');
+                return;
+            }
+
+            mobileMenuBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                toggleMobileMenu();
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', function(e) {
+                if (navbarMenu.classList.contains('active') && 
+                    !navbarMenu.contains(e.target) && 
+                    !mobileMenuBtn.contains(e.target)) {
+                    closeMobileMenu();
+                }
+            });
+
+            // Close menu when clicking links
+            document.querySelectorAll('.navbar-menu a').forEach(link => {
+                link.addEventListener('click', closeMobileMenu);
+            });
+        }
+
+        function toggleMobileMenu() {
+            if (!navbarMenu) return;
+            navbarMenu.classList.toggle('active');
+            updateMobileMenuDisplay();
+        }
+
+        function closeMobileMenu() {
+            if (!navbarMenu) return;
+            navbarMenu.classList.remove('active');
+            updateMobileMenuDisplay();
+        }
+
+        function updateMobileMenuDisplay() {
+            if (!navbarMenu) return;
+            if (window.innerWidth <= 768) {
+                if (navbarMenu.classList.contains('active')) {
+                    navbarMenu.style.display = 'flex';
+                } else {
+                    navbarMenu.style.display = 'none';
+                }
+            }
+        }
+
+        function handleResponsive() {
+            if (window.innerWidth <= 768) {
+                if (mobileMenuBtn) mobileMenuBtn.style.display = 'block';
+                updateMobileMenuDisplay();
+            } else {
+                if (mobileMenuBtn) mobileMenuBtn.style.display = 'none';
+                if (navbarMenu) {
+                    navbarMenu.style.display = 'flex';
+                    closeMobileMenu();
+                }
+            }
+        }
+
+        // Section Management
         function showSection(sectionId) {
             // Hide all sections
             document.querySelectorAll('.section-content').forEach(section => {
@@ -1215,58 +1392,151 @@
             });
             
             // Show selected section
-            document.getElementById(sectionId).classList.add('active');
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+                targetSection.scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
             
-            // Scroll to top of section
-            document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+            closeMobileMenu();
         }
-        
-        // Chemistry Navigation Functions
+
+        // Chemistry Navigation Functions - FIXED VERSION
         function showChemistrySection(id) {
-            document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            document.getElementById('main-chemistry-grid').style.display = 'none';
-            updateChemistryBreadcrumb(id);
+            // Hide all content sections
+            document.querySelectorAll('.content-section').forEach(sec => {
+                sec.classList.remove('active');
+            });
+            
+            // Show selected section
+            const targetSection = document.getElementById(id);
+            if (targetSection) {
+                targetSection.classList.add('active');
+                document.getElementById('main-chemistry-grid').style.display = 'none';
+                updateChemistryBreadcrumb(id);
+                
+                // Scroll to top of the chemistry container
+                document.querySelector('.chemistry-equations-container').scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+            
+            closeMobileMenu();
         }
 
         function showChemistrySubSection(sub, parent) {
-            document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
-            document.getElementById(sub).classList.add('active');
-            updateChemistryBreadcrumb(parent, sub);
+            // Hide all content sections
+            document.querySelectorAll('.content-section').forEach(sec => {
+                sec.classList.remove('active');
+            });
+            
+            // Show selected subsection
+            const targetSubSection = document.getElementById(sub);
+            if (targetSubSection) {
+                targetSubSection.classList.add('active');
+                updateChemistryBreadcrumb(parent, sub);
+                
+                // Scroll to top of the chemistry container
+                document.querySelector('.chemistry-equations-container').scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+            
+            closeMobileMenu();
         }
 
         function goToChemistryBack(id) {
-            const parent = document.getElementById(id);
-            parent.classList.remove('active');
+            const currentSection = document.getElementById(id);
+            if (currentSection) {
+                currentSection.classList.remove('active');
+            }
+            
+            // Define main sections
+            const mainSections = ['organic', 'inorganic', 'thermodynamics', 'equilibrium', 'electrochemistry', 'kinetics'];
             
             // Check if we're at the main level
-            if (['organic', 'inorganic', 'thermodynamics', 'equilibrium', 'electrochemistry', 'kinetics'].includes(id)) {
+            if (mainSections.includes(id)) {
                 document.getElementById('main-chemistry-grid').style.display = 'grid';
                 updateChemistryBreadcrumb();
+                
+                // Scroll to top of the chemistry container
+                document.querySelector('.chemistry-equations-container').scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start'
+                });
             } else {
-                // Find the parent section
-                const parentSections = ['organic', 'inorganic', 'thermodynamics', 'equilibrium', 'electrochemistry', 'kinetics'];
-                for (const section of parentSections) {
-                    if (document.getElementById(section).contains(parent)) {
-                        document.getElementById(section).classList.add('active');
+                // Find and show the parent section
+                let parentFound = false;
+                for (const section of mainSections) {
+                    const sectionElement = document.getElementById(section);
+                    if (sectionElement && currentSection && sectionElement.contains(currentSection)) {
+                        sectionElement.classList.add('active');
                         updateChemistryBreadcrumb(section);
+                        parentFound = true;
+                        
+                        // Scroll to top of the chemistry container
+                        document.querySelector('.chemistry-equations-container').scrollIntoView({ 
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
                         break;
                     }
                 }
+                
+                // Fallback to main grid if no parent found
+                if (!parentFound) {
+                    document.getElementById('main-chemistry-grid').style.display = 'grid';
+                    updateChemistryBreadcrumb();
+                    
+                    // Scroll to top of the chemistry container
+                    document.querySelector('.chemistry-equations-container').scrollIntoView({ 
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
             }
+            
+            closeMobileMenu();
         }
 
         function goToChemistryHome() {
-            document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
+            // Hide all content sections
+            document.querySelectorAll('.content-section').forEach(sec => {
+                sec.classList.remove('active');
+            });
+            
+            // Show main grid
             document.getElementById('main-chemistry-grid').style.display = 'grid';
             updateChemistryBreadcrumb();
+            
+            // Scroll to top of the chemistry container
+            document.querySelector('.chemistry-equations-container').scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'start'
+            });
+            
+            closeMobileMenu();
         }
 
         function updateChemistryBreadcrumb(parent, child) {
             const breadcrumb = document.getElementById('breadcrumb');
-            breadcrumb.innerHTML = `<span onclick="goToChemistryHome()">Chemistry Topics</span>`;
-            if (parent) breadcrumb.innerHTML += ` <span class="separator">›</span> <span onclick="showChemistrySection('${parent}')">${capitalize(parent)}</span>`;
-            if (child) breadcrumb.innerHTML += ` <span class="separator">›</span> <span>${capitalize(child)}</span>`;
+            if (!breadcrumb) return;
+            
+            let breadcrumbHTML = `<span onclick="goToChemistryHome()">Chemistry Topics</span>`;
+            
+            if (parent) {
+                breadcrumbHTML += ` <span class="separator">›</span> <span onclick="showChemistrySection('${parent}')">${capitalize(parent)}</span>`;
+            }
+            if (child) {
+                breadcrumbHTML += ` <span class="separator">›</span> <span>${capitalize(child)}</span>`;
+            }
+            
+            breadcrumb.innerHTML = breadcrumbHTML;
         }
 
         function capitalize(str) {
@@ -1274,4 +1544,4 @@
         }
     </script>
 </body>
-</html> 
+</html>

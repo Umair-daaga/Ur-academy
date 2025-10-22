@@ -17,6 +17,8 @@
             color: #333;
             min-height: 100vh;
             line-height: 1.6;
+            overflow-x: hidden;
+             max-width: 100%;
         }
 
         .navbar {
@@ -292,25 +294,152 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        @media (max-width: 768px) {
-            .navbar {
-                flex-direction: column;
-                padding: 1rem;
-            }
+        /* Mobile Menu Button */
+        /* Proper mobile button positioning */
+        .mobile-menu-btn {
+            background: none;
+            border: none;
+            color: #333;
+            font-size: 1.5em;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
 
-            .navbar-menu {
+        .mobile-menu-btn:hover {
+            background-color: rgba(0,0,0,0.1);
+        }
+
+        /* Mobile Responsive Styles */
+        @media (max-width: 768px) {
+        .navbar {
+                position: relative;
+                padding: 1rem;
+                flex-wrap: wrap;
+            }
+            
+        .navbar-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
                 flex-direction: column;
                 gap: 0;
-                width: 100%;
+                box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+                z-index: 1000;
             }
-
-            .navbar-menu li {
+            
+        .navbar-menu.active {
+                display: flex;
+            }
+            
+        .navbar-menu li {
                 width: 100%;
                 text-align: center;
             }
+            
+        .navbar-menu a {
+                padding: 1.2rem 1rem;
+                width: 100%;
+                border-bottom: 1px solid #eee;
+            }
+            
+        .mobile-menu-btn {
+                display: block;
+                position: absolute;
+                right: 1rem;
+                top: 1rem;
+            }
 
-            .grid-container, .physics-grid {
+        .container {
+                padding: 0 1rem;
+                margin: 1rem auto;
+            }
+
+        .section-title {
+                font-size: 1.8em;
+                margin-bottom: 1.5rem;
+            }
+
+        .grid-container {
                 grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+        .physics-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+        .grid-item, .physics-card {
+                padding: 1.5rem;
+                min-height: 60px;
+                display: flex;
+                align-items: center;
+            }
+
+            .update-card, .physics-equations-container {
+                padding: 1.5rem;
+            }
+
+            .physics-equation-card {
+                padding: 1rem;
+                margin: 0.5rem 0;
+            }
+
+            .math-expression {
+                font-size: 1rem;
+                padding: 0.8rem;
+            }
+
+        .subsection-title {
+                font-size: 1.2em;
+                margin: 1.5rem 0 0.8rem;
+            }
+
+        .drive-link, .physics-button {
+                padding: 0.7rem 1.2rem;
+                font-size: 0.9em;
+                width: 100%;
+                text-align: center;
+                display: block;
+                margin-top: 1rem;
+            }
+
+        .breadcrumb {
+                font-size: 0.9em;
+                margin-bottom: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar-logo {
+                font-size: 1.5em;
+                padding: 0.5rem 0;
+            }
+
+            .section-title {
+                font-size: 1.6em;
+            }
+
+            .container {
+                padding: 0 0.5rem;
+            }
+
+            .grid-item, .physics-card, .update-card, .physics-equations-container {
+                padding: 1rem;
+            }
+
+            .physics-equation-card {
+                padding: 0.8rem;
+            }
+
+            .math-expression {
+                font-size: 0.9rem;
+                padding: 0.6rem;
             }
         }
     </style>
@@ -318,13 +447,14 @@
 <body>
     <nav class="navbar">
         <div class="navbar-logo">UR Physics Point</div>
-        <ul class="navbar-menu">
-            <li><a href="index.html" onclick="showSection('index')">Home</a></li>
-            <li><a href="#" onclick="showSection('pastpapers')">Past Papers</a></li>
-            <li><a href="#" onclick="showSection('equations')">Physics Equations</a></li>
-            <li><a href="#" onclick="showSection('videos')">Video Lessons</a></li>
-            <li><a href="#" onclick="showSection('updates')">What's New</a></li>
-        </ul>
+        <!-- Added IDs for reliable selection -->
+            <button class="mobile-menu-btn" id="mobileMenuBtn" style="background: none; border: none; color: #333; font-size: 1.5em;">☰</button>
+            <ul class="navbar-menu" id="navbarMenu">
+                <li><a href="index.html" onclick="showSection('home')">Home</a></li>
+                <li><a href="#" onclick="showSection('pastpapers')">Past Papers</a></li>
+                <li><a href="#" onclick="showSection('equations')">Classified Equations</a></li>
+                <li><a href="#" onclick="showSection('videos')">Videos</a></li>
+            </ul>
     </nav>
 
     <div class="container">
@@ -398,154 +528,151 @@
                 </div>
 
                 <!-- Mechanics Section -->
-<div id="mechanics" class="content-section">
-    <h2>Mechanics</h2>
-    
-    <!-- Kinematics Section -->
-    <div class="physics-grid">
-        <h2>Kinematics</h2>
-        <div class="physics-equation-card">
-            <h4>v = u + at</h4>
-            <div class="math-expression">v = u + at</div>
-            <p>Final velocity after time <b>t</b> with constant acceleration <b>a</b>.</p>
-        </div>
-        <div class="physics-equation-card">
-            <h4>s = ut + ½at²</h4>
-            <div class="math-expression">s = ut + ½at²</div>
-            <p>Displacement after time <b>t</b>.</p>
-        </div>
-        <div class="physics-equation-card">
-            <h4>v² = u² + 2as</h4>
-            <div class="math-expression">v² = u² + 2as</div>
-            <p>Final velocity squared relationship.</p>
-        </div>
-        <div class="physics-equation-card">
-            <h4>s = (u + v)/2 * t</h4>
-            <div class="math-expression">s = (u + v)/2 * t</div>
-            <p>Displacement after time <b>t</b>.</p>
-        </div>
-    </div>
-    
-    <!-- Circular Motion Section -->
-    <div class="physics-grid">
-        <h2>Circular Motion</h2>
-        <div class="physics-equation-card">
-            <h4>Centripetal Acceleration</h4>
-            <div class="math-expression">a = v²/r</div>
-            <p>Acceleration directed toward the center of circular path.</p>
-        </div>
-        <div class="physics-equation-card">
-            <h4>Centripetal Force</h4>
-            <div class="math-expression">F = mv²/r</div>
-            <p>Force required to keep an object in circular motion.</p>
-        </div>
-        <div class="physics-equation-card">
-            <h4>Angular Velocity</h4>
-            <div class="math-expression">ω = v/r</div>
-            <p>Relationship between linear and angular velocity.</p>
-        </div>
-        <div class="physics-equation-card">
-            <h4>Period of Revolution</h4>
-            <div class="math-expression">T = 2πr/v</div>
-            <p>Time for one complete revolution.</p>
-        </div>
-    </div>
-    
-    <!-- Rotational Motion Section -->
-    <div class="physics-grid">
-        <h2>Rotational Motion</h2>
-        <div class="physics-equation-card">
-            <h4>Torque</h4>
-            <div class="math-expression">τ = r × F</div>
-            <p>Rotational equivalent of force.</p>
-        </div>
-        <div class="physics-equation-card">
-            <h4>Moment of Inertia</h4>
-            <div class="math-expression">I = Σmr²</div>
-            <p>Rotational equivalent of mass.</p>
-        </div>
-        <div class="physics-equation-card">
-            <h4>Rotational Kinetic Energy</h4>
-            <div class="math-expression">K = ½Iω²</div>
-            <p>Energy due to rotational motion.</p>
-        </div>
-        <div class="physics-equation-card">
-            <h4>Angular Momentum</h4>
-            <div class="math-expression">L = Iω</div>
-            <p>Rotational equivalent of linear momentum.</p>
-        </div>
-    </div>
-    
-    <!-- Impulse and Impulsive Force Section -->
-    <div class="physics-grid">
-        <h2>Impulse and Impulsive Force</h2>
-        <div class="physics-equation-card">
-            <h4>Impulse</h4>
-            <div class="math-expression">J = FΔt</div>
-            <p>Change in momentum due to applied force over time.</p>
-        </div>
-        <div class="physics-equation-card">
-            <h4>Impulse-Momentum Theorem</h4>
-            <div class="math-expression">J = Δp = mΔv</div>
-            <p>Impulse equals change in momentum.</p>
-        </div>
-        <div class="physics-equation-card">
-            <h4>Average Impulsive Force</h4>
-            <div class="math-expression">F_avg = Δp/Δt</div>
-            <p>Average force during a collision or impact.</p>
-        </div>
-        <div class="physics-equation-card">
-            <h4>Conservation of Momentum</h4>
-            <div class="math-expression">m₁u₁ + m₂u₂ = m₁v₁ + m₂v₂</div>
-            <p>Total momentum before and after collision remains constant.</p>
-        </div>
-    </div>
-    
-    <!-- Hydrostatics Section -->
-    <div class="physics-grid">
-        <h2>Hydrostatics</h2>
-        <div class="physics-equation-card">
-            <h4>Hydrostatic Pressure</h4>
-            <div class="math-expression">P = ρgh</div>
-            <p>Pressure at depth h in a fluid.</p>
-        </div>
-        <div class="physics-equation-card">
-            <h4>Pascal's Principle</h4>
-            <div class="math-expression">P₁ = P₂</div>
-            <p>Pressure applied to confined fluid is transmitted equally.</p>
-        </div>
-        <div class="physics-equation-card">
-            <h4>Buoyant Force</h4>
-            <div class="math-expression">F_b = ρVg</div>
-            <p>Upward force on submerged object (Archimedes' Principle).</p>
-        </div>
-        <div class="physics-equation-card">
-            <h4>Continuity Equation</h4>
-            <div class="math-expression">A₁v₁ = A₂v₂</div>
-            <p>For incompressible fluids, flow rate is constant.</p>
-        </div>
-    </div>
-    
-    <!-- Hydrodynamics Section -->
-    <div class="physics-grid">
-        <h2>Hydrodynamics</h2>
-        <div class="physics-equation-card">
-            <h4>Bernoulli's Equation</h4>
-            <div class="math-expression">P + ½ρv² + ρgh = constant</div>
-            <p>Conservation of energy for flowing fluids.</p>
-        </div>
-        <div class="physics-equation-card">
-            <h4>hydro Force</h4>
-            <div class="math-expression">F =ρAv²  Power=ρAv<sup>3</sup></div>
-            <p>Force due to liquid </p>
-        </div>
-       
-    </div>
-    
-    <button class="physics-button" onclick="goToPhysicsBack('mechanics')">⬅ Back</button>
-</div>
-
-            
+                <div id="mechanics" class="content-section">
+                    <h2>Mechanics</h2>
+                    
+                    <!-- Kinematics Section -->
+                    <div class="physics-grid">
+                        <h2>Kinematics</h2>
+                        <div class="physics-equation-card">
+                            <h4>v = u + at</h4>
+                            <div class="math-expression">v = u + at</div>
+                            <p>Final velocity after time <b>t</b> with constant acceleration <b>a</b>.</p>
+                        </div>
+                        <div class="physics-equation-card">
+                            <h4>s = ut + ½at²</h4>
+                            <div class="math-expression">s = ut + ½at²</div>
+                            <p>Displacement after time <b>t</b>.</p>
+                        </div>
+                        <div class="physics-equation-card">
+                            <h4>v² = u² + 2as</h4>
+                            <div class="math-expression">v² = u² + 2as</div>
+                            <p>Final velocity squared relationship.</p>
+                        </div>
+                        <div class="physics-equation-card">
+                            <h4>s = (u + v)/2 * t</h4>
+                            <div class="math-expression">s = (u + v)/2 * t</div>
+                            <p>Displacement after time <b>t</b>.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Circular Motion Section -->
+                    <div class="physics-grid">
+                        <h2>Circular Motion</h2>
+                        <div class="physics-equation-card">
+                            <h4>Centripetal Acceleration</h4>
+                            <div class="math-expression">a = v²/r</div>
+                            <p>Acceleration directed toward the center of circular path.</p>
+                        </div>
+                        <div class="physics-equation-card">
+                            <h4>Centripetal Force</h4>
+                            <div class="math-expression">F = mv²/r</div>
+                            <p>Force required to keep an object in circular motion.</p>
+                        </div>
+                        <div class="physics-equation-card">
+                            <h4>Angular Velocity</h4>
+                            <div class="math-expression">ω = v/r</div>
+                            <p>Relationship between linear and angular velocity.</p>
+                        </div>
+                        <div class="physics-equation-card">
+                            <h4>Period of Revolution</h4>
+                            <div class="math-expression">T = 2πr/v</div>
+                            <p>Time for one complete revolution.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Rotational Motion Section -->
+                    <div class="physics-grid">
+                        <h2>Rotational Motion</h2>
+                        <div class="physics-equation-card">
+                            <h4>Torque</h4>
+                            <div class="math-expression">τ = r × F</div>
+                            <p>Rotational equivalent of force.</p>
+                        </div>
+                        <div class="physics-equation-card">
+                            <h4>Moment of Inertia</h4>
+                            <div class="math-expression">I = Σmr²</div>
+                            <p>Rotational equivalent of mass.</p>
+                        </div>
+                        <div class="physics-equation-card">
+                            <h4>Rotational Kinetic Energy</h4>
+                            <div class="math-expression">K = ½Iω²</div>
+                            <p>Energy due to rotational motion.</p>
+                        </div>
+                        <div class="physics-equation-card">
+                            <h4>Angular Momentum</h4>
+                            <div class="math-expression">L = Iω</div>
+                            <p>Rotational equivalent of linear momentum.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Impulse and Impulsive Force Section -->
+                    <div class="physics-grid">
+                        <h2>Impulse and Impulsive Force</h2>
+                        <div class="physics-equation-card">
+                            <h4>Impulse</h4>
+                            <div class="math-expression">J = FΔt</div>
+                            <p>Change in momentum due to applied force over time.</p>
+                        </div>
+                        <div class="physics-equation-card">
+                            <h4>Impulse-Momentum Theorem</h4>
+                            <div class="math-expression">J = Δp = mΔv</div>
+                            <p>Impulse equals change in momentum.</p>
+                        </div>
+                        <div class="physics-equation-card">
+                            <h4>Average Impulsive Force</h4>
+                            <div class="math-expression">F_avg = Δp/Δt</div>
+                            <p>Average force during a collision or impact.</p>
+                        </div>
+                        <div class="physics-equation-card">
+                            <h4>Conservation of Momentum</h4>
+                            <div class="math-expression">m₁u₁ + m₂u₂ = m₁v₁ + m₂v₂</div>
+                            <p>Total momentum before and after collision remains constant.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Hydrostatics Section -->
+                    <div class="physics-grid">
+                        <h2>Hydrostatics</h2>
+                        <div class="physics-equation-card">
+                            <h4>Hydrostatic Pressure</h4>
+                            <div class="math-expression">P = ρgh</div>
+                            <p>Pressure at depth h in a fluid.</p>
+                        </div>
+                        <div class="physics-equation-card">
+                            <h4>Pascal's Principle</h4>
+                            <div class="math-expression">P₁ = P₂</div>
+                            <p>Pressure applied to confined fluid is transmitted equally.</p>
+                        </div>
+                        <div class="physics-equation-card">
+                            <h4>Buoyant Force</h4>
+                            <div class="math-expression">F_b = ρVg</div>
+                            <p>Upward force on submerged object (Archimedes' Principle).</p>
+                        </div>
+                        <div class="physics-equation-card">
+                            <h4>Continuity Equation</h4>
+                            <div class="math-expression">A₁v₁ = A₂v₂</div>
+                            <p>For incompressible fluids, flow rate is constant.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Hydrodynamics Section -->
+                    <div class="physics-grid">
+                        <h2>Hydrodynamics</h2>
+                        <div class="physics-equation-card">
+                            <h4>Bernoulli's Equation</h4>
+                            <div class="math-expression">P + ½ρv² + ρgh = constant</div>
+                            <p>Conservation of energy for flowing fluids.</p>
+                        </div>
+                        <div class="physics-equation-card">
+                            <h4>hydro Force</h4>
+                            <div class="math-expression">F =ρAv²  Power=ρAv<sup>3</sup></div>
+                            <p>Force due to liquid </p>
+                        </div>
+                    </div>
+                    
+                    <button class="physics-button" onclick="goToPhysicsBack('mechanics')">⬅ Back</button>
+                </div>
 
                 <!-- Waves Section -->
                 <div id="waves" class="content-section">
@@ -960,8 +1087,6 @@
                         <p>Stefan's law modified for non-black bodies.</p>
                     </div>
                     
-                    
-                    
                     <div class="physics-equation-card">
                         <h4>de Broglie Wavelength</h4>
                         <div class="math-expression">λ = h/P = h/(mv)</div>
@@ -1300,72 +1425,182 @@
             <button class="physics-button" onclick="showSection('home')">⬅ Back to Home</button>
         </div>
     </div>
-
-    <script>
-        // Show home section by default
-        document.getElementById('home').classList.add('active');
-        
-        function showSection(sectionId) {
-            // Hide all sections
-            document.querySelectorAll('.section-content').forEach(section => {
-                section.classList.remove('active');
-            });
+        <script>
+            // Section Management Functions
+            function showSection(sectionId) {
+                // Hide all sections
+                document.querySelectorAll('.section-content').forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // Show selected section
+                document.getElementById(sectionId).classList.add('active');
+                
+                // Scroll to top of section smoothly
+                document.getElementById(sectionId).scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+                
+                // Close mobile menu if open
+                closeMobileMenu();
+            }
             
-            // Show selected section
-            document.getElementById(sectionId).classList.add('active');
-            
-            // Scroll to top of section
-            document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
-        }
-        
-        // Physics Equations Navigation Functions
-        function showPhysicsSection(id) {
-            document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            document.getElementById('main-physics-grid').style.display = 'none';
-            updatePhysicsBreadcrumb(id);
-        }
+            // Physics Equations Navigation Functions
+            function showPhysicsSection(id) {
+                document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
+                document.getElementById(id).classList.add('active');
+                document.getElementById('main-physics-grid').style.display = 'none';
+                updatePhysicsBreadcrumb(id);
+                closeMobileMenu();
+            }
 
-        function showPhysicsSubSection(sub, parent) {
-            document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
-            document.getElementById(sub).classList.add('active');
-            updatePhysicsBreadcrumb(parent, sub);
-        }
+            function showPhysicsSubSection(sub, parent) {
+                document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
+                document.getElementById(sub).classList.add('active');
+                updatePhysicsBreadcrumb(parent, sub);
+                closeMobileMenu();
+            }
 
-        function goToPhysicsBack(id) {
-            const parent = document.getElementById(id);
-            parent.classList.remove('active');
-            if (['mechanics', 'waves', 'optics', 'thermodynamics', 'electricity', 'magnetism', 'electronics', 'electrostatics', 'gravitation', 'properties-matter', 'radiation'].includes(id)) {
-                document.getElementById('main-physics-grid').style.display = 'grid';
-                updatePhysicsBreadcrumb();
-            } else {
-                const parentSection = parent.closest('.content-section');
-                if (parentSection) {
-                    parentSection.classList.add('active');
-                    updatePhysicsBreadcrumb(parentSection.id);
-                } else {
+            function goToPhysicsBack(id) {
+                const parent = document.getElementById(id);
+                parent.classList.remove('active');
+                
+                const mainSections = ['mechanics', 'waves', 'optics', 'thermodynamics', 'electricity', 
+                                    'magnetism', 'electronics', 'electrostatics', 'gravitation', 
+                                    'properties-matter', 'radiation'];
+                
+                if (mainSections.includes(id)) {
                     document.getElementById('main-physics-grid').style.display = 'grid';
                     updatePhysicsBreadcrumb();
+                } else {
+                    const parentSection = parent.closest('.content-section');
+                    if (parentSection) {
+                        parentSection.classList.add('active');
+                        updatePhysicsBreadcrumb(parentSection.id);
+                    } else {
+                        document.getElementById('main-physics-grid').style.display = 'grid';
+                        updatePhysicsBreadcrumb();
+                    }
+                }
+                closeMobileMenu();
+            }
+
+            function goToPhysicsHome() {
+                document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
+                document.getElementById('main-physics-grid').style.display = 'grid';
+                updatePhysicsBreadcrumb();
+                closeMobileMenu();
+            }
+
+            function updatePhysicsBreadcrumb(parent, child) {
+                const breadcrumb = document.getElementById('breadcrumb');
+                let breadcrumbHTML = `<span onclick="goToPhysicsHome()">Physics Equations</span>`;
+                
+                if (parent) {
+                    breadcrumbHTML += ` <span class="separator">›</span> <span onclick="showPhysicsSection('${parent}')">${capitalize(parent)}</span>`;
+                }
+                if (child) {
+                    breadcrumbHTML += ` <span class="separator">›</span> <span>${capitalize(child)}</span>`;
+                }
+                
+                breadcrumb.innerHTML = breadcrumbHTML;
+            }
+
+            function capitalize(str) {
+                return str.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+            }
+
+            // Mobile Menu Functionality
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const navbarMenu = document.getElementById('navbarMenu');
+
+            function toggleMobileMenu() {
+                navbarMenu.classList.toggle('active');
+                updateMobileMenuDisplay();
+            }
+
+            function closeMobileMenu() {
+                navbarMenu.classList.remove('active');
+                updateMobileMenuDisplay();
+            }
+
+            function updateMobileMenuDisplay() {
+                if (window.innerWidth <= 768) {
+                    if (navbarMenu.classList.contains('active')) {
+                        navbarMenu.style.display = 'flex';
+                    } else {
+                        navbarMenu.style.display = 'none';
+                    }
                 }
             }
-        }
 
-        function goToPhysicsHome() {
-            document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
-            document.getElementById('main-physics-grid').style.display = 'grid';
-            updatePhysicsBreadcrumb();
-        }
+            function handleResponsive() {
+                if (window.innerWidth <= 768) {
+                    mobileMenuBtn.style.display = 'block';
+                    updateMobileMenuDisplay();
+                } else {
+                    mobileMenuBtn.style.display = 'none';
+                    navbarMenu.style.display = 'flex';
+                    navbarMenu.classList.remove('active');
+                }
+            }
 
-        function updatePhysicsBreadcrumb(parent, child) {
-            const breadcrumb = document.getElementById('breadcrumb');
-            breadcrumb.innerHTML = `<span onclick="goToPhysicsHome()">Physics Equations</span>`;
-            if (parent) breadcrumb.innerHTML += ` <span class="separator">›</span> <span onclick="showPhysicsSection('${parent}')">${capitalize(parent)}</span>`;
-            if (child) breadcrumb.innerHTML += ` <span class="separator">›</span> <span>${capitalize(child)}</span>`;
-        }
+            // Event Listeners
+            mobileMenuBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                toggleMobileMenu();
+            });
 
-        function capitalize(str) {
-            return str.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
-        }
-    </script>
+            // Close menu when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!navbarMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+                    closeMobileMenu();
+                }
+            });
+
+            // Close menu when clicking on nav links
+            document.querySelectorAll('.navbar-menu a').forEach(link => {
+                link.addEventListener('click', closeMobileMenu);
+            });
+
+            // Close menu when pressing Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeMobileMenu();
+                }
+            });
+
+            // Prevent scrolling when mobile menu is open
+            navbarMenu.addEventListener('touchmove', function(e) {
+                if (navbarMenu.classList.contains('active')) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
+
+            // Initialize on load
+            document.addEventListener('DOMContentLoaded', function() {
+                // Show home section by default
+                document.getElementById('home').classList.add('active');
+                
+                // Initialize responsive behavior
+                handleResponsive();
+                
+                // Add resize listener with debounce
+                let resizeTimeout;
+                window.addEventListener('resize', function() {
+                    clearTimeout(resizeTimeout);
+                    resizeTimeout = setTimeout(handleResponsive, 100);
+                });
+            });
+
+            // Fallback initialization for older browsers
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', handleResponsive);
+            } else {
+                handleResponsive();
+            }
+        </script>
+ 
 </body>
 </html>

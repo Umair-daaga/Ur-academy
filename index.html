@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>UR Academy - Professional Learning Platform</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    /* (same CSS as before – unchanged) */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -14,49 +14,113 @@
       min-height: 100vh;
       line-height: 1.6;
     }
+    
+    /* Mobile First Navigation */
     .navbar {
       background: rgba(255, 255, 255, 0.95);
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 0 2rem; box-shadow: 0 2px 20px rgba(0,0,0,0.1);
-      position: sticky; top: 0; z-index: 1000;
+      display: flex; 
+      flex-direction: column;
+      padding: 1rem;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+      position: sticky; 
+      top: 0; 
+      z-index: 1000;
     }
-    .navbar-logo { font-size: 1.8em; font-weight: 700; color: #667eea; }
-    .navbar-menu { list-style: none; display: flex; gap: 2rem; align-items: center; }
-    .navbar-menu li { position: relative; }
+    
+    .navbar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+    
+    .navbar-logo { 
+      font-size: 1.5rem; 
+      font-weight: 700; 
+      color: #667eea; 
+    }
+    
+    .menu-toggle {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: #333;
+      cursor: pointer;
+    }
+    
+    .navbar-menu { 
+      list-style: none; 
+      display: none;
+      flex-direction: column;
+      width: 100%;
+      margin-top: 1rem;
+    }
+    
+    .navbar-menu.active {
+      display: flex;
+    }
+    
+    .navbar-menu li { 
+      position: relative; 
+      margin: 0.5rem 0;
+    }
+    
     .navbar-menu > li > a {
-      text-decoration: none; color: #333; font-weight: 600;
-      padding: 1.5rem 1rem; display: inline-block;
-      border-bottom: 3px solid transparent; transition: 0.3s ease;
+      text-decoration: none; 
+      color: #333; 
+      font-weight: 600;
+      padding: 1rem; 
+      display: block;
+      border-radius: 6px;
+      transition: 0.3s ease;
     }
-    .navbar-menu > li > a:hover { color: #667eea; border-bottom: 3px solid #667eea; }
+    
+    .navbar-menu > li > a:hover { 
+      background: #667eea; 
+      color: white; 
+    }
+    
     .dropdown-content {
-      display: none; position: absolute; background: white;
-      min-width: 220px; box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-      border-radius: 8px; overflow: hidden;
+      display: none; 
+      background: white;
+      margin-top: 0.5rem;
+      border-radius: 8px; 
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
+    
+    .dropdown.active .dropdown-content {
+      display: block;
+    }
+    
     .dropdown-content a {
-      display: block; padding: 1rem 1.5rem; color: #333; text-decoration: none;
-      border-bottom: 1px solid #f8f9fa; transition: 0.3s ease;
+      display: block; 
+      padding: 0.75rem 1.5rem; 
+      color: #333; 
+      text-decoration: none;
+      border-bottom: 1px solid #f8f9fa; 
+      transition: 0.3s ease;
     }
+    
     .dropdown-content a:hover {
-      background: #667eea; color: white; padding-left: 2rem;
+      background: #667eea; 
+      color: white; 
+      padding-left: 2rem;
     }
-    .dropdown:hover .dropdown-content { display: block; }
 
     .youtube-section {
       background: white;
       border-radius: 12px;
-      padding: 3rem;
-      margin: 2rem auto;
-      max-width: 1200px;
+      padding: 2rem 1.5rem;
+      margin: 1.5rem;
       box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
     }
 
     .video-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-      margin-top: 2rem;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
     }
 
     .video-grid iframe {
@@ -70,12 +134,14 @@
       display: inline-block;
       background: #667eea;
       color: white;
-      padding: 1rem 2rem;
+      padding: 0.75rem 1.5rem;
       border-radius: 6px;
       text-decoration: none;
       font-weight: 600;
       margin-top: 1rem;
       transition: all 0.3s ease;
+      width: 100%;
+      text-align: center;
     }
 
     .channel-link:hover {
@@ -85,19 +151,37 @@
 
     .hero-section {
       background: linear-gradient(135deg, rgba(102,126,234,0.9), rgba(118,75,162,0.9));
-      color: white; padding: 4rem 2rem; text-align: center;
+      color: white; 
+      padding: 3rem 1.5rem; 
+      text-align: center;
+    }
+    
+    .hero-section h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    
+    .hero-section p {
+      font-size: 1.1rem;
+      max-width: 800px;
+      margin: 0 auto 1rem;
     }
 
     .content { max-width: 1200px; margin: 4rem auto; padding: 0 2rem; }
-    .section-title { font-size: 2.5em; text-align: center; margin-bottom: 3rem; color: #333; font-weight: 600; }
+    .section-title { 
+      font-size: 1.8rem; 
+      text-align: center; 
+      margin-bottom: 2rem; 
+      color: #333; 
+      font-weight: 600; 
+    }
 
     /* Horizontal Scrollable Sections */
     .scroll-section {
       background: white;
       border-radius: 12px;
-      padding: 3rem;
-      margin: 2rem auto;
-      max-width: 1200px;
+      padding: 2rem 1.5rem;
+      margin: 1.5rem;
       box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
       position: relative;
     }
@@ -110,10 +194,10 @@
 
     .playlist-scroll {
       display: flex;
-      gap: 1.5rem;
+      gap: 1.25rem;
       overflow-x: auto;
       scroll-behavior: smooth;
-      padding: 1rem 0.5rem;
+      padding: 1rem 0.25rem;
       scrollbar-width: none; /* Firefox */
       -ms-overflow-style: none; /* IE and Edge */
     }
@@ -125,7 +209,7 @@
     .playlist-card {
       background: #f7f7ff;
       border-radius: 10px;
-      min-width: 280px;
+      min-width: 260px;
       flex-shrink: 0;
       transition: all 0.3s ease;
       cursor: pointer;
@@ -136,7 +220,19 @@
     .playlist-card:hover {
       transform: translateY(-5px);
       box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+
+    /* Specific Colors for Each Playlist Type */
+    .maths-card {
       border-color: #667eea;
+    }
+    
+    .physics-card {
+      border-color: #ff6b6b;
+    }
+    
+    .chemistry-card {
+      border-color: #00d2d3;
     }
 
     .playlist-card.coming-soon {
@@ -160,38 +256,62 @@
       justify-content: center;
       border-radius: 10px;
       color: white;
-      font-size: 2em;
+      font-size: 1.5rem;
       z-index: 2;
     }
 
     .playlist-image {
       width: 100%;
-      height: 160px;
+      height: 140px;
       display: flex;
       align-items: center;
       justify-content: center;
       color: white;
-      font-size: 3em;
+      font-size: 2.5rem;
       position: relative;
     }
 
-    .maths-color { background: linear-gradient(135deg, #667eea, #764ba2); }
-    .physics-color { background: linear-gradient(135deg, #ff6b6b, #ee5a24); }
-    .chemistry-color { background: linear-gradient(135deg, #00d2d3, #54a0ff); }
+    /* Specific gradient backgrounds for each subject */
+    .maths-color { 
+      background: linear-gradient(135deg, #667eea, #764ba2); 
+    }
+    .physics-color { 
+      background: linear-gradient(135deg, #ff6b6b, #ee5a24); 
+    }
+    .chemistry-color { 
+      background: linear-gradient(135deg, #00d2d3, #54a0ff); 
+    }
+    
+    /* Specific colors for different math playlists */
+    .center-of-gravity { 
+      background: linear-gradient(135deg, #667eea, #5a6fd8); 
+    }
+    .trigonometry { 
+      background: linear-gradient(135deg, #a78bfa, #7e5bef); 
+    }
+    .past-papers { 
+      background: linear-gradient(135deg, #f59e0b, #d97706); 
+    }
+    .calculus { 
+      background: linear-gradient(135deg, #10b981, #059669); 
+    }
+    .why-maths { 
+      background: linear-gradient(135deg, #8b5cf6, #7c3aed); 
+    }
 
     .playlist-info {
-      padding: 1.5rem;
+      padding: 1.25rem;
     }
 
     .playlist-info h3 {
       color: #333;
       margin-bottom: 0.5rem;
-      font-size: 1.2em;
+      font-size: 1.1rem;
     }
 
     .playlist-info p {
       color: #666;
-      font-size: 0.9em;
+      font-size: 0.85rem;
       line-height: 1.5;
     }
 
@@ -209,14 +329,14 @@
       background: #667eea;
       color: white;
       border: none;
-      width: 40px;
-      height: 40px;
+      width: 35px;
+      height: 35px;
       border-radius: 50%;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.2em;
+      font-size: 1rem;
       font-weight: bold;
       transition: all 0.3s ease;
       z-index: 10;
@@ -229,11 +349,11 @@
     }
 
     .scroll-arrow.left {
-      left: -20px;
+      left: -15px;
     }
 
     .scroll-arrow.right {
-      right: -20px;
+      right: -15px;
     }
 
     .scroll-arrow.hidden {
@@ -260,34 +380,108 @@
       text-decoration: underline;
     }
 
-    @media (max-width: 768px) {
-      .scroll-section, .youtube-section {
-        padding: 2rem 1.5rem;
-        margin: 1rem auto;
+    /* Desktop Styles */
+    @media (min-width: 768px) {
+      .navbar {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 2rem;
+      }
+      
+      .navbar-header {
+        width: auto;
+      }
+      
+      .menu-toggle {
+        display: none;
+      }
+      
+      .navbar-menu {
+        display: flex;
+        flex-direction: row;
+        margin-top: 0;
+        width: auto;
+      }
+      
+      .navbar-menu li {
+        margin: 0;
+      }
+      
+      .navbar-menu > li > a {
+        padding: 1.5rem 1rem;
+        border-radius: 0;
+        border-bottom: 3px solid transparent;
+      }
+      
+      .navbar-menu > li > a:hover {
+        background: transparent;
+        color: #667eea;
+        border-bottom: 3px solid #667eea;
+      }
+      
+      .dropdown-content {
+        position: absolute;
+        min-width: 220px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      }
+      
+      .dropdown:hover .dropdown-content {
+        display: block;
+      }
+      
+      .hero-section {
+        padding: 4rem 2rem;
+      }
+      
+      .hero-section h1 {
+        font-size: 3rem;
+      }
+      
+      .youtube-section, .scroll-section {
+        padding: 3rem;
+        margin: 2rem auto;
+        max-width: 1200px;
+      }
+      
+      .video-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      
+      .channel-link {
+        width: auto;
+      }
+      
+      .section-title {
+        font-size: 2.5rem;
       }
       
       .playlist-card {
-        min-width: 250px;
+        min-width: 280px;
+      }
+      
+      .playlist-image {
+        height: 160px;
       }
       
       .scroll-arrow {
-        width: 35px;
-        height: 35px;
-        font-size: 1em;
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
       }
       
       .scroll-arrow.left {
-        left: -15px;
+        left: -20px;
       }
       
       .scroll-arrow.right {
-        right: -15px;
+        right: -20px;
       }
     }
 
-    @media (max-width: 480px) {
+    @media (min-width: 1024px) {
       .playlist-card {
-        min-width: 220px;
+        min-width: 300px;
       }
     }
   </style>
@@ -295,8 +489,13 @@
 <body>
   <!-- Navbar -->
   <nav class="navbar">
-    <div class="navbar-logo">UR Academy</div>
-    <ul class="navbar-menu">
+    <div class="navbar-header">
+      <div class="navbar-logo">UR Academy</div>
+      <button class="menu-toggle" id="menuToggle">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+    <ul class="navbar-menu" id="navbarMenu">
       <li class="dropdown">
         <a href="physics.html">Physics</a>
         <div class="dropdown-content">
@@ -346,10 +545,12 @@
       
       <div class="playlist-scroll" id="mathsScroll">
         
-        <!-- Playlist 1 - Replace LINK with your actual playlist URL -->
-        <div class="playlist-card">
+        <!-- Playlist 1 - Center of Gravity -->
+        <div class="playlist-card maths-card">
           <a href="https://www.youtube.com/playlist?list=PLm4XndeqZIjM5uh9E-maufVzoV36SpoLq" target="_blank" class="playlist-link">
-            <div class="playlist-image maths-color">⚖️</div>
+            <div class="playlist-image center-of-gravity">
+              <i class="fas fa-balance-scale"></i>
+            </div>
             <div class="playlist-info">
               <h3>Center of Gravity</h3>
               <p>Understanding mass distribution and balancing points</p>
@@ -357,10 +558,12 @@
           </a>
         </div>
 
-        <!-- Playlist 2 - Replace LINK with your actual playlist URL -->
-        <div class="playlist-card">
-          <a href="" target="_blank" class="playlist-link">
-            <div class="playlist-image maths-color">📐</div>
+        <!-- Playlist 2 - Trigonometry -->
+        <div class="playlist-card maths-card">
+          <a href="https://www.youtube.com/playlist?list=PLm4XndeqZIjPRYS_ekLB1r6Ly0rS1Cogi" target="_blank" class="playlist-link">
+            <div class="playlist-image trigonometry">
+              <i class="fas fa-draw-polygon"></i>
+            </div>
             <div class="playlist-info">
               <h3>Trigonometry</h3>
               <p>Sine, cosine rules, proofs and past papers</p>
@@ -368,30 +571,42 @@
           </a>
         </div>
 
-        <!-- Playlist 3 - Coming Soon -->
-        <div class="playlist-card coming-soon" onclick="showComingSoonAlert()">
-          <div class="lock-overlay">🔒</div>
-          <div class="playlist-image maths-color">📊</div>
+        <!-- Playlist 3 - Past Papers -->
+        <div class="playlist-card maths-card coming-soon" onclick="showComingSoonAlert()">
+          <div class="lock-overlay">
+            <i class="fas fa-lock"></i>
+          </div>
+          <div class="playlist-image past-papers">
+            <i class="fas fa-chart-bar"></i>
+          </div>
           <div class="playlist-info">
             <h3>Past Papers</h3>
             <p>Complete past paper solutions and walkthroughs</p>
           </div>
         </div>
 
-        <!-- Playlist 4 - Coming Soon -->
-        <div class="playlist-card coming-soon" onclick="showComingSoonAlert()">
-          <div class="lock-overlay">🔒</div>
-          <div class="playlist-image maths-color">∫</div>
+        <!-- Playlist 4 - Calculus -->
+        <div class="playlist-card maths-card coming-soon" onclick="showComingSoonAlert()">
+          <div class="lock-overlay">
+            <i class="fas fa-lock"></i>
+          </div>
+          <div class="playlist-image calculus">
+            <i class="fas fa-calculator"></i>
+          </div>
           <div class="playlist-info">
             <h3>Calculus & Derivatives</h3>
             <p>Differentiation, integration and their applications</p>
           </div>
         </div>
 
-        <!-- Playlist 5 - Coming Soon -->
-        <div class="playlist-card coming-soon" onclick="showComingSoonAlert()">
-          <div class="lock-overlay">🔒</div>
-          <div class="playlist-image maths-color">🔢</div>
+        <!-- Playlist 5 - Why Maths -->
+        <div class="playlist-card maths-card coming-soon" onclick="showComingSoonAlert()">
+          <div class="lock-overlay">
+            <i class="fas fa-lock"></i>
+          </div>
+          <div class="playlist-image why-maths">
+            <i class="fas fa-question-circle"></i>
+          </div>
           <div class="playlist-info">
             <h3>Do you know why ??</h3>
             <p>Understanding the reasoning behind mathematical concepts</p>
@@ -412,40 +627,56 @@
       
       <div class="playlist-scroll" id="physicsScroll">
         
-        <!-- Playlist 1 - Coming Soon -->
-        <div class="playlist-card coming-soon" onclick="showComingSoonAlert()">
-          <div class="lock-overlay">🔒</div>
-          <div class="playlist-image physics-color">🔬</div>
+        <!-- Playlist 1 - Deriving Equations -->
+        <div class="playlist-card physics-card coming-soon" onclick="showComingSoonAlert()">
+          <div class="lock-overlay">
+            <i class="fas fa-lock"></i>
+          </div>
+          <div class="playlist-image physics-color">
+            <i class="fas fa-atom"></i>
+          </div>
           <div class="playlist-info">
             <h3>Deriving Equations</h3>
             <p>Step-by-step derivation of physics equations</p>
           </div>
         </div>
 
-        <!-- Playlist 2 - Coming Soon -->
-        <div class="playlist-card coming-soon" onclick="showComingSoonAlert()">
-          <div class="lock-overlay">🔒</div>
-          <div class="playlist-image physics-color">📝</div>
+        <!-- Playlist 2 - Past Papers -->
+        <div class="playlist-card physics-card coming-soon" onclick="showComingSoonAlert()">
+          <div class="lock-overlay">
+            <i class="fas fa-lock"></i>
+          </div>
+          <div class="playlist-image physics-color">
+            <i class="fas fa-file-alt"></i>
+          </div>
           <div class="playlist-info">
             <h3>Past Paper Series</h3>
             <p>Complete past paper solutions and explanations</p>
           </div>
         </div>
 
-        <!-- Playlist 3 - Coming Soon -->
-        <div class="playlist-card coming-soon" onclick="showComingSoonAlert()">
-          <div class="lock-overlay">🔒</div>
-          <div class="playlist-image physics-color">🏛️</div>
+        <!-- Playlist 3 - Moratuwa Series -->
+        <div class="playlist-card physics-card coming-soon" onclick="showComingSoonAlert()">
+          <div class="lock-overlay">
+            <i class="fas fa-lock"></i>
+          </div>
+          <div class="playlist-image physics-color">
+            <i class="fas fa-university"></i>
+          </div>
           <div class="playlist-info">
             <h3>Moratuwa Series</h3>
             <p>Specialized physics content from Moratuwa University</p>
           </div>
         </div>
 
-        <!-- Playlist 4 - Coming Soon -->
-        <div class="playlist-card coming-soon" onclick="showComingSoonAlert()">
-          <div class="lock-overlay">🔒</div>
-          <div class="playlist-image physics-color">⚡</div>
+        <!-- Playlist 4 - Why Physics -->
+        <div class="playlist-card physics-card coming-soon" onclick="showComingSoonAlert()">
+          <div class="lock-overlay">
+            <i class="fas fa-lock"></i>
+          </div>
+          <div class="playlist-image physics-color">
+            <i class="fas fa-bolt"></i>
+          </div>
           <div class="playlist-info">
             <h3>Do You Know Why?</h3>
             <p>Understanding the assumptions behind physics theories</p>
@@ -466,31 +697,41 @@
       
       <div class="playlist-scroll" id="chemistryScroll">
         
-        <!-- Playlist 1 - Coming Soon -->
-          <div class="playlist-card">
-            <a href="https://www.youtube.com/playlist?list=PLm4XndeqZIjM1TdXsI642KCA0y6IrCapw" target="_blank" class="playlist-link">
-              <div class="playlist-image maths-color">📐</div>
-              <div class="playlist-info">
-                <h3>Organic Mechanisms </h3>
-                <p>Learn how products are formed </p>
-              </div>
-            </a>
-          </div>
+        <!-- Playlist 1 - Organic Mechanisms -->
+        <div class="playlist-card chemistry-card">
+          <a href="https://www.youtube.com/playlist?list=PLm4XndeqZIjM1TdXsI642KCA0y6IrCapw" target="_blank" class="playlist-link">
+            <div class="playlist-image chemistry-color">
+              <i class="fas fa-flask"></i>
+            </div>
+            <div class="playlist-info">
+              <h3>Organic Mechanisms</h3>
+              <p>Learn how products are formed through reaction mechanisms</p>
+            </div>
+          </a>
+        </div>
 
-        <!-- Playlist 2 - Coming Soon -->
-        <div class="playlist-card coming-soon" onclick="showComingSoonAlert()">
-          <div class="lock-overlay">🔒</div>
-          <div class="playlist-image chemistry-color">📝</div>
+        <!-- Playlist 2 - Past Papers -->
+        <div class="playlist-card chemistry-card coming-soon" onclick="showComingSoonAlert()">
+          <div class="lock-overlay">
+            <i class="fas fa-lock"></i>
+          </div>
+          <div class="playlist-image chemistry-color">
+            <i class="fas fa-file-alt"></i>
+          </div>
           <div class="playlist-info">
             <h3>Past Paper Series</h3>
             <p>Complete past paper solutions and explanations</p>
           </div>
         </div>
 
-        <!-- Playlist 3 - Coming Soon -->
-        <div class="playlist-card coming-soon" onclick="showComingSoonAlert()">
-          <div class="lock-overlay">🔒</div>
-          <div class="playlist-image chemistry-color">🏛️</div>
+        <!-- Playlist 3 - Moratuwa Series -->
+        <div class="playlist-card chemistry-card coming-soon" onclick="showComingSoonAlert()">
+          <div class="lock-overlay">
+            <i class="fas fa-lock"></i>
+          </div>
+          <div class="playlist-image chemistry-color">
+            <i class="fas fa-university"></i>
+          </div>
           <div class="playlist-info">
             <h3>Moratuwa Series</h3>
             <p>Specialized chemistry content from Moratuwa Exam papers</p>
@@ -510,14 +751,29 @@
     <p>Stay connected with our YouTube channel and support us by sharing and subscribing</p>
   </div>
 
-  <!-- (Rest of content same as before) -->
-  <div class="content">
-    <h2 class="section-title">Our Subjects</h2>
-    <!-- subject cards here -->
-  </div>
-
   <script>
-    // Replace with your actual channel ID and API key
+    // Mobile Navigation
+    const menuToggle = document.getElementById('menuToggle');
+    const navbarMenu = document.getElementById('navbarMenu');
+    const dropdowns = document.querySelectorAll('.dropdown');
+
+    menuToggle.addEventListener('click', () => {
+      navbarMenu.classList.toggle('active');
+    });
+
+    // Mobile dropdown functionality
+    dropdowns.forEach(dropdown => {
+      const link = dropdown.querySelector('a');
+      
+      link.addEventListener('click', (e) => {
+        if (window.innerWidth < 768) {
+          e.preventDefault();
+          dropdown.classList.toggle('active');
+        }
+      });
+    });
+
+    // YouTube API
     const apiKey = "AIzaSyBttxjuEWjgXv7TcqrYa94Q3jbcMSJc4J4";
     const channelId = "UCGEdMXbnMtZZXqKXYoTDdKA";
     const videoGrid = document.getElementById("video-grid");
@@ -534,12 +790,11 @@
         
         const data = await response.json();
 
-        // Check if API returned an error
         if (data.error) {
           throw new Error(data.error.message);
         }
 
-        videoGrid.innerHTML = ""; // clear loading text
+        videoGrid.innerHTML = "";
 
         if (data.items && data.items.length > 0) {
           data.items.forEach(item => {
@@ -617,5 +872,3 @@
   </script>
 </body>
 </html>
-
-

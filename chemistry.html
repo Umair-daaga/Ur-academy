@@ -390,6 +390,85 @@
             justify-content: center;
         }
 
+        /* New styles for reactions */
+        .reaction-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .reaction-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border-left: 4px solid #764ba2;
+        }
+
+        .reaction-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .reaction-title {
+            color: #764ba2;
+            margin-bottom: 1rem;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+
+        .reaction-equation {
+            font-family: 'Times New Roman', serif;
+            font-size: 1.1em;
+            text-align: center;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 6px;
+        }
+
+        .reaction-details {
+            margin-top: 1rem;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .reaction-details ul {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+        }
+
+        .reaction-details li {
+            margin-bottom: 0.3rem;
+        }
+
+        .proof-box {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-left: 4px solid #667eea;
+        }
+
+        .proof-step {
+            margin: 0.8rem 0;
+            padding: 0.8rem;
+            background: white;
+            border-radius: 6px;
+        }
+
+        .math-expression {
+            font-family: 'Times New Roman', serif;
+            font-size: 1.2em;
+            text-align: center;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 6px;
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -452,7 +531,7 @@
                 margin-bottom: 1.5rem;
             }
 
-            .grid-container, .chemistry-grid, .color-grid, .test-grid, .functional-grid {
+            .grid-container, .chemistry-grid, .color-grid, .test-grid, .functional-grid, .reaction-container {
                 grid-template-columns: 1fr;
                 gap: 1rem;
             }
@@ -465,7 +544,7 @@
                 padding: 1.5rem;
             }
 
-            .chemistry-equation-card {
+            .chemistry-equation-card, .reaction-card {
                 padding: 1rem;
                 margin: 0.5rem 0;
             }
@@ -508,7 +587,7 @@
                 padding: 1rem;
             }
 
-            .chemistry-equation-card, .color-card, .test-card, .functional-card {
+            .chemistry-equation-card, .color-card, .test-card, .functional-card, .reaction-card {
                 padding: 0.8rem;
             }
         }
@@ -592,6 +671,106 @@
                     <div class="chemistry-card" onclick="showChemistrySection('equilibrium')">Equilibrium</div>
                     <div class="chemistry-card" onclick="showChemistrySection('electrochemistry')">Electrochemistry</div>
                     <div class="chemistry-card" onclick="showChemistrySection('kinetics')">Chemical Kinetics</div>
+                    <div class="chemistry-card" onclick="showChemistrySection('common-reactions')">Common Reactions</div>
+                </div>
+
+                <!-- Common Reactions Section -->
+                <div id="common-reactions" class="content-section">
+                    <h2>Common Chemical Reactions</h2>
+                    
+                    <h3 class="subsection-title">Acid-Base Reactions</h3>
+                    <div class="reaction-container">
+                        <div class="reaction-card">
+                            <h3 class="reaction-title">Neutralization Reaction</h3>
+                            <div class="reaction-equation">HCl + NaOH → NaCl + H₂O</div>
+                            <div class="reaction-details">
+                                <p><strong>Type:</strong> Acid-Base Neutralization</p>
+                                <p><strong>Description:</strong> Strong acid reacts with strong base to form salt and water.</p>
+                                <p><strong>Applications:</strong> Antacid tablets, pH regulation</p>
+                            </div>
+                        </div>
+                        
+                        <div class="reaction-card">
+                            <h3 class="reaction-title">Carbonate with Acid</h3>
+                            <div class="reaction-equation">CaCO₃ + 2HCl → CaCl₂ + H₂O + CO₂</div>
+                            <div class="reaction-details">
+                                <p><strong>Type:</strong> Acid-Carbonate Reaction</p>
+                                <p><strong>Description:</strong> Carbonate reacts with acid to produce salt, water, and carbon dioxide.</p>
+                                <p><strong>Applications:</strong> Limestone weathering, antacid action</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 class="subsection-title">Redox Reactions</h3>
+                    <div class="reaction-container">
+                        <div class="reaction-card">
+                            <h3 class="reaction-title">Combustion of Methane</h3>
+                            <div class="reaction-equation">CH₄ + 2O₂ → CO₂ + 2H₂O</div>
+                            <div class="reaction-details">
+                                <p><strong>Type:</strong> Combustion</p>
+                                <p><strong>Description:</strong> Hydrocarbon burns in oxygen to produce carbon dioxide and water.</p>
+                                <p><strong>Applications:</strong> Natural gas heating, energy production</p>
+                            </div>
+                        </div>
+                        
+                        <div class="reaction-card">
+                            <h3 class="reaction-title">Thermite Reaction</h3>
+                            <div class="reaction-equation">Fe₂O₃ + 2Al → 2Fe + Al₂O₃</div>
+                            <div class="reaction-details">
+                                <p><strong>Type:</strong> Displacement/Redox</p>
+                                <p><strong>Description:</strong> Highly exothermic reaction where aluminum reduces iron oxide.</p>
+                                <p><strong>Applications:</strong> Rail welding, metal extraction</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 class="subsection-title">Precipitation Reactions</h3>
+                    <div class="reaction-container">
+                        <div class="reaction-card">
+                            <h3 class="reaction-title">Silver Chloride Formation</h3>
+                            <div class="reaction-equation">AgNO₃ + NaCl → AgCl + NaNO₃</div>
+                            <div class="reaction-details">
+                                <p><strong>Type:</strong> Precipitation</p>
+                                <p><strong>Description:</strong> Silver ions combine with chloride ions to form insoluble silver chloride.</p>
+                                <p><strong>Applications:</strong> Chloride ion test, photography</p>
+                            </div>
+                        </div>
+                        
+                        <div class="reaction-card">
+                            <h3 class="reaction-title">Barium Sulfate Formation</h3>
+                            <div class="reaction-equation">BaCl₂ + Na₂SO₄ → BaSO₄ + 2NaCl</div>
+                            <div class="reaction-details">
+                                <p><strong>Type:</strong> Precipitation</p>
+                                <p><strong>Description:</strong> Barium ions combine with sulfate ions to form insoluble barium sulfate.</p>
+                                <p><strong>Applications:</strong> Sulfate ion test, medical imaging</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 class="subsection-title">Organic Reactions</h3>
+                    <div class="reaction-container">
+                        <div class="reaction-card">
+                            <h3 class="reaction-title">Esterification</h3>
+                            <div class="reaction-equation">CH₃COOH + CH₃CH₂OH ⇌ CH₃COOCH₂CH₃ + H₂O</div>
+                            <div class="reaction-details">
+                                <p><strong>Type:</strong> Condensation</p>
+                                <p><strong>Description:</strong> Carboxylic acid reacts with alcohol to form ester and water.</p>
+                                <p><strong>Applications:</strong> Perfume production, flavoring agents</p>
+                            </div>
+                        </div>
+                        
+                        <div class="reaction-card">
+                            <h3 class="reaction-title">Saponification</h3>
+                            <div class="reaction-equation">(C₁₇H₃₅COO)₃C₃H₅ + 3NaOH → 3C₁₇H₃₅COONa + C₃H₅(OH)₃</div>
+                            <div class="reaction-details">
+                                <p><strong>Type:</strong> Hydrolysis</p>
+                                <p><strong>Description:</strong> Ester (fat/oil) reacts with base to form soap and glycerol.</p>
+                                <p><strong>Applications:</strong> Soap manufacturing</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="chemistry-button" onclick="goToChemistryBack('common-reactions')">⬅ Back</button>
                 </div>
 
                 <div id="thermodynamics" class="content-section">
@@ -621,8 +800,61 @@
                     <div class="chemistry-grid">
                         <div class="chemistry-card" onclick="showChemistrySubSection('colors', 'inorganic')">Colors of Compounds</div>
                         <div class="chemistry-card" onclick="showChemistrySubSection('testing', 'inorganic')">Testing of Compounds</div>
-                        <div class="chemistry-card" >Reactions  would be out on 24/10/2025</div>
+                        <div class="chemistry-card" onclick="showChemistrySubSection('inorganic-reactions', 'inorganic')">Inorganic Reactions</div>
                     </div>
+                    <button class="chemistry-button" onclick="goToChemistryBack('inorganic')">⬅ Back</button>
+                </div>
+
+                <!-- Inorganic Reactions Section -->
+                <div id="inorganic-reactions" class="content-section">
+                    <h2>Important Inorganic Reactions</h2>
+                    
+                    <h3 class="subsection-title">Metal Reactions</h3>
+                    <div class="reaction-container">
+                        <div class="reaction-card">
+                            <h3 class="reaction-title">Reaction of Sodium with Water</h3>
+                            <div class="reaction-equation">2Na + 2H₂O → 2NaOH + H₂</div>
+                            <div class="reaction-details">
+                                <p><strong>Observation:</strong> Vigorous reaction, sodium moves on water surface, hydrogen gas produced</p>
+                                <p><strong>Type:</strong> Metal-Water Reaction</p>
+                                <p><strong>Significance:</strong> Demonstrates high reactivity of alkali metals</p>
+                            </div>
+                        </div>
+                        
+                        <div class="reaction-card">
+                            <h3 class="reaction-title">Reaction of Iron with Steam</h3>
+                            <div class="reaction-equation">3Fe + 4H₂O → Fe₃O₄ + 4H₂</div>
+                            <div class="reaction-details">
+                                <p><strong>Observation:</strong> Red-hot iron glows, hydrogen gas produced</p>
+                                <p><strong>Type:</strong> Metal-Steam Reaction</p>
+                                <p><strong>Significance:</strong> Shows reactivity of iron with water vapor at high temperature</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 class="subsection-title">Oxide Reactions</h3>
+                    <div class="reaction-container">
+                        <div class="reaction-card">
+                            <h3 class="reaction-title">Reaction of Calcium Oxide with Water</h3>
+                            <div class="reaction-equation">CaO + H₂O → Ca(OH)₂</div>
+                            <div class="reaction-details">
+                                <p><strong>Observation:</strong> Vigorous reaction with hissing sound, heat released, slaked lime formed</p>
+                                <p><strong>Type:</strong> Basic Oxide Reaction</p>
+                                <p><strong>Significance:</strong> Important in cement manufacturing</p>
+                            </div>
+                        </div>
+                        
+                        <div class="reaction-card">
+                            <h3 class="reaction-title">Reaction of Sulfur Dioxide with Water</h3>
+                            <div class="reaction-equation">SO₂ + H₂O → H₂SO₃</div>
+                            <div class="reaction-details">
+                                <p><strong>Observation:</strong> Acidic solution formed, turns blue litmus red</p>
+                                <p><strong>Type:</strong> Acidic Oxide Reaction</p>
+                                <p><strong>Significance:</strong> Contributes to acid rain formation</p>
+                            </div>
+                        </div>
+                    </div>
+
                     <button class="chemistry-button" onclick="goToChemistryBack('inorganic')">⬅ Back</button>
                 </div>
 
@@ -866,7 +1098,90 @@
                         <div class="chemistry-card" onclick="showChemistrySubSection('mechanisms', 'organic')">Reaction Mechanisms</div>
                         <div class="chemistry-card" onclick="showChemistrySubSection('functional-groups', 'organic')">Functional Groups</div>
                         <div class="chemistry-card" onclick="showChemistrySubSection('nomenclature', 'organic')">Nomenclature</div>
+                        <div class="chemistry-card" onclick="showChemistrySubSection('organic-reactions', 'organic')">Organic Reactions</div>
                     </div>
+                    <button class="chemistry-button" onclick="goToChemistryBack('organic')">⬅ Back</button>
+                </div>
+
+                <!-- Organic Reactions Section -->
+                <div id="organic-reactions" class="content-section">
+                    <h2>Important Organic Reactions</h2>
+                    
+                    <h3 class="subsection-title">Substitution Reactions</h3>
+                    <div class="reaction-container">
+                        <div class="reaction-card">
+                            <h3 class="reaction-title">Chlorination of Methane</h3>
+                            <div class="reaction-equation">CH₄ + Cl₂ → CH₃Cl + HCl</div>
+                            <div class="reaction-details">
+                                <p><strong>Type:</strong> Free Radical Substitution</p>
+                                <p><strong>Conditions:</strong> UV light or heat</p>
+                                <p><strong>Mechanism:</strong> Initiation → Propagation → Termination</p>
+                                <p><strong>Applications:</strong> Production of chloromethane, industrial solvents</p>
+                            </div>
+                        </div>
+                        
+                        <div class="reaction-card">
+                            <h3 class="reaction-title">Nitration of Benzene</h3>
+                            <div class="reaction-equation">C₆H₆ + HNO₃ → C₆H₅NO₂ + H₂O</div>
+                            <div class="reaction-details">
+                                <p><strong>Type:</strong> Electrophilic Aromatic Substitution</p>
+                                <p><strong>Conditions:</strong> Conc. HNO₃ + Conc. H₂SO₄, 50-60°C</p>
+                                <p><strong>Mechanism:</strong> Generation of nitronium ion (NO₂⁺) followed by substitution</p>
+                                <p><strong>Applications:</strong> Production of nitrobenzene, precursor to aniline</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 class="subsection-title">Addition Reactions</h3>
+                    <div class="reaction-container">
+                        <div class="reaction-card">
+                            <h3 class="reaction-title">Hydrogenation of Ethene</h3>
+                            <div class="reaction-equation">CH₂=CH₂ + H₂ → CH₃-CH₃</div>
+                            <div class="reaction-details">
+                                <p><strong>Type:</strong> Catalytic Hydrogenation</p>
+                                <p><strong>Conditions:</strong> Ni/Pt/Pd catalyst, 200-300°C</p>
+                                <p><strong>Mechanism:</strong> Syn addition of hydrogen atoms</p>
+                                <p><strong>Applications:</strong> Vegetable oil hardening, margarine production</p>
+                            </div>
+                        </div>
+                        
+                        <div class="reaction-card">
+                            <h3 class="reaction-title">Hydration of Ethene</h3>
+                            <div class="reaction-equation">CH₂=CH₂ + H₂O → CH₃CH₂OH</div>
+                            <div class="reaction-details">
+                                <p><strong>Type:</strong> Electrophilic Addition</p>
+                                <p><strong>Conditions:</strong> H₃PO₄ catalyst, 300°C, 60-70 atm</p>
+                                <p><strong>Mechanism:</strong> Markovnikov addition</p>
+                                <p><strong>Applications:</strong> Industrial production of ethanol</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 class="subsection-title">Elimination Reactions</h3>
+                    <div class="reaction-container">
+                        <div class="reaction-card">
+                            <h3 class="reaction-title">Dehydration of Ethanol</h3>
+                            <div class="reaction-equation">CH₃CH₂OH → CH₂=CH₂ + H₂O</div>
+                            <div class="reaction-details">
+                                <p><strong>Type:</strong> Acid-catalyzed Elimination</p>
+                                <p><strong>Conditions:</strong> Conc. H₂SO₄, 170°C</p>
+                                <p><strong>Mechanism:</strong> E1 or E2 depending on conditions</p>
+                                <p><strong>Applications:</strong> Laboratory preparation of alkenes</p>
+                            </div>
+                        </div>
+                        
+                        <div class="reaction-card">
+                            <h3 class="reaction-title">Dehydrohalogenation</h3>
+                            <div class="reaction-equation">CH₃-CH₂Br + KOH → CH₂=CH₂ + KBr + H₂O</div>
+                            <div class="reaction-details">
+                                <p><strong>Type:</strong> Base-induced Elimination</p>
+                                <p><strong>Conditions:</strong> Alcoholic KOH, heat</p>
+                                <p><strong>Mechanism:</strong> E2 elimination</p>
+                                <p><strong>Applications:</strong> Preparation of alkenes from alkyl halides</p>
+                            </div>
+                        </div>
+                    </div>
+
                     <button class="chemistry-button" onclick="goToChemistryBack('organic')">⬅ Back</button>
                 </div>
 
@@ -1170,8 +1485,111 @@
                 </div>
 
                 <div id="electrochemistry" class="content-section">
-                    <h2>Electrochemistry</h2>
-                    <p>sorry still under update ......  updates on 24th october  </p>
+                    <h2>⚡ Electrochemistry</h2>
+                    
+                    <!-- Galvanic Cell -->
+                    <h3 class="subsection-title">Galvanic Cell</h3>
+                    <div class="chemistry-equation-card">
+                        <h4>Cell Potential</h4>
+                        <div class="math-expression">E°<sub>cell</sub> = E°<sub>cathode</sub> - E°<sub>anode</sub></div>
+                        <p>Standard cell potential = Reduction potential - Oxidation potential</p>
+                    </div>
+
+                    <!-- Daniell Cell -->
+                    <h3 class="subsection-title">Daniell Cell</h3>
+                    <div class="chemistry-equation-card">
+                        <h4>Zn | Zn²⁺ || Cu²⁺ | Cu</h4>
+                        <div class="math-expression">E° = 1.10 V</div>
+                        <p><strong>Anode:</strong> Zn → Zn²⁺ + 2e⁻ (Oxidation)</p>
+                        <p><strong>Cathode:</strong> Cu²⁺ + 2e⁻ → Cu (Reduction)</p>
+                    </div>
+
+                    <!-- Lead-Acid Battery -->
+                    <h3 class="subsection-title">Lead-Acid Battery</h3>
+                    <div class="chemistry-equation-card">
+                        <h4>Car Battery</h4>
+                        <div class="math-expression">E° = 2.05 V</div>
+                        <p><strong>Discharge:</strong> Pb + PbO₂ + 2H₂SO₄ → 2PbSO₄ + 2H₂O</p>
+                        <p><strong>Charge:</strong> Reverse reaction during charging</p>
+                    </div>
+
+                    <!-- Faraday's Laws -->
+                    <h3 class="subsection-title">Faraday's Laws of Electrolysis</h3>
+                    <div class="chemistry-grid">
+                        <div class="chemistry-equation-card">
+                            <h4>First Law</h4>
+                            <div class="math-expression">m ∝ Q</div>
+                            <p>Mass deposited ∝ Charge passed</p>
+                            <div class="math-expression">m = (Q × M) / (n × F)</div>
+                        </div>
+                        
+                        <div class="chemistry-equation-card">
+                            <h4>Second Law</h4>
+                            <div class="math-expression">m₁/m₂ = (M₁/n₁) / (M₂/n₂)</div>
+                            <p>Same charge deposits masses in ratio of equivalent weights</p>
+                        </div>
+                        
+                        <div class="chemistry-equation-card">
+                            <h4>Constants</h4>
+                            <div class="math-expression">F = 96,485 C/mol</div>
+                            <div class="math-expression">Q = I × t</div>
+                            <p>Faraday constant & Charge calculation</p>
+                        </div>
+                    </div>
+
+                    <!-- Electrochemical Series -->
+                    <h3 class="subsection-title">Electrochemical Series (Reducing Power)</h3>
+                    <div class="chemistry-equation-card">
+                        <h4>Strong Reducing Agents → Weak Reducing Agents</h4>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0;">
+                            <div style="text-align: left;">
+                                <strong>Increasing Reducing Power:</strong><br>
+                                K (Potassium)<br>
+                                Na (Sodium)<br>
+                                Ca (Calcium)<br>
+                                Mg (Magnesium)<br>
+                                Al (Aluminum)<br>
+                                Zn (Zinc)
+                            </div>
+                            <div style="text-align: left;">
+                                <strong>→</strong><br>
+                                Fe (Iron)<br>
+                                Pb (Lead)<br>
+                                H (Hydrogen)<br>
+                                Cu (Copper)<br>
+                                Ag (Silver)<br>
+                                Au (Gold)
+                            </div>
+                        </div>
+                        <p><strong>K strongest reducer → Au weakest reducer</strong></p>
+                        <p>Higher reactivity = Better reducing agent = More easily oxidized</p>
+                    </div>
+
+                    <!-- Example Calculation -->
+                    <div class="proof-box">
+                        <h3>Example: Copper Deposition</h3>
+                        <p><strong>Problem:</strong> Calculate mass of copper deposited when 2A current passes for 30 minutes through CuSO₄ solution.</p>
+                        
+                        <div class="proof-step">
+                            <strong>Step 1:</strong> Calculate charge passed<br>
+                            Q = I × t = 2A × (30 × 60)s = 3600 C
+                        </div>
+                        
+                        <div class="proof-step">
+                            <strong>Step 2:</strong> Use Faraday's law<br>
+                            For Cu²⁺ + 2e⁻ → Cu, n = 2<br>
+                            m = (Q × M) / (n × F)<br>
+                            m = (3600 × 63.5) / (2 × 96485)
+                        </div>
+                        
+                        <div class="proof-step">
+                            <strong>Step 3:</strong> Calculate mass<br>
+                            m = 228600 / 192970 ≈ 1.18 g   <a href="https://www.youtube.com/channel/UCGEdMXbnMtZZXqKXYoTDdKA">visit our channel for explanation </a>
+                        </div>
+                        
+                        <p><strong>Answer:</strong> 1.18 grams of copper deposited</p>
+                    </div>
+
                     <button class="chemistry-button" onclick="goToChemistryBack('electrochemistry')">⬅ Back</button>
                 </div>
 
@@ -1287,7 +1705,7 @@
                     <ul style="margin: 1rem 0; padding-left: 1.5rem;">
                         <li>2023 A-Level Chemistry past papers with detailed solutions</li>
                         <li>New video series on organic mechanism has been  uploaded</li>
-                        
+                        <li>Comprehensive reactions section added with detailed examples</li>
                     </ul>
                     <p><strong>Upcoming Events:</strong></p>
                     <ul style="margin: 1rem 0; padding-left: 1.5rem;">
@@ -1450,56 +1868,57 @@
             closeMobileMenu();
         }
 
+        // FIXED: Navigation back function
         function goToChemistryBack(id) {
+            // Hide current section
             const currentSection = document.getElementById(id);
             if (currentSection) {
                 currentSection.classList.remove('active');
             }
             
-            // Define main sections
-            const mainSections = ['organic', 'inorganic', 'thermodynamics', 'equilibrium', 'electrochemistry', 'kinetics'];
+            // Define parent-child relationships
+            const parentChildMap = {
+                // Inorganic subsections
+                'colors': 'inorganic',
+                'testing': 'inorganic',
+                'inorganic-reactions': 'inorganic',
+                
+                // Organic subsections
+                'mechanisms': 'organic',
+                'functional-groups': 'organic',
+                'nomenclature': 'organic',
+                'organic-reactions': 'organic',
+                
+                // Main sections
+                'organic': 'main',
+                'inorganic': 'main',
+                'thermodynamics': 'main',
+                'equilibrium': 'main',
+                'electrochemistry': 'main',
+                'kinetics': 'main',
+                'common-reactions': 'main'
+            };
             
-            // Check if we're at the main level
-            if (mainSections.includes(id)) {
+            const parentId = parentChildMap[id];
+            
+            if (parentId === 'main') {
+                // Go back to main grid
                 document.getElementById('main-chemistry-grid').style.display = 'grid';
                 updateChemistryBreadcrumb();
-                
-                // Scroll to top of the chemistry container
-                document.querySelector('.chemistry-equations-container').scrollIntoView({ 
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            } else {
-                // Find and show the parent section
-                let parentFound = false;
-                for (const section of mainSections) {
-                    const sectionElement = document.getElementById(section);
-                    if (sectionElement && currentSection && sectionElement.contains(currentSection)) {
-                        sectionElement.classList.add('active');
-                        updateChemistryBreadcrumb(section);
-                        parentFound = true;
-                        
-                        // Scroll to top of the chemistry container
-                        document.querySelector('.chemistry-equations-container').scrollIntoView({ 
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                        break;
-                    }
-                }
-                
-                // Fallback to main grid if no parent found
-                if (!parentFound) {
-                    document.getElementById('main-chemistry-grid').style.display = 'grid';
-                    updateChemistryBreadcrumb();
-                    
-                    // Scroll to top of the chemistry container
-                    document.querySelector('.chemistry-equations-container').scrollIntoView({ 
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
+            } else if (parentId) {
+                // Go back to parent section
+                const parentSection = document.getElementById(parentId);
+                if (parentSection) {
+                    parentSection.classList.add('active');
+                    updateChemistryBreadcrumb(parentId);
                 }
             }
+            
+            // Scroll to top of the chemistry container
+            document.querySelector('.chemistry-equations-container').scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'start'
+            });
             
             closeMobileMenu();
         }
